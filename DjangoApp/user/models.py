@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 
@@ -12,8 +13,8 @@ class USERS(models.Model):
     id_rol = models.ForeignKey(ROL, on_delete=models.CASCADE)
     dni_number = models.CharField(max_length=9, unique=True)
     username = models.CharField(max_length=100)
-    crated_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    crated_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
     name = models.CharField(max_length=75)
     birth_date = models.DateField()
     first_name = models.CharField(max_length=75)

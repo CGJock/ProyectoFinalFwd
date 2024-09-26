@@ -1,27 +1,32 @@
 from django.db import models
 
 # Create your models here.
+
+class ROL(models.Model):
+    id_rol  = models.AutoField(primary_key=True)
+    rol_name = models.CharField(max_length=100)
+    
 class USERS(models.Model):
     id_user = models.AutoField(primary_key=True)
+    state = models.BooleanField(default=False)
+    id_rol = models.ForeignKey(ROL, on_delete=models.CASCADE)
     dni_number = models.CharField(max_length=9, unique=True)
+    username = models.CharField(max_length=100)
     crated_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    username = models.CharField(max_length=100)
-    user_name = models.CharField(max_length=75)
-    usert_birth_date = models.DateField()
-    user_first_name = models.CharField(max_length=75)
-    user_last_name = models.CharField(max_length=75)
-    user_email = models.EmailField(max_length=100)
+    name = models.CharField(max_length=75)
+    birth_date = models.DateField()
+    first_name = models.CharField(max_length=75)
+    last_name = models.CharField(max_length=75)
+    email = models.EmailField(max_length=100)
     password = models.CharField(max_length=100)
-    user_phone_number = models.CharField(max_length=11)
+    phone_number = models.CharField(max_length=11)
     
     
     def __str__(self) -> str:
         return self.user_email
     
-class ROL(models.Model):
-    id_rol  = models.AutoField(primary_key=True)
-    rol_name = models.CharField(max_length=100)
+
 
     
 class INSTITUTIONS(models.Model):
@@ -46,7 +51,6 @@ class STUDENT(models.Model):
     id_student = models.ForeignKey(USERS, on_delete=models.CASCADE)
     id_grade  = models.ForeignKey(GRADE, on_delete=models.CASCADE)
     id_institution  = models.ForeignKey(INSTITUTIONS, on_delete=models.CASCADE)
-    rol_type  = models.ForeignKey(ROL, on_delete=models.CASCADE)
     goberment_subsidy  = models.BooleanField()
     scholarship = models.BooleanField()
     

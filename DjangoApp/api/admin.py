@@ -5,4 +5,4 @@ from user.models import USERS
 
 @admin.register(USERS)
 class register_student(admin.ModelAdmin):
-    list_display: {''}
+    list_display: {'user_id'}

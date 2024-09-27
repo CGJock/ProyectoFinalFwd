@@ -1,4 +1,5 @@
 import { useState } from 'react'
+
 import  from "./pages/login"
 import './App.css'
 
@@ -9,8 +10,5 @@ function App() {
     <>
     
     </>
-  
-  )
-}
 
 export default App

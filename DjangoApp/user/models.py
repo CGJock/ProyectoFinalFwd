@@ -1,12 +1,10 @@
 from django.db import models
 from django.utils import timezone
+from rol.models import ROL
 
 # Create your models here.
 
-class ROL(models.Model):
-    id_rol  = models.AutoField(primary_key=True)
-    rol_name = models.CharField(max_length=100)
-    
+
 class USERS(models.Model):
     id_user = models.AutoField(primary_key=True)
     state = models.BooleanField(default=False)
@@ -26,9 +24,6 @@ class USERS(models.Model):
     def __str__(self) -> str:
         return self.email
     
-
-
-    
 class INSTITUTIONS(models.Model):
     id_institution = models.AutoField(primary_key=True)
     institution_name  = models.CharField(max_length=150)
@@ -39,7 +34,6 @@ class INSTITUTIONS(models.Model):
         return self.id_institution
     
 
-    
 class GRADE(models.Model):
     id_grade = models.AutoField(primary_key=True)
     grade_name = models.CharField(max_length=100)
@@ -52,6 +46,7 @@ class STUDENT(USERS):
     id_institution  = models.ForeignKey(INSTITUTIONS, on_delete=models.CASCADE)
     gobernment_subsidy  = models.BooleanField()
     scholarship = models.BooleanField()
+    uuid = models.UUIDField(null=True, unique=True) 
     
     def __str__(self):
         return self.id_student

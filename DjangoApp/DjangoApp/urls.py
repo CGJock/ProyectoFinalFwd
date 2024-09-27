@@ -17,17 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from user.api.router import router_user
+from rol.router import router_rol
 from user.api.views import RegisterUserViewSet
 
 
-register_user_viewset = RegisterUserViewSet.as_view({
-    'post': 'create',
-    'get': 'list',
-})
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router_user.urls)),
-    path('register/', register_user_viewset, name='register_user'),
-    path('register/<str:user_type>/', register_user_viewset, name='register_user_type'),
+    path('register/', RegisterUserViewSet.as_view({'post': 'create'}), name='register'),
+    path('', include(router_rol.urls)),
+    
 ]

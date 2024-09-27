@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer, Serializer
-from user.models import USERS, PSYCHOLOGIST, STUDENT, ROL, GRADE
+from user.models import USERS, PSYCHOLOGIST, STUDENT
 
 #Base user form registro
 class UserSerializer(ModelSerializer):
@@ -21,7 +21,3 @@ class PsychologistSerializer(ModelSerializer):
 
 
         
-class GradeSerializer(ModelSerializer):
-    class Meta:
-        model=GRADE
-        fields='__all__'

@@ -16,9 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from api.router import router_user
+from user.api.router import router_user
+from user.api.views import RegisterUserViewSet
+
+
+register_user_viewset = RegisterUserViewSet.as_view({
+    'post': 'create',
+    'get': 'list',
+})
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router_user.urls))
+    path('', include(router_user.urls)),
+    path('register/', register_user_viewset, name='register_user'),
+    path('register/<str:user_type>/', register_user_viewset, name='register_user_type'),
 ]

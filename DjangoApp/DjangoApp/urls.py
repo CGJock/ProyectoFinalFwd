@@ -16,9 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from api.router import router_user
+from user.api.router import router_user
+from rol.router import router_rol
+from grade.router import router_grade
+from user.api.views import RegisterUserViewSet
+
+
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router_user.urls))
+    path('', include(router_user.urls)),
+    path('register/', RegisterUserViewSet.as_view({'post': 'create'}), name='register'),
+    path('', include(router_rol.urls)),
+    path('', include(router_grade.urls)),
+    
 ]

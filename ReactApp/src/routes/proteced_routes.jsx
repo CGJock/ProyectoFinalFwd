@@ -1,8 +1,8 @@
-
+import { Register } from "../components/Admin-components/admin-ui/Register"
 
 export const Protected_routes = () => {
   return (
-    <div>proteced_routes</div>
+    <Register />
   )
 }
 

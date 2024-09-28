@@ -18,5 +18,19 @@ const postRegister = async (apiUrl,datos) => {
            } 
            
       }
-      export default postRegister;
+      export {postRegister}
 //###################################################################################################################################
+
+const getRegister = async(apiUrl,datos) => {
+  try{
+      const response = await fetch(apiUrl);
+      const data = await response.json()
+      return data
+    
+  } catch(error){
+    alert("error en el servidor")
+  }
+  
+}
+
+export { getRegister }

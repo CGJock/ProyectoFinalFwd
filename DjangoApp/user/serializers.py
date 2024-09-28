@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer, Serializer
+from rest_framework.serializers import ModelSerializer
 from user.models import USERS, PSYCHOLOGIST, STUDENT
 
 #Base user form registro
@@ -11,7 +11,7 @@ class UserSerializer(ModelSerializer):
 class StudentSerializer(ModelSerializer):
     class Meta:
         model=STUDENT
-        fields=['id_grade','id_institution','gobernment_subsidy','scholarship']
+        fields='__all__'
     
 #form registro psychologist
 class PsychologistSerializer(ModelSerializer):

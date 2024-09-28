@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from rol.models import ROL
 from grade.models import GRADE
+from instituto.models import INSTITUTIONS
 
 # Create your models here.
 
@@ -25,19 +26,12 @@ class USERS(models.Model):
     def __str__(self) -> str:
         return self.email
     
-class INSTITUTIONS(models.Model):
-    id_institution = models.AutoField(primary_key=True)
-    institution_name  = models.CharField(max_length=150)
-    public_institution = models.BooleanField()
-    institution_address = models.CharField(max_length=200)
-    
-    def __str__(self):
-        return self.id_institution
-    
-class STUDENT(USERS):
-    id_grade  = models.ForeignKey(GRADE, on_delete=models.CASCADE, related_name='students')
+
+class STUDENT(models.Model):
+    id_student = models.ForeignKey(USERS, on_delete=models.CASCADE)
+    id_grade  = models.ForeignKey(GRADE, on_delete=models.CASCADE)
     id_institution  = models.ForeignKey(INSTITUTIONS, on_delete=models.CASCADE)
-    gobernment_subsidy  = models.BooleanField()
+    government_subsidy  = models.BooleanField()
     scholarship = models.BooleanField()
     uuid = models.UUIDField(null=True, unique=True) 
     
@@ -45,7 +39,8 @@ class STUDENT(USERS):
         return self.id_student
     
 
-class PSYCHOLOGIST(USERS):
+class PSYCHOLOGIST(models.Model):
+    id_psychologist = models.ForeignKey(USERS, on_delete=models.CASCADE)
     license_code = models.CharField(max_length=100)
     availability   = models.BooleanField()
     years_experience  = models.IntegerField()

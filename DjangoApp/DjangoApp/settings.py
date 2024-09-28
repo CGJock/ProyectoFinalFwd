@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'user',
     'rol',
     'grade',
+    'instituto',
 ]
 
 MIDDLEWARE = [
@@ -85,6 +86,7 @@ DATABASES = {
         'PASSWORD': 'root',
         'HOST': 'mysql',
         'PORT': '3306',
+        
     }
 }
 

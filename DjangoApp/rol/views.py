@@ -7,3 +7,8 @@ from rest_framework import viewsets
 class RolViewSet(viewsets.ModelViewSet):
     queryset = ROL.objects.all()
     serializer_class = RolSerializer
+    
+class RolViewList(viewsets.ReadOnlyModelViewSet):
+    queryset = ROL.objects.all()
+    serializer_class = RolSerializer
+    

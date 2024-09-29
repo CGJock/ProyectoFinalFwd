@@ -1,6 +1,5 @@
 import { useState } from 'react'
-
-import  from "./pages/login"
+import Rutas from './routes/routes'
 import './App.css'
 
 function App() {
@@ -8,7 +7,10 @@ function App() {
 
   return (
     <>
-    
+     <Rutas />
     </>
+  
+  )
+}
 
 export default App

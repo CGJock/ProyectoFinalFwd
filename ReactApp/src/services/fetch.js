@@ -1,14 +1,14 @@
 
 //servicio con metodo post para registrar usuarios
-const postRegister = async (apiUrl,datos) => {
+export const postRegister = async (apiPost,user_data) => {
     try {
-          const response = await fetch(apiUrl, {
+          const response = await fetch(apiPost, {
            method: 'POST',
            headers: {
              'Content-Type': 'application/json'
              },
-             body: JSON.stringify((datos)//los datos contiene el objeto con los input
-              )
+             body: JSON.stringify(user_data)//los datos contiene el objeto con los input
+              
            });
            const data = await response.json()
           
@@ -18,5 +18,20 @@ const postRegister = async (apiUrl,datos) => {
            } 
            
       }
-      export default postRegister;
+    
 //###################################################################################################################################
+
+export const get_institutes_data = async(apiUrl) => {
+  try{
+      const response = await fetch(apiUrl);
+      const data = await response.json()
+      console.log(data)
+      return data
+    
+  } catch(error){
+    alert("error en el servidor")
+  }
+  
+}
+
+

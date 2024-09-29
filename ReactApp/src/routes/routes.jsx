@@ -1,7 +1,8 @@
-import Register from '../components/Admin-components/admin-ui/Register'
+
 import Protected_routes from './proteced_routes';
 import  {Routes, Route} from "react-router-dom";
 import Home from '../pages/home/home'
+import Register from '../components/Admin-components/admin-ui/Register';
 
 const Rutas = () => {
   return (

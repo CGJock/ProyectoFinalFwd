@@ -1,8 +1,8 @@
-import { Register } from "../components/Admin-components/admin-ui/Register"
+import Administration from "../pages/admin/administration"
 
 export const Protected_routes = () => {
   return (
-    <Register />
+    <Administration/>
   )
 }
 

@@ -1,6 +1,12 @@
-import { useState } from "react";
-import postRegister from "../../../services/fetch";
-import { getRegister } from "../../../services/fetch";
+import { useState, useContext} from "react";
+import {postRegister,  get_institutes_data} from "../../../services/fetch";
+import Selector_grades from "./selector-grades";
+import Selector_rols from "./selector-rol";
+import Selector_institution from "./selector-institution";
+import { Checkbox } from "./checkbox";
+
+
+
 
 
 
@@ -16,18 +22,26 @@ const Register = () => {
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('')
     const [phone_number, setphone_number] = useState('')
-
-
+    
+    
     //variables para estudiantes
-    const [user_grade, setuser_grade] = useState('')
+    
     
     //variables de inputs para funcionalidad
     const [profileExists, setprofileExists] = useState('')
+   
+    
 
-    async function handle_form() {
+  
+      
+    
+    
+    
+    
+    async function handle_form(event) {
       
       event.preventDefault()
-      if(!dni_number || !username || name || first_name || birth_date ||  last_name || email || password || phone_number) {
+      if(!dni_number || !username || !name || !first_name || !birth_date ||  !last_name || !email || !password || !phone_number) {
         alert('Please fill all the fields')
         } 
           let data = await getRegister()
@@ -51,9 +65,9 @@ const Register = () => {
     
 
   return (
-    <div className="register_form">
+    <div className="register_form" >
 
-    <form method='POST' className="RegisterForm">
+    <form style={{display: "flex",flexDirection: 'column'}}  method='POST' className="RegisterForm">
         <label>Cedula</label>
         <input type="text" name="dni_number" value={ dni_number } onChange={(event) => Setdni_number(event.target.value)}/>
 
@@ -82,53 +96,28 @@ const Register = () => {
         <input type="number" name="phone_number" value={ phone_number } onChange={(event) => setphone_number(event.target.value)}/>
 
         <label>Tipo de usuario</label>
-        <select 
-        value={user_type}
-        onChange={(event) => Setuser_type(event.target.value)}
-        name="products"
-        id="products"
-      >
-        <option value={1}>Administrador</option>
-        <option value={2}>Estudiante</option>
-        <option value={3}>Psicologo</option>
-        <option value={4}>Moderador</option>
-        </select>
+        
+        <Selector_rols />
 
+       
+        <input className='registerBtn' type="submit" />
     </form>
 
       <div className="student_inputs">
-        <form method="put" className="student_form">
         
-        <label>Selecciona Grado Academico</label>
-        <select 
-        value={user_grade}
-        onChange={(event) => setuser_grade(event.target.value)}
-        name="grade"
-        id="grade"
-      >
-        <option value={7}>Administrador</option>
-        <option value={8}>Estudiante</option>
-        <option value={9}>Psicologo</option>
-        <option value={10}>Moderador</option>
-        <option value={11}>Moderador</option>
-        <option value={12}>Moderador</option>
-        </select>
+        <h2>Agregue los datos realcionados al estudiante</h2>
+        
+        <form style={{display: 'flex', flexDirection: 'column'}} method="put" className="student_form">
+        
+        <Selector_institution />
+        <Selector_grades />
+        
 
-        <label>Selecciona Grado Academico</label>
-        <select 
-        value={id_institution}
-        onChange={(event) => Setuser_type(event.target.value)}
-        name="institution"
-        id="institution"
-      >
-        <option value={7}>Administrador</option>
-        <option value={8}>Estudiante</option>
-        <option value={9}>Psicologo</option>
-        <option value={10}>Moderador</option>
-        <option value={11}>Moderador</option>
-        <option value={12}>Moderador</option>
-        </select>
-        </form>
+        <Checkbox />
+        
+       
+        
+         </form>
         </div>
       
       </div>

@@ -1,9 +1,9 @@
-from django.shortcuts import render
 from .models import PSYCHOLOGIST
 from rest_framework import viewsets
 from .serializers import PsychologistSerializer
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import viewsets
 
 # Create your views here.
 class RegisterPsychologistViewSet(viewsets.ModelViewSet):
@@ -17,5 +17,11 @@ class RegisterPsychologistViewSet(viewsets.ModelViewSet):
             return Response(psychologist_serializer.data, status=status.HTTP_201_CREATED)
         elif psychologist_serializer.errors:
             return  Response(psychologist_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+class PychologistsList(viewsets.ReadOnlyModelViewSet):
+    queryset = PSYCHOLOGIST.objects.all()
+    serializer_class = PsychologistSerializer
+    
+
 
 

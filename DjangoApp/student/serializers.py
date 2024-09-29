@@ -1,4 +1,4 @@
-from models import STUDENT
+from student.models import STUDENT
 from rest_framework import serializers
 
  #form de registro estudiante   

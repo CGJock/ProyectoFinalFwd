@@ -9,7 +9,9 @@ const Rutas = () => {
         <Route path="/" element={<Register />} />
     </Routes>
 
-    <Protected_routes
+    <Protected_routes>
+      
+    </Protected_routes>
     </>
   )
 }

@@ -6,11 +6,11 @@ import React from 'react'
 
 
 
-const Selector_rols = () => {
+const Selector_rols = ({id_rol,setid_rol}) => {
     
     
     const [roles, setroles] = useState([])
-    const [rol, setrol] = useState('')
+    
     
     
     const apiUrl = 'http://localhost:8000/rol/rols/'
@@ -31,12 +31,12 @@ const Selector_rols = () => {
 
   return (
     
-    <div>
-      <label>Selecciona Grado Academico</label>
+    <>
+      <label>Selecciona el Rol del usuario</label>
 
         <select 
-        value={rol}
-        onChange={(event) => setrol(event.target.value)}
+        value={id_rol}
+        onChange={(event) => setid_rol(event.target.value)}
         name="institution"
         id="institution"
         >
@@ -48,7 +48,7 @@ const Selector_rols = () => {
     </option>
         ))}
     </select>
-    </div>
+    </>
     
   )
 }

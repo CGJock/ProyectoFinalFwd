@@ -1,23 +1,11 @@
-from rest_framework.serializers import ModelSerializer
-from user.models import USERS, PSYCHOLOGIST, STUDENT
-
+from rest_framework import serializers
+from user.models import USERS
 #Base user form registro
-class UserSerializer(ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model=USERS
-        fields=['dni_number','state','id_rol','username','birth_date','first_name','last_name','email','password','phone_number']
- 
- #form de registro estudiante   
-class StudentSerializer(ModelSerializer):
-    class Meta:
-        model=STUDENT
+        birth_date = serializers.DateField(format='%m/%d/%Y', input_formats=['%m/%d/%Y'])
         fields='__all__'
-    
-#form registro psychologist
-class PsychologistSerializer(ModelSerializer):
-    class Meta:
-        model=PSYCHOLOGIST
-        fields=['license_code','availability','years_experience']
 
 
         

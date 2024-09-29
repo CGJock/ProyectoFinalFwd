@@ -3,7 +3,10 @@ import {postRegister,  get_institutes_data} from "../../../services/fetch";
 import Selector_grades from "./selector-grades";
 import Selector_rols from "./selector-rol";
 import Selector_institution from "./selector-institution";
-import { Checkbox } from "./checkbox";
+import { Checkboxgovernment_subsidy } from "./checkbox-government_subsidy";
+import { CheckboxSex } from "./checkbox-sex";
+import { Checkscholarship } from "./checkbox-scholarship";
+import { Checkboxavailability } from "./psychologist-inputs/checkboxavailability";
 
 
 
@@ -11,52 +14,72 @@ import { Checkbox } from "./checkbox";
 
 
 const Register = () => {
+    
     //variables de inputs usuarios generales
-    const [user_type, Setuser_type] = useState('')
     const [dni_number, Setdni_number] = useState('')
+    const [sex, setsex] = useState(0)//para asignar el sexo masculino o femenino
     const [username, Setusername] = useState('')
+    const [id_rol, setid_rol] = useState('')//setea el rol del usuario
     const [name, Setname] = useState('')
     const [first_name, setFirst_name] = useState('')
     const [birth_date, setbirth_date] = useState('')
     const [last_name, setlast_name] = useState('')
     const [email, setemail] = useState('')
-    const [password, setpassword] = useState('')
+    const [password, setpassword] = useState('')//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!pendiente implementar secrets
     const [phone_number, setphone_number] = useState('')
     
     
     //variables para estudiantes
+    const [id_grade, setid_grade] = useState('')
+    const [id_institution, setid_institution] = useState('')
+    const [government_subsidy, setgovernment_subsidy] = useState(0)//valor por default ,sera negativo
+    const [scholarship, setscholarship] = useState(0) //valor para setear si un usuario esta con beca
+    
+
+    //variables Psicologos
+    const [license_code, setlicense_code] = useState('')
+    const [availability, setavailability] = useState(1)
+    const [years_experience, setyears_experience] = useState('')
     
     
     //variables de inputs para funcionalidad
-    const [profileExists, setprofileExists] = useState('')
+    const aditional_data = {} //se meteran los datos extras del usuario de acuerdo al rol
    
     
 
   
-      
-    
-    
-    
-    
-    async function handle_form(event) {
-      
+   async function handle_form(event) {
       event.preventDefault()
-      if(!dni_number || !username || !name || !first_name || !birth_date ||  !last_name || !email || !password || !phone_number) {
-        alert('Please fill all the fields')
-        } 
-          let data = await getRegister()
-          for (const e in data)
-            if (e.dni_number ==  dni_number || e.email ==  email) {
-            setprofileExists(true);
-            }
-            else{
-            setprofileExists(false);
-            }
 
-            if  (profileExists == false) {
-              let data = await postRegister(user_type, dni_number, username, name, first_name,)
-            }else{
+      const apiPost = 'http://localhost:8000/user/register-user/'
+      const apiUrl = 'http://localhost:8000/user/users/'
+      const user_data = {
+        id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,password
+      }
+
+     
+
+      if(!user_data) {
+        alert('Please fill all the fields')
+        return
+        } 
+          let data = await get_institutes_data(apiUrl)
+
+          const profileExists = data.some((e) => e.dni_number == dni_number || e.email == email)
+         
+
+            if(profileExists) {
               alert('User already exists')
+            }else{
+              await postRegister(apiPost,user_data)
+              if (id_rol === 2){
+                aditional_data = {id_institution,id_grade,government_subsidy,scholarship}
+              setTimeout(() => {
+                console.log("Delayed for 1 second.");
+              }, 2000);
+            } else if(id === 3){
+              aditional_data = {license_code, years_experience}
+            }
             }
               
           }
@@ -71,6 +94,8 @@ const Register = () => {
         <label>Cedula</label>
         <input type="text" name="dni_number" value={ dni_number } onChange={(event) => Setdni_number(event.target.value)}/>
 
+        <CheckboxSex setsex={setsex} sex={sex}  />
+
         <label>Username</label>
         <input type="text" name="username" value={ username } onChange={(event) => Setusername(event.target.value)} />
 
@@ -84,7 +109,7 @@ const Register = () => {
         <input type="text" name="last_name" value={ last_name } onChange={(event) => setlast_name(event.target.value)}/>
 
         <label>Fecha de nacimiento</label>
-        <input type="date" value={birth_date} onChange={(event) => setbirth_date(event.target.value)}/>
+        <input type="date"  value={birth_date} onChange={(event) => setbirth_date(event.target.value)}/>
 
         <label>Correo Electronico</label>
         <input type="email" name="email" value={ email } onChange={(event) => setemail(event.target.value)}/>
@@ -97,28 +122,42 @@ const Register = () => {
 
         <label>Tipo de usuario</label>
         
-        <Selector_rols />
+        <Selector_rols name='id_rol' value={id_rol} id_rol={id_rol} setid_rol={setid_rol}/>
 
        
-        <input className='registerBtn' type="submit" />
-    </form>
+        <button className='registerBtn' onClick={handle_form}> registro</button>
+       </form>
 
-      <div className="student_inputs">
+        {/* <div className="student_inputs">
         
-        <h2>Agregue los datos realcionados al estudiante</h2>
+        <h2>Agregue los datos relacionados al estudiante</h2>
         
-        <form style={{display: 'flex', flexDirection: 'column'}} method="put" className="student_form">
+        <form style={{display: 'flex', flexDirection: 'column'}} method="PUT" className="student_form">
         
-        <Selector_institution />
-        <Selector_grades />
-        
+        <Selector_institution setid_institution={setid_institution} id_institution={id_institution}/>
+        <Selector_grades setid_grade={setid_grade} grade={id_grade}/>
+        <Checkboxgovernment_subsidy setgovernment_subsidy={setgovernment_subsidy} government_subsidy={government_subsidy} />
+        <Checkscholarship setscholarship={setscholarship} scholarship={scholarship} />
 
-        <Checkbox />
-        
-       
-        
-         </form>
-        </div>
+        </form>
+
+            <div className="pychologist_inputs">
+
+            <h2>Agregue los datos relacionados al psicologo</h2>
+            <form style={{display: 'flex', flexDirection: 'column'}} method="put" className="psychologist_form">
+
+            <label>Codigo de licencia</label>
+            <input type="number" name="license_code" value={ license_code } onChange={(event) => setlicense_code(event.target.value)}/>
+
+            <label>Annos Experiencia</label>
+            <input type="number" name="years_experience" value={ years_experience } onChange={(event) => setyears_experience(event.target.value)}/>
+            <Checkboxavailability setavailability={setavailability} availability={availability} />
+
+        </form>
+            </div>
+
+
+        </div> */}
       
       </div>
 

@@ -7,10 +7,10 @@ import React from 'react'
 
 
 
-const Selector_institution = () => {
+const Selector_institution = ({id_institution,setid_institution}) => {
 
 const [institutions, setinstitutions] = useState([])
-const [institution, setinstitution] = useState('')
+// const [institution, setinstitution] = useState('')
 
 const apiUrl = 'http://localhost:8000/instituto/institutions/'
 const getInstitutions = async () => {
@@ -34,8 +34,8 @@ useEffect(() => {
       <label>Selecciona Institucion</label>
 
         <select 
-        value={institution}
-        onChange={(event) => setinstitution(event.target.value)}
+        value={id_institution}
+        onChange={(event) => setid_institution(event.target.value)}
         name="institution"
         id="institution"
         >

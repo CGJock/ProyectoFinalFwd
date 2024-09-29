@@ -6,13 +6,11 @@ import React from 'react'
 
 
 
-const Selector_grades = () => {
+const Selector_grades = ({id_grade, setid_grade}) => {
     
     
     const [grades, setgrades] = useState([])
-    const [grade, setgrade] = useState('')
-    
-    
+   
     const apiUrl = 'http://localhost:8000/grade/grades/'
     const getgrades = async () => {
       
@@ -35,8 +33,8 @@ const Selector_grades = () => {
       <label>Selecciona Grado Academico</label>
 
         <select 
-        value={grade}
-        onChange={(event) => setgrade(event.target.value)}
+        value={id_grade}
+        onChange={(event) => setid_grade(event.target.value)}
         name="institution"
         id="institution"
         >

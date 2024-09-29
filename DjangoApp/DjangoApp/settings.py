@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'grade',
     'instituto',
     'student',
-    'psychologist'
+    'psychologist',
 ]
 
 MIDDLEWARE = [

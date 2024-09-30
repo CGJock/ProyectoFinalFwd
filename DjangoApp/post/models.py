@@ -28,10 +28,10 @@ class Rol(models.Model):
 class Post(models.Model):
     User = models.ForeignKey(User, on_delete= models.CASCADE)
     title = models.CharField(max_length=200)
-    description = models.TextField
-    image = models.ImageField
+    description = models.TextField(null=True, blank=True)
+    image_url = models.URLField(max_length=500, null=True, blank=True)
     creation_date = models.DateField(auto_now_add=True)
-    comment_count = models.IntegerField(default=0)
+    comment_count = models.PositiveIntegerField(default=0)
     modification_date = models.DateField(auto_now=True)
 
     def __str__(self):

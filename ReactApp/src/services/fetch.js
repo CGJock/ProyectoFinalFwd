@@ -1,6 +1,6 @@
 
 //servicio con metodo post para registrar usuarios
-export const postRegister = async (apiPost,user_data,newid) => {
+export const postRegister = async (apiPost,user_data) => {
     try {
           const response = await fetch(apiPost, {
            method: 'POST',

@@ -5,5 +5,5 @@ from rest_framework import serializers
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model=STUDENT
-        fields='__all__'
+        fields=['id_student','id_grade','id_institution','government_subsidy','scholarship']
     

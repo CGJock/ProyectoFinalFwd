@@ -13,9 +13,9 @@ class RegisterStudentViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         student_serializer = StudentSerializer(data=request.data)
         if student_serializer.is_valid():
-            student_serializer.save  
+            student_serializer.save()  
             return Response(student_serializer.data, status=status.HTTP_201_CREATED)
-        elif  student_serializer.errors:
+        else:  
             return Response(student_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
       
 

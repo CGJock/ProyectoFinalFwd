@@ -23,8 +23,7 @@ class USERS(models.Model):
     
     
     def __str__(self) -> str:
-        return self.email
-    
+        return str(self.username)
 
 
 

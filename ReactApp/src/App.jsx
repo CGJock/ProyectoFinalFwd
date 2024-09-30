@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import login from "./pages/user/user-ui/login"
-import { Routes, Route } from "react-router-dom"
+
+import Rutas from './routes/routes'
+
 import './App.css'
 
 function App() {
@@ -8,11 +9,11 @@ function App() {
 
   return (
     <>
-    <Routes>
-    <Route path="/" element={<login/>} />
-    </Routes>
-    
+
+     <Rutas />
     </>
+  
+
   )
 }
 

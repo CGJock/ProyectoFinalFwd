@@ -1,8 +1,8 @@
-
+import Administration from "../pages/admin/administration"
 
 export const Protected_routes = () => {
   return (
-    <div>proteced_routes</div>
+    <Administration/>
   )
 }
 

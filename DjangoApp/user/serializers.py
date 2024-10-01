@@ -6,6 +6,7 @@ class UserSerializer(serializers.ModelSerializer):
         model=USERS
         birth_date = serializers.DateField(format='%m/%d/%Y', input_formats=['%m/%d/%Y'])
         fields='__all__'
-
+        password 
+    
 
         

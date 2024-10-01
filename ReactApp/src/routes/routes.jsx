@@ -20,7 +20,7 @@ const Rutas = () => {
             </Protected_routes>
           }/>
     </Routes>
-      
+
     </>
   )
 }

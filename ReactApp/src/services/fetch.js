@@ -49,7 +49,7 @@ export const get_institutes_data = async(apiUrl) => {
       return data
     
   } catch(error){
-    alert("error en el servidor")
+    console.log("error en el servidor")
   }
   
 }

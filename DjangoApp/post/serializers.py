@@ -13,5 +13,5 @@ class PostSerializer(serializers.ModelSerializer):
 
 class PostResponseSerializer(serializers.ModelSerializer):
     class Meta:
-        model = PostResponse
+        model = PostResponse 
         fields = '__all__'

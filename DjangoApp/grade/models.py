@@ -8,6 +8,6 @@ class GRADE(models.Model):
     grade_name = models.CharField(max_length=100)
     
     def __str__(self):
-        return self.grade_name
+        return str(self.id_grade)
     
     

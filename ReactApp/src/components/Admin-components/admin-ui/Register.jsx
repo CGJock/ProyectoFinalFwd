@@ -1,5 +1,5 @@
-import { useState, useContext} from "react";
-import {postRegister,  get_institutes_data} from "../../../services/fetch";
+import { useState} from "react";
+import {postRegister,  get_institutes_data, postTypeuser} from "../../../services/fetch";
 import Selector_grades from "./selector-grades";
 import Selector_rols from "./selector-rol";
 import Selector_institution from "./selector-institution";
@@ -7,6 +7,7 @@ import { Checkboxgovernment_subsidy } from "./checkbox-government_subsidy";
 import { CheckboxSex } from "./checkbox-sex";
 import { Checkscholarship } from "./checkbox-scholarship";
 import { Checkboxavailability } from "./psychologist-inputs/checkboxavailability";
+
 
 
 
@@ -28,7 +29,7 @@ const Register = () => {
     const [password, setpassword] = useState('')//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!pendiente implementar secrets
     const [phone_number, setphone_number] = useState('')
     
-    
+    console.log("que rayos",{id_rol})
     //variables para estudiantes
     const [id_grade, setid_grade] = useState('')
     const [id_institution, setid_institution] = useState('')
@@ -51,8 +52,9 @@ const Register = () => {
    async function handle_form(event) {
       event.preventDefault()
 
-      const apiPost = 'http://localhost:8000/user/register-user/'
-      const apiUrl = 'http://localhost:8000/user/users/'
+      const apiPost = 'http://localhost:8000/api/user/register-user/' //api para el registro de usuarios basicos
+      const apiUrl = 'http://localhost:8000/api/user/users/'          //api para ver todos los usuarios
+      const apiStu = 'http://localhost:8000/api/student/register-student/' //api para registrar un estudiante
       const user_data = {
         id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,password
       }
@@ -71,18 +73,24 @@ const Register = () => {
             if(profileExists) {
               alert('User already exists')
             }else{
-              await postRegister(apiPost,user_data)
-              if (id_rol === 2){
-                aditional_data = {id_institution,id_grade,government_subsidy,scholarship}
-              setTimeout(() => {
-                console.log("Delayed for 1 second.");
-              }, 2000);
-            } else if(id === 3){
-              aditional_data = {license_code, years_experience}
+              const newid = await postRegister(apiPost, user_data);
+              if (id_rol == 2) {
+                const id_student = newid;
+                const extra_data = { id_student, id_institution, id_grade, government_subsidy, scholarship };
+    
+                // Agregar console log para verificar extra_data
+                console.log("extra_data:", extra_data);
+    
+                try {
+                    // Esperar la ejecución de postTypeuser
+                    await postTypeuser(apiStu, extra_data);
+                } catch (error) {
+                    console.error("Error en postTypeuser:", error);
+                }
             }
-            }
-              
-          }
+        }
+    }
+          
 
           
     
@@ -128,23 +136,23 @@ const Register = () => {
         <button className='registerBtn' onClick={handle_form}> registro</button>
        </form>
 
-        {/* <div className="student_inputs">
+         <div className="student_inputs">
         
         <h2>Agregue los datos relacionados al estudiante</h2>
         
-        <form style={{display: 'flex', flexDirection: 'column'}} method="PUT" className="student_form">
+        
         
         <Selector_institution setid_institution={setid_institution} id_institution={id_institution}/>
         <Selector_grades setid_grade={setid_grade} grade={id_grade}/>
         <Checkboxgovernment_subsidy setgovernment_subsidy={setgovernment_subsidy} government_subsidy={government_subsidy} />
         <Checkscholarship setscholarship={setscholarship} scholarship={scholarship} />
 
-        </form>
+       
 
-            <div className="pychologist_inputs">
+            {/* <div className="pychologist_inputs">
 
             <h2>Agregue los datos relacionados al psicologo</h2>
-            <form style={{display: 'flex', flexDirection: 'column'}} method="put" className="psychologist_form">
+            
 
             <label>Codigo de licencia</label>
             <input type="number" name="license_code" value={ license_code } onChange={(event) => setlicense_code(event.target.value)}/>
@@ -153,11 +161,11 @@ const Register = () => {
             <input type="number" name="years_experience" value={ years_experience } onChange={(event) => setyears_experience(event.target.value)}/>
             <Checkboxavailability setavailability={setavailability} availability={availability} />
 
-        </form>
-            </div>
+       
+            </div> */}
 
 
-        </div> */}
+        </div> */
       
       </div>
 

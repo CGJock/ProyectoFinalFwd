@@ -17,17 +17,21 @@ Including another URLconf
 
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from user.views import RegisterUserViewSet,RegisterUserListView
+from user.views import UserListView,RegisterUserViewSet,LoginUserViewSet
+
+
 
 router_user = DefaultRouter()
 
 
-router_user.register(prefix='register-user', viewset=RegisterUserViewSet, basename='register-users')
-# router_user.register(prefix='register-student', viewset=RegisterStudentViewSet, basename='register-student')
-# router_user.register(prefix='register-pyschologist', viewset=RegisterPsychologistViewSet, basename='register-pyschologist')
-router_user.register(prefix='users', viewset=RegisterUserListView, basename='user-list')
+router_user.register(prefix='users', viewset=UserListView, basename='user-list')
+router_user.register(prefix='user-register', viewset=RegisterUserViewSet, basename='user-register')
+router_user.register(prefix='user-login', viewset=LoginUserViewSet, basename='user-login')
+
+
 
 
 urlpatterns = [
-    path('',include(router_user.urls))
+    path('',include(router_user.urls)),
+    
 ]

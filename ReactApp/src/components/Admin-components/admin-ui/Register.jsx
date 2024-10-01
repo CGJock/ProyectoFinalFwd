@@ -52,9 +52,9 @@ const Register = () => {
    async function handle_form(event) {
       event.preventDefault()
 
-      const apiPost = 'http://localhost:8000/user/register-user/' //api para el registro de usuarios basicos
-      const apiUrl = 'http://localhost:8000/user/users/'          //api para ver todos los usuarios
-      const apiStu = 'http://localhost:8000/student/register-student/' //api para registrar un estudiante
+      const apiPost = 'http://localhost:8000/api/user/register-user/' //api para el registro de usuarios basicos
+      const apiUrl = 'http://localhost:8000/api/user/users/'          //api para ver todos los usuarios
+      const apiStu = 'http://localhost:8000/api/student/register-student/' //api para registrar un estudiante
       const user_data = {
         id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,password
       }

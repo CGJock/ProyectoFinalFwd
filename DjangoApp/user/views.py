@@ -2,22 +2,59 @@ from rest_framework import viewsets, status
 from rest_framework.views import APIView  
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
+from django.contrib.auth.hashers import make_password
 from user.models import USERS
+from student.models import STUDENT
+from student.serializers import StudentSerializer
+from grade.models import GRADE
+from instituto.models import  INSTITUTIONS
+
+
 from .serializers import UserSerializer,UserLoginSerializer
 import jwt, datetime
 
 
 
 class RegisterUserViewSet(viewsets.ModelViewSet):
-    queryset = USERS.objects.all()
-    serializer_class = UserSerializer
-    
+   
     def create(self, request):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        user_data = {
+            'id_rol': request.data.get('id_rol'),
+            'dni_number':request.data.get('dni_number'),
+            "sex":request.data.get('sex'),
+            "username":request.data.get('username'),
+            "birth_date":request.data.get('birth_date'),
+            "name":request.data.get('name'),
+            "first_name":request.data.get('first_name'),
+            "last_name":request.data.get('last_name'),
+            "email":request.data.get('email'),
+            "password":make_password(request.data.get('password')),
+            "phone_number":request.data.get('phone_number')
+        }
+        user_serializer = UserSerializer(data=user_data)
+        
+        
+        
+        if user_serializer.is_valid(raise_exception=True):
+           user = user_serializer.save()
+           if request.data.get('id_rol') == 2:
+               student_data = {
+                "government_subsidy":request.data.get("government_subsidy"),
+                "scholarship":request.data.get("scholarship"),  
+               }
+               grade = GRADE.objects.get(id_grade = request.data.get("id_grade"))
+               institution = INSTITUTIONS.objects.get(id_institution =request.data.get("id_institution"))
+               
+               student = STUDENT.objects.create(id_user = user, id_grade = grade, id_institution = institution,**student_data)
+               
+               student_serializer = StudentSerializer(student)
+               return Response({
+                   "user": user_serializer.data,
+                   "student":student_serializer.data
+
+               },status=status.HTTP_201_CREATED)
+           
+        return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 
 class UserListView(viewsets.ReadOnlyModelViewSet):
@@ -81,6 +118,10 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer = UserSerializer(user)
 
         return Response(serializer.data)
+    
+    
+
+
 
 
 

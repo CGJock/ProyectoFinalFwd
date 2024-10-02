@@ -32,6 +32,7 @@ router_user.register(prefix='user', viewset=UserViewSet, basename='user')
 
 
 
+
 urlpatterns = [
     path('',include(router_user.urls)),
     

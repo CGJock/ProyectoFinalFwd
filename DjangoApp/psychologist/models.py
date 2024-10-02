@@ -5,7 +5,8 @@ from user.models import USERS
 
 
 class PSYCHOLOGIST(models.Model):
-    id_psychologist = models.ForeignKey(USERS, on_delete=models.CASCADE)
+    id_user = models.ForeignKey(USERS, on_delete=models.CASCADE)
+    id_psychologist = models.AutoField(primary_key=True)
     license_code = models.CharField(max_length=100)
     availability   = models.BooleanField()
     years_experience  = models.IntegerField()

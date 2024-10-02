@@ -12,7 +12,7 @@ const Selector_institution = ({id_institution,setid_institution}) => {
 const [institutions, setinstitutions] = useState([])
 // const [institution, setinstitution] = useState('')
 
-const apiUrl = 'http://localhost:8000/instituto/institutions/'
+const apiUrl = 'http://localhost:8000/api/instituto/institutions/'
 const getInstitutions = async () => {
   
   try {

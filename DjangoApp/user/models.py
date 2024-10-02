@@ -43,11 +43,9 @@ class USERS(AbstractUser):
     last_login = models.DateTimeField(null=True, blank=True)
     
 
-
-
-    
-    USERNAME_FIELD = 'email'
+     
     REQUIRED_FIELDS = []
+ 
 
 
 

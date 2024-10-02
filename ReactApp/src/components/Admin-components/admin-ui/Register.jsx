@@ -6,7 +6,7 @@ import Selector_institution from "./selector-institution";
 import { Checkboxgovernment_subsidy } from "./checkbox-government_subsidy";
 import { CheckboxSex } from "./checkbox-sex";
 import { Checkscholarship } from "./checkbox-scholarship";
-import { Checkboxavailability } from "./psychologist-inputs/checkboxavailability";
+import { Checkboxavailability } from "./checkboxavailability";
 
 
 
@@ -41,11 +41,10 @@ const Register = () => {
     const [license_code, setlicense_code] = useState('')
     const [availability, setavailability] = useState(1)
     const [years_experience, setyears_experience] = useState('')
+    const [Checkboxavailability,setCheckboxavailability] = useState('')
     
     
-    //variables de inputs para funcionalidad
-    const aditional_data = {} //se meteran los datos extras del usuario de acuerdo al rol
-   
+  
     
 
   
@@ -54,7 +53,7 @@ const Register = () => {
 
       const apiPost = 'http://localhost:8000/api/user/register-user/' //api para el registro de usuarios basicos
       const apiUrl = 'http://localhost:8000/api/user/users/'          //api para ver todos los usuarios
-      const apiStu = 'http://localhost:8000/api/student/register-student/' //api para registrar un estudiante
+      
       const user_data = {
         id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,password
       }
@@ -73,23 +72,11 @@ const Register = () => {
             if(profileExists) {
               alert('User already exists')
             }else{
-              const newid = await postRegister(apiPost, user_data);
-              if (id_rol == 2) {
-                const id_student = newid;
-                const extra_data = { id_student, id_institution, id_grade, government_subsidy, scholarship };
-    
-                // Agregar console log para verificar extra_data
-                console.log("extra_data:", extra_data);
-    
-                try {
-                    // Esperar la ejecución de postTypeuser
-                    await postTypeuser(apiStu, extra_data);
-                } catch (error) {
-                    console.error("Error en postTypeuser:", error);
-                }
-            }
+              await postRegister(apiPost, user_data);
+             console.log("log exitoso")
+               
+          }
         }
-    }
           
 
           

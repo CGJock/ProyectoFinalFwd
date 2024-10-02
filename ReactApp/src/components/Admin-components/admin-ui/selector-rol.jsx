@@ -1,6 +1,6 @@
 import { useState, useEffect,  } from "react";
 import { get_institutes_data } from "../../../services/fetch";
-import React from 'react'
+
 
 
 
@@ -13,7 +13,7 @@ const Selector_rols = ({id_rol,setid_rol}) => {
     
     
     
-    const apiUrl = 'http://localhost:8000/rol/rols/'
+    const apiUrl = 'http://localhost:8000/api/rol/rols/'
     const getroles = async () => {
       
       try {

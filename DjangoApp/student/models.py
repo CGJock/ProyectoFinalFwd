@@ -5,7 +5,8 @@ from instituto.models import INSTITUTIONS
 
 # Create your models here.
 class STUDENT(models.Model):
-    id_student = models.ForeignKey(USERS, on_delete=models.CASCADE)
+    id_user = models.ForeignKey(USERS,on_delete=models.CASCADE)
+    id_student = models.AutoField(primary_key=True)
     id_grade  = models.ForeignKey(GRADE, on_delete=models.CASCADE)
     id_institution  = models.ForeignKey(INSTITUTIONS, on_delete=models.CASCADE)
     government_subsidy  = models.BooleanField()

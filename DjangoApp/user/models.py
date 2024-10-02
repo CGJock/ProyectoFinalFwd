@@ -40,7 +40,11 @@ class USERS(AbstractUser):
     email = models.EmailField(max_length=100,unique=True)
     password = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=8)
-   
+    last_login = models.DateTimeField(null=True, blank=True)
+    
+
+
+
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

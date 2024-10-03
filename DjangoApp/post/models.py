@@ -2,6 +2,7 @@ from django.db import models
 from user.models import USERS
 
 
+
 class Post(models.Model):
     post_id  = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(USERS, on_delete= models.CASCADE)
@@ -11,6 +12,7 @@ class Post(models.Model):
     creation_date = models.DateField(auto_now_add=True)
     comment_count = models.PositiveIntegerField(default=0)
     modification_date = models.DateField(auto_now=True)
+
 
     def __str__(self):
         return self.title
@@ -22,7 +24,10 @@ class PostResponse(models.Model):
     description = models.TextField()
     response_date = models.DateField(auto_now_add=True)
     like_count = models.IntegerField(default=0)
+    USERS = models.ForeignKey(USERS, on_delete=models.CASCADE)
+    like_count = models.IntegerField(default=0)
+    
     def __str__(self):
         return f'Response by {self.user_id} on {self.post.title}'
-    
+
     

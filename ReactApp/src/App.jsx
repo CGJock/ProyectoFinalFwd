@@ -1,4 +1,4 @@
-import { useState } from 'react'
+
 
 import Rutas from './routes/routes'
 
@@ -9,8 +9,7 @@ function App() {
 
   return (
     <>
-
-     <Rutas />
+  <Rutas />
     </>
   
 

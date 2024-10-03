@@ -1,12 +1,14 @@
 from rest_framework import viewsets,  status
-from .models import Post, User, PostResponse
+from .models import Post, PostResponse
 from .serializers import PostSerializer, UserSerializer, PostResponseSerializer
 from rest_framework.response import Response
+from user.models import USERS
+
 import requests
 # queryset = Consulta de todos los usuarios en la base de datos.
 # serializer_class= Clase del serializador utilizado para convertir el modelo User a JSON y viceversa
 class userViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all() 
+    queryset = USERS.objects.all() 
     serializer_class = UserSerializer 
 #esta viewset gestiona las publicaciones en la application
 class PostViewSet(viewsets.ModelViewSet):
@@ -44,7 +46,7 @@ class PostViewSet(viewsets.ModelViewSet):
         files = {
             'image': image_file.read() 
         }
-        response = requests.post('https://api.imgur.com/3/image', headers=headers, files=files)
+        response = requests.post('https://api.imgur.com/3/gallery.json', headers=headers, files=files)
 
         if response.status_code == 200:
             return response.json()['data']['link']

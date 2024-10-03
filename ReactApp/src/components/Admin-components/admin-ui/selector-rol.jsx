@@ -13,6 +13,7 @@ const Selector_rols = ({id_rol,setid_rol}) => {
     
     
     
+    
     const apiUrl = 'http://localhost:8000/api/rol/rols/'
     const getroles = async () => {
       

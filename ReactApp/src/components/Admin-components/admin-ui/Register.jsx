@@ -1,5 +1,5 @@
 import { useState} from "react";
-import {postRegister,  get_institutes_data, postTypeuser} from "../../../services/fetch";
+import {postRegister,  get_institutes_data} from "../../../services/fetch";
 import Selector_grades from "./selector-grades";
 import Selector_rols from "./selector-rol";
 import Selector_institution from "./selector-institution";
@@ -39,9 +39,9 @@ const Register = () => {
 
     //variables Psicologos
     const [license_code, setlicense_code] = useState('')
-    const [availability, setavailability] = useState(1)
+    const [availability, setavailability] = useState(0)
     const [years_experience, setyears_experience] = useState('')
-    const [Checkboxavailability,setCheckboxavailability] = useState('')
+    
     
     
   
@@ -85,7 +85,7 @@ const Register = () => {
   return (
     <div className="register_form" >
 
-    <form style={{display: "flex",flexDirection: 'column'}}  method='POST' className="RegisterForm">
+    {/* <form style={{display: "flex",flexDirection: 'column'}}  method='POST' className="RegisterForm"> */}
         <label>Cedula</label>
         <input type="text" name="dni_number" value={ dni_number } onChange={(event) => Setdni_number(event.target.value)}/>
 
@@ -120,8 +120,8 @@ const Register = () => {
         <Selector_rols name='id_rol' value={id_rol} id_rol={id_rol} setid_rol={setid_rol}/>
 
        
-        <button className='registerBtn' onClick={handle_form}> registro</button>
-       </form>
+        
+       
 
          <div className="student_inputs">
         
@@ -134,9 +134,11 @@ const Register = () => {
         <Checkboxgovernment_subsidy setgovernment_subsidy={setgovernment_subsidy} government_subsidy={government_subsidy} />
         <Checkscholarship setscholarship={setscholarship} scholarship={scholarship} />
 
+        </div>
+
        
 
-            {/* <div className="pychologist_inputs">
+            <div className="pychologist_inputs">
 
             <h2>Agregue los datos relacionados al psicologo</h2>
             
@@ -148,13 +150,12 @@ const Register = () => {
             <input type="number" name="years_experience" value={ years_experience } onChange={(event) => setyears_experience(event.target.value)}/>
             <Checkboxavailability setavailability={setavailability} availability={availability} />
 
-       
-            </div> */}
-
-
-        </div> */
+            </div>
+            <button className='registerBtn' onClick={handle_form}> registro</button>
+            {/* </form> */}
+        </div> 
       
-      </div>
+      
 
   )
 }

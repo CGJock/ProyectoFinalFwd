@@ -1,16 +1,20 @@
 from rest_framework import viewsets,  status
-from .models import Post, PostResponse
-from .serializers import PostSerializer, UserSerializer, PostResponseSerializer
-from rest_framework.response import Response
-from user.models import USERS
 
+from post.models import Post, PostResponse
+from user.models import USERS
+from .serializers import PostSerializer, PostResponseSerializer
+from user.serializers import UserSerializer
+from user.models import USERS
+from rest_framework.response import Response
 import requests
+
 # queryset = Consulta de todos los usuarios en la base de datos.
 # serializer_class= Clase del serializador utilizado para convertir el modelo User a JSON y viceversa
 class userViewSet(viewsets.ModelViewSet):
     queryset = USERS.objects.all() 
     serializer_class = UserSerializer 
 #esta viewset gestiona las publicaciones en la application
+
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer

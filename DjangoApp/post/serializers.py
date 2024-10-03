@@ -1,12 +1,11 @@
 from rest_framework import serializers
-from .models import Post, PostResponse
+from .models import Post,PostResponse
 from user.models import USERS
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = USERS
-        fields = '__all__'
-        
+
+
+
+
 class PostResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostResponse 

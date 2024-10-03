@@ -6,8 +6,11 @@ from django.contrib.auth.hashers import make_password
 from user.models import USERS
 from student.models import STUDENT
 from student.serializers import StudentSerializer
+from psychologist.serializers import  PsychologistSerializer
+
 from grade.models import GRADE
 from instituto.models import  INSTITUTIONS
+from psychologist.models import PSYCHOLOGIST
 
 
 from .serializers import UserSerializer,UserLoginSerializer
@@ -16,7 +19,8 @@ import jwt, datetime
 
 
 class RegisterUserViewSet(viewsets.ModelViewSet):
-   
+    queryset = USERS.objects.all()  # Define el queryset para evitar el error
+    serializer_class = UserSerializer
     def create(self, request):
         user_data = {
             'id_rol': request.data.get('id_rol'),
@@ -33,11 +37,10 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
         }
         user_serializer = UserSerializer(data=user_data)
         
-        
-        
         if user_serializer.is_valid(raise_exception=True):
-           user = user_serializer.save()
-           if request.data.get('id_rol') == 2:
+            user = user_serializer.save()
+            
+            if request.data.get('id_rol') == 2:
                student_data = {
                 "government_subsidy":request.data.get("government_subsidy"),
                 "scholarship":request.data.get("scholarship"),  
@@ -53,6 +56,25 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
                    "student":student_serializer.data
 
                },status=status.HTTP_201_CREATED)
+               
+            elif request.data.get('id_rol') == 3:
+                psychologist_data  = {
+                    'license_code': request.data.get('license_code'),
+                    'availability': request.data.get('availability'),
+                    'years_experience' : request.data.get('years_experience')
+                }
+                
+                
+                
+                psychologist = PSYCHOLOGIST.objects.create(id_user = user,**psychologist_data)
+               
+                psychologist_serializer =  PsychologistSerializer(psychologist)
+                
+                return Response({
+                    "user": user_serializer.data,
+                    "psychologist":psychologist_serializer.data
+                },status=status.HTTP_201_CREATED)
+
            
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         

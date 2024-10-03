@@ -1,11 +1,13 @@
 from rest_framework import viewsets,  status
-from .models import Post, User, PostResponse
-from .serializers import PostSerializer, UserSerializer, PostResponseSerializer
+from post.models import Post, PostResponse
+from user.models import USERS
+from .serializers import PostSerializer, PostResponseSerializer
+from user.serializers import UserSerializer
 from rest_framework.response import Response
 import requests
 
 class userViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = USERS.objects.all()
     serializer_class = UserSerializer
     
 class PostViewSet(viewsets.ModelViewSet):

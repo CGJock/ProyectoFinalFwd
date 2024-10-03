@@ -1,5 +1,6 @@
 import { useEffect,  useState } from 'react'
 import { get_institutes_data } from '../../../services/fetch';
+import 
 
 const UsersContainer = () => {
     const [data, setdata] = useState([])
@@ -13,7 +14,7 @@ const UsersContainer = () => {
         setdata(datos);
       }
   return (
-    <div className="table-container" style={{display:'flex', flexDirection:'column'}}>
+    <div className="table-users-container" style={{display:'flex', flexDirection:'column'}}>
     {/* Cabecera de la tabla */}
     <div className="table-header">
       <div className="table-row">

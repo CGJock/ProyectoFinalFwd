@@ -1,6 +1,6 @@
 import { useEffect,  useState } from 'react'
 import { get_institutes_data } from '../../../services/fetch';
-import 
+
 
 const UsersContainer = () => {
     const [data, setdata] = useState([])

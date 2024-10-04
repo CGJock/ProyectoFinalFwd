@@ -25,7 +25,7 @@ from rol.models import ROL
     
     
 class USERS(AbstractUser):
-    id_user = models.AutoField(primary_key=True)
+    id_user = models.AutoField(primary_key=True,unique=True)
     state = models.BooleanField(default=False)
     id_rol = models.ForeignKey(ROL, on_delete=models.CASCADE)
     dni_number = models.CharField(max_length=9, unique=True)

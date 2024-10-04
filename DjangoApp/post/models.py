@@ -5,7 +5,7 @@ from user.models import USERS
 
 class Post(models.Model):
     post_id  = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(USERS, on_delete= models.CASCADE)
+    id_user = models.ForeignKey(USERS, on_delete= models.CASCADE, )
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     image_url = models.URLField(max_length=500, null=True, blank=True)
@@ -20,11 +20,11 @@ class Post(models.Model):
 class PostResponse(models.Model):
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='responses')
     response_id =  models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(USERS, on_delete=models.CASCADE)
+    id_user = models.ForeignKey(USERS, on_delete=models.CASCADE,related_name='responses_as_id_user')
     description = models.TextField()
     response_date = models.DateField(auto_now_add=True)
     like_count = models.IntegerField(default=0)
-    USERS = models.ForeignKey(USERS, on_delete=models.CASCADE)
+    USERS = models.ForeignKey(USERS, on_delete=models.CASCADE, related_name ='responses_as_users')
     like_count = models.IntegerField(default=0)
     
     def __str__(self):

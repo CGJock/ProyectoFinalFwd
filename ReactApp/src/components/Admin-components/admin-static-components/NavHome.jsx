@@ -17,7 +17,7 @@ const NavHome = () => {
       <>
         <nav className="navHome">
             <div className="navHome-container">
-
+             {/* menu hamburgesa para responsividad */}
             <button className="nav-toggle" onClick={toggleMenu}>
           ☰
         </button>
@@ -29,6 +29,7 @@ const NavHome = () => {
             </ul>
             </div>
         </nav>
+        {/* este modal va a contener el formulario del contacto */}
 
         <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>

@@ -6,7 +6,7 @@ import PostList from '../../components/Admin-components/post/PostList'
 import PostForm from '../../components/Admin-components/post/PostForm'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import InteractiveMap from '../../components/Admin-components/admin-static-components/InteractiveMap'
-
+import VideoCarousel from '../../components/Admin-components/admin-static-components/VideoCarousel'
 export const Home = () => {
   return (
     <>
@@ -14,8 +14,15 @@ export const Home = () => {
     <div>
     <NavHome/>
     </div>
+      {/* Carrusel de videos */}
+      <div>
+        <VideoCarousel />
+      </div>
+   
     <div>  <PostList/>
     <PostForm/>
+  
+   
     <InteractiveMap/>
     </div>
    

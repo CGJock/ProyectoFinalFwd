@@ -28,6 +28,7 @@ const InteractiveMap = () => {
   };
 
   return (
+    // mediante la longitud del la ubicacion qu se desea se encuenta la ubicacion exacta
     <MapContainer center={[9.9758, -84.8351]} zoom={13} style={{ height: "500px", width: "100%",  minHeight: "500px" }}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -36,6 +37,7 @@ const InteractiveMap = () => {
       <MapEvents />
       {markers.map((position, idx) => (
         <Marker key={idx} position={position}>
+            {/* popup es el mensaje que se muestra al pasar el cursor por encima de el icono  */}
           <Popup>
             Has hecho clic aquí!<br />{`Lat: ${position.lat}, Lng: ${position.lng}`}
           </Popup>

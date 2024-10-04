@@ -7,13 +7,14 @@ from user.models import USERS
 from student.models import STUDENT
 from student.serializers import StudentSerializer
 from psychologist.serializers import  PsychologistSerializer
+import json
 
 from grade.models import GRADE
 from instituto.models import  INSTITUTIONS
 from psychologist.models import PSYCHOLOGIST
 
 
-from .serializers import UserSerializer,UserLoginSerializer
+from .serializers import UserSerializer,UserLoginSerializer,DeleteUserSerializer
 import jwt, datetime
 
 
@@ -78,18 +79,20 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
            
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-
+#se muestran todos los ususarios
 class UserListView(viewsets.ReadOnlyModelViewSet):
     queryset = USERS.objects.all()
     serializer_class = UserSerializer
-    
+ 
+ 
+ #clase para setear la cooki con el hash   
 class LoginUserViewSet(viewsets.ViewSet):
     queryset = USERS.objects.all()
     serializer_class = UserLoginSerializer
     def create(self, request):
-        email = request.data.get('email')
-        password = request.data.get('password')
-        
+        email = request.data['email']
+        password = request.data['password']
+        print(password,email)
         user = USERS.objects.filter(email=email).first()
         
         if user is None:
@@ -118,14 +121,13 @@ class LoginUserViewSet(viewsets.ViewSet):
         return response
 
       
-        # return Response({'jwt': token}, status=status.HTTP_200_OK)
             
-            
+           
 class UserViewSet(viewsets.ModelViewSet):
    queryset =  USERS.objects.all()
    serializer_class = UserLoginSerializer
    
-   def create(self,request):
+   def get(self,request):
         token = request.COOKIES.get('jwt')
        
         if not token:
@@ -140,6 +142,43 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer = UserSerializer(user)
 
         return Response(serializer.data)
+    
+
+class DeleteUser(viewsets.ModelViewSet):
+    queryset = USERS.objects.all()
+    serializer_class = DeleteUserSerializer
+    
+    def delete(self,request,pk):
+        user_cookie = request.COOKIES.get('jwt')
+        
+        if not user_cookie:
+            return Response({"message": "accion no permitida"},status=status.HTTP_400_BAD_REQUEST)
+        try:
+            cookie_dict = json.loads(user_cookie)
+        except json.JSONDecodeError:
+            return Response({"detail":"invalid cookie format"},status=status.HTTP_400_BAD_REQUEST)
+        
+        # user_id_cookie = cookie_dict.get['id_user']
+        user_id_cookie = cookie_dict.get('id_rol')
+        
+        try:
+        
+            instance = USERS.objects.get(pk=pk)
+            
+        # Compara el id de la cookie con el id del usuario del modelo
+            if int(user_id_cookie) != 2:
+                return Response({'detail': 'Unauthorized to delete this resource'}, status=status.HTTP_403_FORBIDDEN)
+        except USERS.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        instance.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        
+
+        
+
+    
     
     
 

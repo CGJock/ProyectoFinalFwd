@@ -16,21 +16,27 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
         
-    def create(self, validated_data):
-        password = validated_data.pop('password', None)
-        instance = self.Meta.model(**validated_data)
+    # def create(self, validated_data):
+    #     password = validated_data.pop('password', None)
+    #     instance = self.Meta.model(**validated_data)
         
-        if password is not None:
-            #.set_password es un metodo de django es el que nos permite hacer el hash
-            instance.set_password(password)
-        instance.save()
-        return instance
+    #     # if password is not None:
+    #         #.set_password es un metodo de django es el que nos permite hacer el hash
+    #         # instance.set_password(password)
+    #     instance.save()
+    #     return instance
         
         
 class UserLoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = USERS
-        fields = ['username', 'email','password']
+        fields = [ 'email','password']
+        
+class DeleteUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =  USERS
+        fields = ['id_user','id_rol']
+
           
 
         

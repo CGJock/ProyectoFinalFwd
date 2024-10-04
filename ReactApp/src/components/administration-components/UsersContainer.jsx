@@ -1,6 +1,10 @@
 import { useEffect,  useState } from 'react'
+<<<<<<< HEAD:ReactApp/src/components/Admin-components/admin-static-components/UsersContainer.jsx
+import { get_institutes_data } from '../../../services/fetch';
+=======
 import { get_institutes_data } from '../../services/fetch';
 import '../../../styles/table_users.css'
+>>>>>>> 6d935eaf2473f2ca095b21ac86f43d2ddbb1b9ab:ReactApp/src/components/administration-components/UsersContainer.jsx
 
 
 const UsersContainer = () => {

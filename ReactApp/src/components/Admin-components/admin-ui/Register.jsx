@@ -10,10 +10,6 @@ import { Checkboxavailability } from "./checkboxavailability";
 
 
 
-
-
-
-
 const Register = () => {
     
     //variables de inputs usuarios generales
@@ -45,10 +41,7 @@ const Register = () => {
     
     
   
-    
-
-  
-   async function handle_form(event) {
+    async function handle_form(event) {
       event.preventDefault()
 
       const apiPost = 'http://localhost:8000/api/user/register-user/' //api para el registro de usuarios basicos

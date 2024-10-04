@@ -4,7 +4,7 @@ import Selector_grades from "./selector-grades";
 import Selector_rols from "./selector-rol";
 import Selector_institution from "./selector-institution";
 import { Checkboxgovernment_subsidy } from "./checkbox-government_subsidy";
-import { CheckboxSex } from "./checkbox-sex";
+import { Selector_gender } from "./checkbox-sex";
 import { Checkscholarship } from "./checkbox-scholarship";
 import { Checkboxavailability } from "./checkboxavailability";
 
@@ -25,7 +25,6 @@ const Register = () => {
     const [password, setpassword] = useState('')//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!pendiente implementar secrets
     const [phone_number, setphone_number] = useState('')
     
-    console.log("que rayos",{id_rol})
     //variables para estudiantes
     const [id_grade, setid_grade] = useState('')
     const [id_institution, setid_institution] = useState('')
@@ -44,19 +43,25 @@ const Register = () => {
     async function handle_form(event) {
       event.preventDefault()
 
-      const apiPost = 'http://localhost:8000/api/user/register-user/' //api para el registro de usuarios basicos
+      const apiPost = 'http://localhost:8000/api/user/user-register/' //api para el registro de usuarios basicos
       const apiUrl = 'http://localhost:8000/api/user/users/'          //api para ver todos los usuarios
       
-      const user_data = {
-        id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,password
-      }
+      let user_data = {}
 
-     
-
-      if(!user_data) {
+        if(!user_data) {
         alert('Please fill all the fields')
         return
         } 
+        
+        if (id_rol == 2){
+          user_data = {
+            id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,password,id_institution,id_grade,government_subsidy,scholarship
+          }
+        }else if(id_rol == 3){
+          user_data = {
+            id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,password,license_code,availability,years_experience
+          }
+        }
           let data = await get_institutes_data(apiUrl)
 
           const profileExists = data.some((e) => e.dni_number == dni_number || e.email == email)
@@ -65,7 +70,9 @@ const Register = () => {
             if(profileExists) {
               alert('User already exists')
             }else{
+              console.log(user_data)
               await postRegister(apiPost, user_data);
+              
              console.log("log exitoso")
                
           }
@@ -82,7 +89,7 @@ const Register = () => {
         <label>Cedula</label>
         <input type="text" name="dni_number" value={ dni_number } onChange={(event) => Setdni_number(event.target.value)}/>
 
-        <CheckboxSex setsex={setsex} sex={sex}  />
+        <Selector_gender  setsex={setsex} sex={sex}  />
 
         <label>Username</label>
         <input type="text" name="username" value={ username } onChange={(event) => Setusername(event.target.value)} />
@@ -115,12 +122,10 @@ const Register = () => {
        
         
        
-
-         <div className="student_inputs">
+        {id_rol == 2 && (
+        <div className="student_inputs">
         
         <h2>Agregue los datos relacionados al estudiante</h2>
-        
-        
         
         <Selector_institution setid_institution={setid_institution} id_institution={id_institution}/>
         <Selector_grades setid_grade={setid_grade} grade={id_grade}/>
@@ -128,7 +133,9 @@ const Register = () => {
         <Checkscholarship setscholarship={setscholarship} scholarship={scholarship} />
 
         </div>
+         )}
 
+         {id_rol == 3 && (
        
 
             <div className="pychologist_inputs">
@@ -144,8 +151,9 @@ const Register = () => {
             <Checkboxavailability setavailability={setavailability} availability={availability} />
 
             </div>
+             )}
             <button className='registerBtn' onClick={handle_form}> registro</button>
-            {/* </form> */}
+            
         </div> 
       
       

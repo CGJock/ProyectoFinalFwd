@@ -5,10 +5,9 @@ import Home from '../pages/home/home'
 import Administration from '../pages/admin/administration';
 import Register from '../components/Admin-components/admin-ui/Register';
 import FAQ from '../components/Admin-components/admin-static-components/FAQ';
-// import CreatePost from '../components/Admin-components/post/CreatePost';
 import PostList from '../components/Admin-components/post/PostList';
-
-
+import CreatePost from '../components/Admin-components/post/CreatePost';
+import Login from '../pages/login/login';
 import PostForm from '../components/Admin-components/post/PostForm';
 
 
@@ -20,9 +19,11 @@ const Rutas = () => {
         <Route path="/FAQ" element={<FAQ />} />
         <Route path="/create-post" component={PostForm} />
         <Route path="/post-list" component={PostList} />
+        <Route path="/CreatePost" element={<CreatePost />} />
+        <Route path='/login' element={<Login />} />
+
         
-    
-    <Route path="/Administration" element={<Administration/>} />
+<Route path="/Administration" element={<Administration/>} />
         <Route
           path="/Register"
           element={

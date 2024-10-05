@@ -1,4 +1,6 @@
 import '../../../styles/footer.css'
+// import instagram from '../../../logos-img';
+
 const Footer = () => {
     return (
       <footer className="footer">
@@ -10,10 +12,10 @@ const Footer = () => {
             <a href="/">Home</a>
           </div>
           <div className="footer-social">
-          <a href="https://www.facebook.com/tu_pagina_de_facebook" target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a href="https://www.facebook.com/tu_pagina_de_facebook" target="_blank" rel="noopener noreferrer" >Facebook</a>
           <a href="https://twitter.com/tu_cuenta_de_twitter" target="_blank" rel="noopener noreferrer">Twitter</a>
           <a href="https://www.instagram.com/tu_cuenta_de_instagram" target="_blank" rel="noopener noreferrer">Instagram</a>
-
+          {/* <img src={instagram} alt="logo" /> */}
           </div>
         </div>
         <div className="footer-bottom">

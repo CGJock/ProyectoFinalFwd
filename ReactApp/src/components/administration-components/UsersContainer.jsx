@@ -1,6 +1,8 @@
 import { useEffect,  useState } from 'react'
+
 import { get_institutes_data } from '../../services/fetch';
 import '../../styles/table_users.css'
+
 
 
 const UsersContainer = () => {

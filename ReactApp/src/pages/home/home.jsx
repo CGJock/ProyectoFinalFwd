@@ -7,6 +7,7 @@ import PostForm from '../../components/Admin-components/post/PostForm'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import InteractiveMap from '../../components/Admin-components/admin-static-components/InteractiveMap'
 import VideoCarousel from '../../components/Admin-components/admin-static-components/VideoCarousel'
+
 export const Home = () => {
   return (
     <>
@@ -19,9 +20,11 @@ export const Home = () => {
         <VideoCarousel />
       </div>
    
-    <div>  <PostList/>
+    <div>
+    <PostList/>  
     <PostForm/>
-  
+    
+    
    
     <InteractiveMap/>
     </div>

@@ -1,6 +1,6 @@
 
 import { useState, useEffect} from "react";
-import { get_institutes_data } from "../../../services/fetch";
+import { get_institutes_data } from "../../../../services/fetch";
 
 
 

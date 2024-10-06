@@ -7,6 +7,7 @@ from user.models import USERS
 from student.models import STUDENT
 from student.serializers import StudentSerializer
 from psychologist.serializers import  PsychologistSerializer
+import random,string
 
 
 from grade.models import GRADE
@@ -22,7 +23,13 @@ import jwt, datetime
 class RegisterUserViewSet(viewsets.ModelViewSet):
     queryset = USERS.objects.all()  # Define el queryset para evitar el error
     serializer_class = UserSerializer
+    
+    
+            
     def create(self, request):
+       
+        generated_password = self.generate_password()
+       
         user_data = {
             'id_rol': request.data.get('id_rol'),
             'dni_number':request.data.get('dni_number'),
@@ -33,13 +40,15 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
             "first_name":request.data.get('first_name'),
             "last_name":request.data.get('last_name'),
             "email":request.data.get('email'),
-            "password":make_password(request.data.get('password')),
+            # "password":generated_password,
             "phone_number":request.data.get('phone_number')
         }
         user_serializer = UserSerializer(data=user_data)
         
         if user_serializer.is_valid(raise_exception=True):
             user = user_serializer.save()
+            user.password = make_password(generated_password)  # Hashear y asignar la contraseña
+            user.save()
             
             if request.data.get('id_rol') == 2:
                student_data = {
@@ -78,6 +87,11 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
 
            
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def generate_password(self):
+            length = random.randint(8, 32)
+            characters = string.ascii_letters + string.digits + string.punctuation
+            return ''.join(random.choice(characters) for _ in range(length))
+    
         
 #se muestran todos los ususarios
 class UserListView(viewsets.ReadOnlyModelViewSet):
@@ -177,7 +191,7 @@ class DeleteUser(viewsets.ModelViewSet):
         except jwt.ExpiredSignatureError:
             return Response({"detail": "El token ha expirado"}, status=status.HTTP_401_UNAUTHORIZED)
         except jwt.InvalidTokenError:
-            return Response({"detail": "Formato de token inválido"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "Formato de token invalido"}, status=status.HTTP_400_BAD_REQUEST)
         
         # Obtén el id_rol de la cookie decodificada
         id_rol = decoded_cookie.get('id_rol')

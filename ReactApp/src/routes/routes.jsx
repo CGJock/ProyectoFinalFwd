@@ -9,6 +9,8 @@ import PostList from '../components/Admin-components/post/PostList';
 import CreatePost from '../components/Admin-components/post/CreatePost';
 import Login from '../pages/login/login';
 import PostForm from '../components/Admin-components/post/PostForm';
+import UsersContainer from '../components/administration-components/UsersContainer';
+import { Profile } from '../pages/profile/Profile';
 
 
 const Rutas = () => {
@@ -17,20 +19,24 @@ const Rutas = () => {
     <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/FAQ" element={<FAQ />} />
-        <Route path="/create-post" component={PostForm} />
-        <Route path="/post-list" component={PostList} />
-        <Route path="/CreatePost" element={<CreatePost />} />
+        <Route path="/Profile/create-post" element={<Profile />} />
+        <Route path="/post-list" component={<PostList />} />
+        
         <Route path='/login' element={<Login />} />
 
         
-<Route path="/Administration" element={<Administration/>} />
         <Route
-          path="/Register"
+          path="/Administration"
           element={
             <Protected_routes>
-              <Register />
+              <Administration />
             </Protected_routes>
-          }/>
+          }
+        >
+          {/* Aquí se definen las subrutas dentro de la ruta de administración */}
+          <Route path="register" element={<Register />} />
+          <Route path="students" element={<UsersContainer />} />
+        </Route>
     </Routes>
 
     </>

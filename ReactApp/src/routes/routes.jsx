@@ -7,8 +7,8 @@ import Register from '../components/Admin-components/admin-ui/Register';
 import FAQ from '../components/Admin-components/admin-static-components/FAQ';
 // import CreatePost from '../components/Admin-components/post/CreatePost';
 import PostList from '../components/Admin-components/post/PostList';
-
-
+import Library from '../components/Admin-components/admin-static-components/Library';
+import AboutMe from '../components/Admin-components/admin-static-components/AboutMe';
 import PostForm from '../components/Admin-components/post/PostForm';
 
 
@@ -17,9 +17,15 @@ const Rutas = () => {
     <>
     <Routes>
         <Route path="/" element={<Home/>} />
+        <Route path="/library" element={<Library />} />
+
         <Route path="/FAQ" element={<FAQ />} />
-        <Route path="/create-post" component={PostForm} />
-        <Route path="/post-list" component={PostList} />
+
+
+        <Route path="/create-post" element={PostForm} />
+        <Route path="/post-list" element={PostList} />
+        <Route path="/AboutMe" element={<AboutMe/>} />
+        
         
     
     <Route path="/Administration" element={<Administration/>} />

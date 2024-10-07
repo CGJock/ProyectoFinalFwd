@@ -5,7 +5,7 @@ const PostList = () => {
 
   useEffect(() => {
     // fetch para obtener las publicaciones
-    fetch('http://localhost:8000/api/post/')
+    fetch('http://localhost:8000/api/posts/')
       .then(response => response.json())
       .then(data => {
         setPosts(data);

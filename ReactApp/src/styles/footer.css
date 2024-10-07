@@ -20,6 +20,7 @@ html, body {
     color: #dbd2f1;
     padding: 50px 0;
     font-size: 14px;
+   
     
   }
   
@@ -27,9 +28,11 @@ html, body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    margin: auto;
+    max-width: 1200px;
+    flex-wrap: wrap;
     
   }
   
@@ -77,6 +80,60 @@ html, body {
   .footer-bottom p {
     margin: 0;
     font-size: 12px;
-    color: #fff5f5;
+    color: #dfdede;
   }
- 
+  .footer-contact-me {
+    background-color: #b7bdf0; 
+    color: #fff; 
+    padding: 20px;
+    border-radius: 8px;   box-shadow: 0 4px 8px rgba(209, 209, 209, 0.2); }
+  
+  .footer-contact-me h3 {
+    color: #000000;
+    font-size: 24px;
+    margin-bottom: 15px;
+    margin-right: 900px;
+  }
+  
+  .footer-contact-me p {
+    color: #000000;
+    font-size: 16px;
+    margin: 5px 0;
+    margin-right: 900px;
+  }
+  
+  .footer-contact-me p:hover {
+    color: #193c4d;
+    transition: color 0.3s ease; /* Suaviza la transición de color */
+  }
+  
+  .footer-contact-me a {
+    color: #00aaff; 
+    text-decoration: none;
+  }
+  
+  .footer-contact-me a:hover {
+    color: #fff; 
+  }
+  
+  .footer-signup-btn {
+    padding: 10px 20px;
+    background-color: #7556db;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .footer-signup-btn:hover {
+    background-color: #7556db;
+  }
+
+  .footer-bottom {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #1b1b1b;
+    margin-top: 20px;
+  }
+  .footer-social a:hover {
+    color: #7556db;
+  }

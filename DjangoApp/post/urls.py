@@ -5,10 +5,11 @@ from .router_post import router
 
 
 
+
 router = DefaultRouter()
 router.register(r'posts', PostViewSet)
 
 urlpatterns = [
-    path('api/post/', include(router.urls))
+    path('api/posts/', include(router.urls))
    
 ]

@@ -19,7 +19,8 @@ export const Home = () => {
         <VideoCarousel />
       </div>
    
-    <div>  <PostList/>
+    <div> 
+    <PostList/>
     <PostForm/>
   
    

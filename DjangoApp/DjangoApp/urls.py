@@ -28,6 +28,6 @@ urlpatterns = [
     path('api/grade/', include('grade.urls')),
     path('api/instituto/',include('instituto.urls')),
     path('api/rol/', include('rol.urls')),
-    path('api/post/', include('post.urls'))
+    path('api/posts/', include('post.urls'))
     
 ]

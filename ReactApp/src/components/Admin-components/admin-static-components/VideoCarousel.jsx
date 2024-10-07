@@ -14,7 +14,7 @@ const VideoCarousel = () => {
       {videoUrls.map((url, index) => (
         <Carousel.Item key={index}>
           {/* este div es el que engloba al video */}
-          <div className="video-container" style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden", maxWidth: "100%", background: "#000" }}>
+          <div className="video-container" style={{ position: "relative", paddingBottom: "56.25%", height: 10, overflow: "hidden", maxWidth: "100%", background: "#000" }}>
             {/* lo que esta dentro de la etiqueta video son los parametros que le video como tal van a cumplir */}
             <video
               src={url}

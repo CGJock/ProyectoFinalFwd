@@ -24,7 +24,7 @@ const Register = () => {
     const [birth_date, setbirth_date] = useState('')
     const [last_name, setlast_name] = useState('')
     const [email, setemail] = useState('')
-    const [password, setpassword] = useState('')//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!pendiente implementar secrets
+    // const [password, setpassword] = useState('')//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!pendiente implementar secrets
     const [phone_number, setphone_number] = useState('')
     
     //variables para estudiantes
@@ -57,11 +57,11 @@ const Register = () => {
         
         if (id_rol == 2){
           user_data = {
-            id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,password,id_institution,id_grade,government_subsidy,scholarship
+            id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,id_institution,id_grade,government_subsidy,scholarship
           }
         }else if(id_rol == 3){
           user_data = {
-            id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,password,license_code,availability,years_experience
+            id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,license_code,availability,years_experience
           }
         }
           let data = await get_institutes_data(apiUrl)
@@ -74,8 +74,7 @@ const Register = () => {
             }else{
               console.log(user_data)
               await postRegister(apiPost, user_data);
-              
-             console.log("log exitoso")
+              console.log("log exitoso")
                
           }
         }

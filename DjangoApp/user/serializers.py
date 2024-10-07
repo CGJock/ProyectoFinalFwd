@@ -1,7 +1,6 @@
 
 from rest_framework import serializers
 from user.models import USERS
-from django.contrib.auth.hashers import make_password
 
 
 #Base user form registro
@@ -39,7 +38,7 @@ class DeleteUserSerializer(serializers.ModelSerializer):
 class ResetPasswordSerializer(serializers.ModelSerializer):
     class Meta:
         model = USERS
-        fields = ['email','password']
+        fields = ['email']
 
           
 

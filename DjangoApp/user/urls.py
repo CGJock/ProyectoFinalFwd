@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from user.views import UserListView,RegisterUserViewSet,LoginUserViewSet,UserViewSet,DeleteUser,LogOutUserView
+from user.views import UserListView,RegisterUserViewSet,LoginUserViewSet,UserViewSet,DeleteUser,LogOutUserView,ResetPasswordSerializer
 
 
 
@@ -30,6 +30,7 @@ router_user.register(prefix='user-login', viewset=LoginUserViewSet, basename='us
 router_user.register(prefix='user', viewset=UserViewSet, basename='user')
 router_user.register(prefix='delete-user', viewset=DeleteUser,basename='delete-user')
 router_user.register(prefix='logout-user', viewset=LogOutUserView, basename='logout-user')
+router_user.register(prefix='reset-password',viewset=ResetPasswordSerializer, basename="update-password")
 
 
 

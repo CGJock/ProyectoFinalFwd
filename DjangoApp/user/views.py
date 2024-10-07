@@ -7,6 +7,10 @@ from user.models import USERS
 from student.models import STUDENT
 from student.serializers import StudentSerializer
 from psychologist.serializers import  PsychologistSerializer
+from .serializers import ResetPasswordSerializer
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.http import urlsafe_base64_encode
 import random,string
 
 
@@ -24,8 +28,12 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
     queryset = USERS.objects.all()  # Define el queryset para evitar el error
     serializer_class = UserSerializer
     
+    def generate_password(self):
+            length = random.randint(8, 32)
+            characters = string.ascii_letters + string.digits + string.punctuation
+            return ''.join(random.choice(characters) for _ in range(length))
     
-            
+    
     def create(self, request):
        
         generated_password = self.generate_password()
@@ -83,14 +91,26 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
                 return Response({
                     "user": user_serializer.data,
                     "psychologist":psychologist_serializer.data
+    
                 },status=status.HTTP_201_CREATED)
 
+                
+            #se encripta el link 
+            encoded_pk = urlsafe_base64_encode(force_bytes(user.pk))
+            token = PasswordResetTokenGenerator().make_token(user)
+            url = f"http://localhost:8000/reset-password/{encoded_pk}/{token}/"
+            
+            return Response({
+                "email": user.email,
+                "username": user.username,
+                "password": generated_password,
+                "reset_url": url
+                })
+                
+              
            
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    def generate_password(self):
-            length = random.randint(8, 32)
-            characters = string.ascii_letters + string.digits + string.punctuation
-            return ''.join(random.choice(characters) for _ in range(length))
+    
     
         
 #se muestran todos los ususarios
@@ -213,9 +233,16 @@ class DeleteUser(viewsets.ModelViewSet):
 
     
 
-
-        
-
+class ResetUserView(viewsets.ModelViewSet):
+    def reset_password(self, request, encoded_pk, token):
+        serializer = ResetPasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        new_password = serializer.validated_data['new_password']
+    
+        def post(self,request):
+            email = serializer.data['email']
+            user = USERS.objects.filter(email=email).first()
+       
     
     
     

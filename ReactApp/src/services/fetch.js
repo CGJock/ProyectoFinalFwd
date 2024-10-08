@@ -1,6 +1,7 @@
 
 //servicio con metodo post para registrar usuarios
 import emailjs from "emailjs-com"; // Ensure you have EmailJS installed
+import jwtDecode from 'jwt-decode';
 
 export const postRegister = async (apiPost, user_data) => {
     try {
@@ -23,8 +24,20 @@ export const postRegister = async (apiPost, user_data) => {
         const data = await response.json();
         alert("User registered successfully");
 
+        // Verifica si el token está presente en los datos de la respuesta
+        if (data.token) {
+            // Decodifica el JWT para acceder al payload
+            const decoded = jwtDecode(data.token);
+            console.log("Payload del JWT decodificado:", decoded);
+            
+            // Guarda el ID de usuario en el contexto
+            return { token: data.token, userId: decoded.id_user }; // Devuelve el token y el ID de usuario
+        }
+        
+
         // Send the email using the response data
         sendEmail(data.email, data.username, data.password, data.reset_url);
+        
 
         return data; // Return the data for further use if needed
     } catch (error) {

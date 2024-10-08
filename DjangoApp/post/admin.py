@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Post, PostResponse
+from .models import Post, PostReplies
 
 
 # Register your models here.
 admin.site.register(Post)
-admin.site.register(PostResponse)
+admin.site.register(PostReplies)

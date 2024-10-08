@@ -29,6 +29,6 @@ urlpatterns = [
     path('api/instituto/',include('instituto.urls')),
     path('api/rol/', include('rol.urls')),
     path('api/post/', include('post.urls')),
-    path('api/library/', include('library.urls'))
+    path('api/library/', include('library.urls')),
     
 ]

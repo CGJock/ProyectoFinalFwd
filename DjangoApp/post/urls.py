@@ -4,8 +4,6 @@ from .views import PostViewSet
 from .router_post import router
 
 
-
-
 router = DefaultRouter()
 router.register(r'posts', PostViewSet)
 

@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { postRegister } from "../../services/fetch"
 import {  useNavigate } from "react-router-dom";
+import { useAuth } from '../../context/AuthContext';
+
 
  
 
@@ -11,6 +13,7 @@ export const LoginComponent = () => {
     const [password, setpassword] = useState('')
     const navigate = useNavigate()
     const [errorMessage, seterrorMessage] = useState('')
+    const { setUserId } = useAuth();
 
     async function handleLogin(){
     const apiPost = "http://localhost:8000/api/user/user-login/"

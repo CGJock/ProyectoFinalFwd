@@ -7,21 +7,24 @@ import Register from '../components/Admin-components/admin-ui/Register';
 import FAQ from '../components/Admin-components/admin-static-components/FAQ';
 import PostList from '../components/Admin-components/post/PostList';
 import CreatePost from '../components/Admin-components/post/CreatePost';
-import Login from '../pages/login/login';
+import Login from '../pages/login/login'
 import PostForm from '../components/Admin-components/post/PostForm';
 import UsersContainer from '../components/administration-components/UsersContainer';
 import { Profile } from '../pages/profile/Profile';
+import { AuthProvider, useAuth } from '../context/AuthContext';
+
 
 
 const Rutas = () => {
+  const { userId } = useAuth(); 
   return (
     <>
+    
     <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/FAQ" element={<FAQ />} />
         <Route path="/Profile/create-post" element={<Profile />} />
         <Route path="/post-list" component={<PostList />} />
-        
         <Route path='/login' element={<Login />} />
 
         
@@ -38,6 +41,7 @@ const Rutas = () => {
           <Route path="students" element={<UsersContainer />} />
         </Route>
     </Routes>
+    
 
     </>
   )

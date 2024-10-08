@@ -16,7 +16,7 @@ const PostForm = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:8000/api/posts/', {
+      const response = await fetch("http://localhost:8000/api/post/posts/", {
         method: 'POST',
         body: formData,
       });

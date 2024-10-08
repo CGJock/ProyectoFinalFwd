@@ -1,5 +1,5 @@
 from rest_framework import viewsets,  status
-from post.models import Post, PostResponse
+from post.models import Post, PostReplies
 from user.models import USERS
 from .serializers import PostSerializer, PostResponseSerializer
 from user.serializers import UserSerializer
@@ -71,7 +71,7 @@ class userViewSet(viewsets.ModelViewSet):
     
 
 class PostResponseViewSet(viewsets.ModelViewSet):
-    queryset = PostResponse.objects.all()  
+    queryset = PostReplies.objects.all()  
     serializer_class = PostResponseSerializer
     def create(self, request, *args, **kwargs):
         data = request.data

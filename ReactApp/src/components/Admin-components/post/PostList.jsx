@@ -5,7 +5,7 @@ const PostList = () => {
 
   useEffect(() => {
     // fetch para obtener las publicaciones
-    fetch('http://localhost:8000/api/post/')
+    fetch("http://localhost:8000/api/post/posts/")
       .then(response => response.json())
       .then(data => {
         setPosts(data);
@@ -18,6 +18,7 @@ const PostList = () => {
   return (
     <div>
       <h1>Publicaciones</h1>
+      {/*  */}
       {posts.map(post => (
         <div key={post.post_id}>
           <h2>{post.title}</h2>

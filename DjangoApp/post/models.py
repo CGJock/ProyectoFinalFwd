@@ -17,17 +17,17 @@ class Post(models.Model):
     def __str__(self):
         return self.title
     
-class PostResponse(models.Model):
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='responses')
-    response_id =  models.AutoField(primary_key=True)
-    id_user = models.ForeignKey(USERS, on_delete=models.CASCADE,related_name='responses_as_id_user')
+class PostReplies(models.Model):
+
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='replies')
+    replies_id =  models.AutoField(primary_key=True)
+    id_user = models.ForeignKey(USERS, on_delete=models.CASCADE,related_name='replies_as_id_user')
     description = models.TextField()
-    response_date = models.DateField(auto_now_add=True)
+    replies_date = models.DateField(auto_now_add=True)
     like_count = models.IntegerField(default=0)
-    USERS = models.ForeignKey(USERS, on_delete=models.CASCADE, related_name ='responses_as_users')
     like_count = models.IntegerField(default=0)
     
     def __str__(self):
-        return f'Response by {self.user_id} on {self.post.title}'
+        return f'Replies by {self.user_id} on {self.post.title}'
 
     

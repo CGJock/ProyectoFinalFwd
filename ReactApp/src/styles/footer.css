@@ -1,82 +1,86 @@
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 1000vh;
-    
-  }
-
-.main-content {
-    flex: 1; 
-  }
-
-html, body {
-    height: 200%;
-    margin: 0;
-    padding: 0;
-  }
-
 .footer {
-    background-color: #f5f5f5;
-    color: #dbd2f1;
-    padding: 50px 0;
-    font-size: 14px;
-    
-  }
-  
-  .footer-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    
-  }
-  
-  .footer-logo {
-    flex: 1;
-  }
-  
-  .footer-links {
-    flex: 2;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .footer-links a {
-    color: #000000;
-    text-decoration: none;
-    margin: 0 15px;
-    transition: color 0.3s ease;
-  }
-  
-  .footer-links a:hover {
-    color: #000000;
-  }
-  
-  .footer-social {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-  .footer-social a {
-    color: #000000;
-    text-decoration: none;
-    margin-left: 15px;
-    font-size: 18px;
-  }
-  
-  .footer-bottom {
-    background-color: #000000;
-    text-align: center;
-    padding: 10px 0;
-    margin-top: 20px;
-  }
-  
-  .footer-bottom p {
-    margin: 0;
-    font-size: 12px;
-    color: #fff5f5;
-  }
- 
+  background-color:  #193063;
+  color:  #fff;
+  padding: 40px 0;
+  font-family: Arial, sans-serif;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-logo img {
+  width: 150px;
+}
+
+.footer-links, .footer-contact, .footer-remain-updated {
+  margin-bottom: 20px;
+}
+
+.footer-links h3, .footer-contact h3, .footer-remain-updated h3 {
+  color:  #ffe3ff;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  display: block;
+  color: #d1b4f3;
+  margin: 5px 0;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: #a385e7;
+}
+
+.footer-contact p {
+  color: #d1b4f3;
+  margin: 5px 0;
+}
+
+.footer-remain-updated input {
+  padding: 10px;
+  width: 80%;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.footer-signup-btn {
+  padding: 10px 20px;
+  background-color: #a385e7;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.footer-signup-btn:hover {
+  background-color: #7556db;
+}
+
+.footer-social a {
+  color: #fff;
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.footer-social a:hover {
+  color: #d1b4f3;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 20px 0;
+  /* background-color:  #506daa; */
+  margin-top: 20px;
+}
+
+.footer-remain-updated input::placeholder {
+  color: #ffe3ff; /* Color del placeholder */
+}

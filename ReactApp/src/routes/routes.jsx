@@ -1,4 +1,5 @@
 
+
 import Protected_routes from './proteced_routes';
 import  {Routes, Route} from "react-router-dom";
 import Home from '../pages/home/home'
@@ -14,15 +15,16 @@ import PostForm from '../components/Admin-components/post/PostForm';
 const Rutas = () => {
   return (
     <>
-    <Routes>
-        <Route path="/" element={<Home/>} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/library" element={<Library />} />
         <Route path="/FAQ" element={<FAQ />} />
         <Route path="/create-post" component={PostForm} />
         <Route path="/post-list" component={PostList} />
         <Route path="/CreatePost" element={<CreatePost />} />
         <Route path='/login' element={<Login />} />
 
-        
+      
 <Route path="/Administration" element={<Administration/>} />
         <Route
           path="/Register"
@@ -30,12 +32,11 @@ const Rutas = () => {
             <Protected_routes>
               <Register />
             </Protected_routes>
-          }/>
-    </Routes>
-
+          }
+        />
+      </Routes>
     </>
-  )
-}
+  );
+};
 
-export default Rutas
-
+export default Rutas;

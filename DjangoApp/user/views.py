@@ -8,6 +8,7 @@ from user.models import USERS
 from student.models import STUDENT
 from student.serializers import StudentSerializer
 from psychologist.serializers import  PsychologistSerializer
+from rest_framework import serializers
 
 
 from django.utils.encoding import force_bytes
@@ -100,7 +101,8 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
             #se encripta el link 
             encoded_pk = urlsafe_base64_encode(force_bytes(user.pk))
             token = PasswordResetTokenGenerator().make_token(user)
-            url = f"http://localhost:8000/reset-password/{encoded_pk}/{token}/"
+            # url = f"http://localhost:8000/reset-password/{encoded_pk}/{token}/"
+            url = f"http://localhost:8000/api/user/reset-password/"
             
             return Response({
                 "email": user.email,
@@ -236,41 +238,31 @@ class DeleteUser(viewsets.ModelViewSet):
 
     
 
-class ResetUserView(serializers.ModelSerializer):
-    new_password = serializers.Charfield(write_only=True,required=True)
-    confirmed_password =  serializers.CharField(write_only=True,required=True)
-    
-    class Meta:
-        model:  USERS
-        fields = ['password','new_password','confirmed_password']
-
+class ResetPasswordView(viewsets.ModelViewSet):
+        queryset = USERS.objects.all() 
+        serializer_class = ResetPasswordSerializer
         
-        def get(self,request):
+        def update(self,request,pk=None):
             token = request.COOKIES.get('jwt')
             if not token:
-                raise AuthenticationFailed("no autentificado")
+                raise AuthenticationFailed("No Autentificado")
             try:
                 payload = jwt.decode(token, 'secret', algorithm='HS256')
            
             except jwt.ExpiredSignatureError :
-                raise AuthenticationFailed("no autentificado")
+                raise AuthenticationFailed("Autentificacion Expirada")
         
-            user =  USERS.objects.filter(id_user=payload['id_user']).first()
+            user =  USERS.objects.filter(pk=payload['id_user']).first()
             if not user:
                 raise  AuthenticationFailed("no autentificado")
-            return user
 
-            
-        def update(self,instance,validated_data):
-            new_password = validated_data.pop('new_password', None)
-            confirmed_password = validated_data.pop('confirmed_password', None)
+            serializer = ResetPasswordSerializer(user, data=request.data)
+            if serializer.is_valid():
+                user.password = make_password(serializer.validated_data['new_password'])
+                user.save()
+                return Response({"message": "Contraseña actualizada correctamente."})
         
-            if new_password != confirmed_password:
-                raise serializers.ValidationError({"error": "las contras no coinciden"})
-            instance.password = make_password('password')
-            instance.save
-            return instance
-
+            return Response(serializer.errors, status=400)
             
             
             

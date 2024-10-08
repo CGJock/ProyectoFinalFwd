@@ -269,7 +269,7 @@ class ResetUserView(serializers.ModelSerializer):
                 raise serializers.ValidationError({"error": "las contras no coinciden"})
             instance.password = make_password('password')
             instance.save
-            return instance
+            return
 
             
             

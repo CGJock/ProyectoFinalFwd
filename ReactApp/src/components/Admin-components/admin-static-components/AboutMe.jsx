@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../../styles/AboutMe.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import InteractiveMap from './InteractiveMap';
 
 const AboutMe = () => {
   return (
@@ -35,7 +36,18 @@ const AboutMe = () => {
         </Col>
       </Row>
     </Container>
+
+    <section>
+    <Container className="my-5">
+      <h2 className="text-center">Ubícanos en nuestras instalaciones</h2>
+      <InteractiveMap />
+
+    </Container>
+
+
+    </section>
   </section>
+
 );
 };
 

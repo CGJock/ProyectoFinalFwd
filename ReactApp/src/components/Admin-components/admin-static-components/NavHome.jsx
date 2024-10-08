@@ -1,17 +1,24 @@
 import { Link } from "react-router-dom";
-import '../../../styles/nav-home.css'
+import '../../../styles/nav-home.css';
 import { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Alert } from "react-bootstrap";
 
 const NavHome = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [showAlert, setShowAlert] = useState(false); // Estado para la alerta
   
     const toggleMenu = () => {
       setIsOpen(!isOpen);
     };
     const handleShow = () => setShowModal(true);
     const handleClose = () => setShowModal(false);
+
+    const handleSubmit = () => {
+        setShowAlert(true); // Mostrar la alerta
+        setShowModal(false); // Cerrar el modal
+        setTimeout(() => setShowAlert(false), 5000); 
+    };
 
     return (
       <>
@@ -25,13 +32,14 @@ const NavHome = () => {
                 <li><Link to="/" className="home_link">Home</Link></li>
                 <li><Link to="/AboutMe"className="about_link">About</Link></li>
                 <li><Link to="/FAQ" className="questions_link">FAQ</Link></li>
-                <li><Button variant="outline-secondary"onClick={handleShow}className="contact_link">contact</Button>{' '}</li>
-          
+                <li><Button variant="outline-secondary" onClick={handleShow} className="contact_link">Contact</Button>{' '}</li>
             </ul>
             </div>
         </nav>
-        {/* este modal va a contener el formulario del contacto */}
-
+        
+        {/* Alerta de envío correcto */}
+     
+        {/* Modal para el formulario de contacto */}
         <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
             <Modal.Title>Contact Me</Modal.Title>
@@ -56,7 +64,13 @@ const NavHome = () => {
             <Button variant="secondary" onClick={handleClose}>
                 Close
             </Button>
-            <Button variant="primary" onClick={handleClose}>
+            {showAlert && (
+            <Alert variant="success" onClose={() => setShowAlert(false)} dismissible>
+                se envio correcto!
+            </Alert>
+        )}
+
+            <Button variant="primary" onClick={handleSubmit}>
                 Send Message
             </Button>
         </Modal.Footer>
@@ -64,9 +78,5 @@ const NavHome = () => {
     </>
     );
 };
-        
 
-   
-   
-
-export default NavHome
+export default NavHome;

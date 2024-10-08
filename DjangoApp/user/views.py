@@ -2,12 +2,14 @@ from rest_framework import viewsets, status
 from rest_framework.views import APIView  
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from user.models import USERS
 from student.models import STUDENT
 from student.serializers import StudentSerializer
 from psychologist.serializers import  PsychologistSerializer
-from .serializers import ResetPasswordSerializer
+
+
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.http import urlsafe_base64_encode
@@ -19,7 +21,7 @@ from instituto.models import  INSTITUTIONS
 from psychologist.models import PSYCHOLOGIST
 
 
-from .serializers import UserSerializer,UserLoginSerializer,DeleteUserSerializer
+from .serializers import UserSerializer,UserLoginSerializer,DeleteUserSerializer,ResetPasswordSerializer
 import jwt, datetime
 
 
@@ -104,7 +106,8 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
                 "email": user.email,
                 "username": user.username,
                 "password": generated_password,
-                "reset_url": url
+                "reset_url": url,
+                'isActive' :user.is_active
                 })
                 
               
@@ -171,7 +174,7 @@ class LogOutUserView(viewsets.ViewSet):
 
       
             
-           
+    #para autentificar el estudiante       
 class UserViewSet(viewsets.ModelViewSet):
    queryset =  USERS.objects.all()
    serializer_class = UserLoginSerializer
@@ -233,15 +236,45 @@ class DeleteUser(viewsets.ModelViewSet):
 
     
 
-class ResetUserView(viewsets.ModelViewSet):
-    def reset_password(self, request, encoded_pk, token):
-        serializer = ResetPasswordSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        new_password = serializer.validated_data['new_password']
+class ResetUserView(serializers.ModelSerializer):
+    new_password = serializers.Charfield(write_only=True,required=True)
+    confirmed_password =  serializers.CharField(write_only=True,required=True)
     
-        def post(self,request):
-            email = serializer.data['email']
-            user = USERS.objects.filter(email=email).first()
+    class Meta:
+        model:  USERS
+        fields = ['password','new_password','confirmed_password']
+
+        
+        def get(self,request):
+            token = request.COOKIES.get('jwt')
+            if not token:
+                raise AuthenticationFailed("no autentificado")
+            try:
+                payload = jwt.decode(token, 'secret', algorithm='HS256')
+           
+            except jwt.ExpiredSignatureError :
+                raise AuthenticationFailed("no autentificado")
+        
+            user =  USERS.objects.filter(id_user=payload['id_user']).first()
+            if not user:
+                raise  AuthenticationFailed("no autentificado")
+            return user
+
+            
+        def update(self,instance,validated_data):
+            new_password = validated_data.pop('new_password', None)
+            confirmed_password = validated_data.pop('confirmed_password', None)
+        
+            if new_password != confirmed_password:
+                raise serializers.ValidationError({"error": "las contras no coinciden"})
+            instance.password = make_password('password')
+            instance.save
+            return instance
+
+            
+            
+            
+            
        
     
     

@@ -8,7 +8,11 @@ const Administration = () => {
    <>
    
     <h1>Pagina de administracion</h1>
+   
+    <main>
     <Outlet />
+    </main>
+   
   
    </>
   )

@@ -7,7 +7,6 @@ import { Checkboxgovernment_subsidy } from "./Selectors/checkbox-government_subs
 import { Selector_gender } from "./Selectors/checkbox-gender";
 import { Checkscholarship } from "./Selectors/checkbox-scholarship";
 import { Checkboxavailability } from "./Selectors/checkboxavailability";
-import { Outlet } from 'react-router-dom';
 import  '../../../styles/register_container.css'
 
 

@@ -35,10 +35,11 @@ class DeleteUserSerializer(serializers.ModelSerializer):
         fields = ['id_user']
         
 
-class ResetPasswordSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = USERS
-        fields = ['email']
+# class ResetPasswordSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = USERS
+#         fields = ['password','new_password','confirme_password']
+        
 
           
 

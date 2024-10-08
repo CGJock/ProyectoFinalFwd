@@ -7,7 +7,7 @@ from user.models import USERS
 from student.models import STUDENT
 from student.serializers import StudentSerializer
 from psychologist.serializers import  PsychologistSerializer
-import json
+
 
 from grade.models import GRADE
 from instituto.models import  INSTITUTIONS
@@ -89,6 +89,7 @@ class UserListView(viewsets.ReadOnlyModelViewSet):
 class LoginUserViewSet(viewsets.ViewSet):
     queryset = USERS.objects.all()
     serializer_class = UserLoginSerializer
+    
     def create(self, request):
         email = request.data['email']
         password = request.data['password']
@@ -96,14 +97,15 @@ class LoginUserViewSet(viewsets.ViewSet):
         user = USERS.objects.filter(email=email).first()
         
         if user is None:
-            raise AuthenticationFailed("User not found")
+            raise AuthenticationFailed("El email no existe")
         
         if not user.check_password(password):
-            raise AuthenticationFailed("Incorrect password")
+            raise AuthenticationFailed("contrasenna incorrecta")
         
         # se setan las propiedades del payload
         payload = {
             "id_user": user.id_user,
+            'id_rol' : user.id_rol.id_rol,
             "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=120),#se setea el vencimiento del token
             "iat" : datetime.datetime.utcnow()
         }
@@ -119,6 +121,19 @@ class LoginUserViewSet(viewsets.ViewSet):
             'jwt': token
         }
         return response
+    
+
+class LogOutUserView(viewsets.ViewSet):
+    queryset = USERS.objects.all()
+    serializer_class = UserSerializer
+    def create(self,request):
+        response = Response()
+        response.delete_cookie('jwt')
+        response.data = {
+            'message' : "sesion borrada"
+        }
+        return Response
+  
 
       
             
@@ -133,48 +148,57 @@ class UserViewSet(viewsets.ModelViewSet):
         if not token:
            raise AuthenticationFailed("no autentificado")
         try:
-           token = jwt.decode(token, 'secret', algorithm='HS256')
+           payload = jwt.decode(token, 'secret', algorithm='HS256')
            
         except jwt.ExpiredSignatureError :
             raise AuthenticationFailed("no autentificado")
         
-        user =  USERS.objects.filter(id_user=token['id_user']).first()
+        user =  USERS.objects.filter(id_user=payload['id_user']).first()
         serializer = UserSerializer(user)
 
         return Response(serializer.data)
     
 
+
 class DeleteUser(viewsets.ModelViewSet):
     queryset = USERS.objects.all()
     serializer_class = DeleteUserSerializer
     
-    def delete(self,request,pk):
+    def destroy(self, request, pk):
+        # Obtiene la cookie del request
         user_cookie = request.COOKIES.get('jwt')
         
         if not user_cookie:
-            return Response({"message": "accion no permitida"},status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "Acción no permitida"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Intenta decodificar el token JWT
         try:
-            cookie_dict = json.loads(user_cookie)
-        except json.JSONDecodeError:
-            return Response({"detail":"invalid cookie format"},status=status.HTTP_400_BAD_REQUEST)
+            decoded_cookie = jwt.decode(user_cookie, 'secret', algorithms=['HS256'])
+        except jwt.ExpiredSignatureError:
+            return Response({"detail": "El token ha expirado"}, status=status.HTTP_401_UNAUTHORIZED)
+        except jwt.InvalidTokenError:
+            return Response({"detail": "Formato de token inválido"}, status=status.HTTP_400_BAD_REQUEST)
         
-        # user_id_cookie = cookie_dict.get['id_user']
-        user_id_cookie = cookie_dict.get('id_rol')
+        # Obtén el id_rol de la cookie decodificada
+        id_rol = decoded_cookie.get('id_rol')
         
+        
+        # Verifica si el id_rol es válido y si tiene el valor 1 (rol de administrador)
+        if not id_rol or id_rol != 1:
+            return Response({'detail': 'No autorizado para eliminar este recurso',"id_rol":id_rol}, status=status.HTTP_403_FORBIDDEN)
+        
+        # Si el id_rol es 1, intenta obtener y eliminar el usuario
         try:
-        
             instance = USERS.objects.get(pk=pk)
-            
-        # Compara el id de la cookie con el id del usuario del modelo
-            if int(user_id_cookie) != 2:
-                return Response({'detail': 'Unauthorized to delete this resource'}, status=status.HTTP_403_FORBIDDEN)
         except USERS.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+        # Elimina el usuario
         instance.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-        
-        
+
+    
+
 
         
 

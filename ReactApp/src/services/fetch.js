@@ -10,12 +10,17 @@ export const postRegister = async (apiPost,user_data) => {
              body: JSON.stringify(user_data)//los datos contiene el objeto con los input
               
            });
+
+           if(!response.ok){
+            const errorData = await response.json();
+            throw new Error(errorData.detail || "error")
+          }
            const data = await response.json()
-             
             alert("se agrego con exito");
-            return data.user_id
+            return data
          } catch(error) {
-            alert("error");
+            console.error("no se logro procesar lod datos",error);
+            throw error;
            } 
            
       }

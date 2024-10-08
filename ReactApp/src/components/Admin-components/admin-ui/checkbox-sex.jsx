@@ -1,5 +1,5 @@
 
-export const CheckboxSex = ({sex,setsex}) => {
+export const Selector_gender = ({sex,setsex}) => {
     
 
   return (

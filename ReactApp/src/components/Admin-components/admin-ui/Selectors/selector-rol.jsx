@@ -1,5 +1,5 @@
 import { useState, useEffect,  } from "react";
-import { get_institutes_data } from "../../../services/fetch";
+import { get_institutes_data } from "../../../../services/fetch";
 
 
 
@@ -33,7 +33,7 @@ const Selector_rols = ({id_rol,setid_rol}) => {
   return (
     
     <>
-      <label>Selecciona el Rol del usuario</label>
+      
 
         <select 
         value={id_rol}

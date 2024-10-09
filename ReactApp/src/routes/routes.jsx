@@ -8,33 +8,55 @@ import Register from '../components/Admin-components/admin-ui/Register';
 import FAQ from '../components/Admin-components/admin-static-components/FAQ';
 import PostList from '../components/Admin-components/post/PostList';
 import CreatePost from '../components/Admin-components/post/CreatePost';
-import Login from '../pages/login/login';
+import Login from '../pages/login/login'
 import PostForm from '../components/Admin-components/post/PostForm';
+import UsersContainer from '../components/administration-components/UsersContainer';
+import { Profile } from '../pages/profile/Profile';
+import { AuthProvider, useAuth } from '../context/AuthContext';
+import { useParams } from 'react-router-dom';
+
 
 
 const Rutas = () => {
+  const { userId } = useAuth();
+  const { userId :id } = useParams();
   return (
     <>
+
+    
+    
+        
+
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/library" element={<Library />} />
+
         <Route path="/FAQ" element={<FAQ />} />
-        <Route path="/create-post" component={PostForm} />
-        <Route path="/post-list" component={PostList} />
-        <Route path="/CreatePost" element={<CreatePost />} />
+        <Route path="/Profile/create-post" element={<Profile />} />
+        <Route path="/post-list" component={<PostList />} />
         <Route path='/login' element={<Login />} />
 
+
       
-<Route path="/Administration" element={<Administration/>} />
+
+
         <Route
-          path="/Register"
+          path="/Administration"
           element={
             <Protected_routes>
-              <Register />
+              <Administration />
             </Protected_routes>
           }
-        />
-      </Routes>
+
+        >
+          {/* Aquí se definen las subrutas dentro de la ruta de administración */}
+          <Route path="register" element={<Register />} />
+          <Route path="students" element={<UsersContainer />} />
+          <Route path="profile/students/:id" element={<Profile />} />
+        </Route>
+    </Routes>
+    
+
     </>
   );
 };

@@ -1,0 +1,81 @@
+custom-select {
+    position: relative;
+    width: 200px; /* Ancho del selector */
+}
+
+/* Estilos para el select */
+select {
+    width: 50%;
+    background: linear-gradient(135deg, #0f0f0f 0%, #060009 100%);
+ 
+    color: white;
+    border: none;
+    border-radius: 13px;
+    padding: 8px 20px 8px 20px; /* Espacio para la flecha personalizada */
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    appearance: none; /* Ocultar flecha nativa */
+    -webkit-appearance: none; /* Safari */
+    -moz-appearance: none; /* Firefox */
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    outline: none;
+}
+.selector_gender{
+    width: 100%;
+    background: linear-gradient(135deg, #0f0f0f 0%, #060009 100%);
+    color: white;
+    border: none;
+    border-radius: 13px;
+    padding: 8px 20px 8px 20px; /* Espacio para la flecha personalizada */
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    appearance: none; /* Ocultar flecha nativa */
+    -webkit-appearance: none; /* Safari */
+    -moz-appearance: none; /* Firefox */
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Flecha personalizada */
+.custom-select::after {
+    content: '▼'; /* Símbolo de flecha */
+    font-size: 18px;
+    color: white;
+    position: absolute;
+    right: 20px; /* Ubicación de la flecha */
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* La flecha no es clickeable */
+}
+
+select:hover {
+    background: linear-gradient(135deg, #171717 0%, #09090a 100%);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+option {
+    background-color: #fff;
+    color: #333;
+    padding: 10px;
+    text-align: center;
+}
+.dropdown {
+    display: none; /* Ocultamos el dropdown inicialmente */
+    position: absolute;
+    background: white;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Para asegurarnos de que esté por encima de otros elementos */
+    margin-top: 5px; /* Espacio entre el select y el dropdown */
+}
+.selector_rol_condicioinado{
+    display: flex;
+    border: solid purple;
+    align-items: center;
+    
+}

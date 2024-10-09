@@ -1,49 +1,62 @@
 
 //servicio con metodo post para registrar usuarios
-export const postRegister = async (apiPost,user_data) => {
+import emailjs from "emailjs-com"; // Ensure you have EmailJS installed
+// import jwtDecode from 'jwt-decode';
+
+export const postRegister = async (apiPost, user_data) => {
     try {
-          const response = await fetch(apiPost, {
-           method: 'POST',
-           headers: {
-             'Content-Type': 'application/json'
-             },
-             body: JSON.stringify(user_data)//los datos contiene el objeto con los input
-              
-           });
+        // Make the POST request to register the user
+        const response = await fetch(apiPost, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user_data) // User data containing the input values
+        });
 
-           if(!response.ok){
+        // Check if the response is ok
+        if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(errorData.detail || "error")
-          }
-           const data = await response.json()
-            alert("se agrego con exito");
-            return data
-         } catch(error) {
-            console.error("no se logro procesar lod datos",error);
-            throw error;
-           } 
-           
-      }
+            throw new Error(errorData.detail || "Error in registration");
+        }
 
-  export const postTypeuser = async (apiStu,extra_data,newid) => {
-        try {
-              const response = await fetch(apiStu, {
-               method: 'POST',
-               headers: {
-                 'Content-Type': 'application/json'
-                 },
-                 body: JSON.stringify(extra_data)//los datos contiene el objeto con los input
-                  
-               });
-               const data = await response.json()
-                alert("se agrego con exito");
-                return newid
-             } catch(error) {
-                alert("error");
-               } 
-               
-          }
-    
+        // Parse the response data
+        const data = await response.json();
+        alert("User registered successfully");
+
+      
+
+        // Send the email using the response data
+        sendEmail(data.email, data.username, data.password, data.reset_url);
+        
+
+        return data; // Return the data for further use if needed
+    } catch (error) {
+        console.error("Failed to process the data", error);
+        throw error; // Rethrow the error to handle it in the calling function
+    }
+};
+
+const sendEmail = (email, username, password, reset_url) => {
+    const templateParams = {
+        to_email: email,
+        user_name: username,
+        user_password: password,
+        reset_url: reset_url,
+    };
+
+    emailjs
+        .send("service_73e4kpp", "template_23n6rd4", templateParams, "WaYegO_6CWZJoBg6b")
+        .then(
+            (response) => {
+                console.log("Email sent successfully", response.status, response.text);
+            },
+            (err) => {
+                console.error("Error sending email", err);
+            }
+        );
+};
+
 //###################################################################################################################################
 
 export const get_institutes_data = async(apiUrl) => {

@@ -1,4 +1,5 @@
 
+
 import Protected_routes from './proteced_routes';
 import  {Routes, Route} from "react-router-dom";
 import Home from '../pages/home/home'
@@ -21,15 +22,24 @@ const Rutas = () => {
   const { userId :id } = useParams();
   return (
     <>
+
     
-    <Routes>
-        <Route path="/home" element={<Home/>} />
+    
+        
+
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/library" element={<Library />} />
+
         <Route path="/FAQ" element={<FAQ />} />
         <Route path="/Profile/create-post" element={<Profile />} />
         <Route path="/post-list" component={<PostList />} />
         <Route path='/login' element={<Login />} />
 
-        
+
+      
+
+
         <Route
           path="/Administration"
           element={
@@ -37,6 +47,7 @@ const Rutas = () => {
               <Administration />
             </Protected_routes>
           }
+
         >
           {/* Aquí se definen las subrutas dentro de la ruta de administración */}
           <Route path="register" element={<Register />} />
@@ -47,8 +58,7 @@ const Rutas = () => {
     
 
     </>
-  )
-}
+  );
+};
 
-export default Rutas
-
+export default Rutas;

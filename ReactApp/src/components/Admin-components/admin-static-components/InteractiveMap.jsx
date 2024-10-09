@@ -29,7 +29,7 @@ const InteractiveMap = () => {
 
   return (
     // mediante la longitud del la ubicacion qu se desea se encuenta la ubicacion exacta
-    <MapContainer center={[9.9758, -84.8351]} zoom={13} style={{ height: "500px", width: "100%",  minHeight: "500px" }}>
+    <MapContainer center={[9.9758, -84.8351]} zoom={13} style={{ height: "200px", width: "30%",  minHeight: "60px" }}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

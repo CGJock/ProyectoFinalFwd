@@ -4,11 +4,10 @@ from .views import PostViewSet
 from .router_post import router
 
 
-
 router = DefaultRouter()
 router.register(r'posts', PostViewSet)
 
 urlpatterns = [
-    path('api/post/', include(router.urls))
+    path('', include(router.urls))
    
 ]

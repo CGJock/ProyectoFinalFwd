@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'instituto',
     'student',
     'psychologist',
+    'library',
 ]
 
 MIDDLEWARE = [
@@ -149,4 +150,4 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDUA_URL = '/media/'
+MEDIA_URL = '/media/'

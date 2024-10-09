@@ -1,0 +1,47 @@
+.about-me {
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+  }
+  
+  .about-me-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .about-me-title {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  .about-me-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  .about-me-text:first-of-type {
+    margin-top: 0;
+  }
+  
+  .about-me p:last-of-type {
+    margin-bottom: 0;
+  }
+  
+  @media (min-width: 768px) {
+    .about-me {
+      padding: 80px 20px;
+    }
+  
+    .about-me-title {
+      font-size: 3rem;
+    }
+  
+    .about-me-text {
+      font-size: 1.25rem;
+    }
+  }
+  

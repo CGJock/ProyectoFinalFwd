@@ -8,13 +8,13 @@ export const Checkboxavailability = ({setavailability , availability }) => {
 
   return (
     <>
-    <label>Disponibilidad Psicologo</label>
-      <input
+    
+      <input className="checkbox"
         type="checkbox"
         checked={availability  === 1} 
         onChange={handleChange}
       />
-      Checkbox is {availability  === 1 ? 'Checked' : 'Unchecked'}
+      
     
     </>
   )

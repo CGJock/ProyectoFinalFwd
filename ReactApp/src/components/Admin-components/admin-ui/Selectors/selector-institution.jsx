@@ -1,6 +1,7 @@
 
 import { useState, useEffect} from "react";
 import { get_institutes_data } from "../../../../services/fetch";
+import '../../../../styles/selectores.css'
 
 
 
@@ -31,9 +32,8 @@ useEffect(() => {
  return (
     
     <div>
-      <label>Selecciona Institucion</label>
 
-        <select 
+        <select className="institution-selector"
         value={id_institution}
         onChange={(event) => setid_institution(event.target.value)}
         name="institution"

@@ -10,13 +10,13 @@ export const Checkboxgovernment_subsidy = ({setgovernment_subsidy, government_su
 
   return (
     <>
-    <label>Ayuda Gobernamental</label>
-      <input
+    
+      <input className="checkbox"
         type="checkbox"
         checked={government_subsidy === 1} 
         onChange={handleChange}
       />
-      Checkbox is {government_subsidy === 1 ? 'Checked' : 'Unchecked'}
+      
     
     </>
   )

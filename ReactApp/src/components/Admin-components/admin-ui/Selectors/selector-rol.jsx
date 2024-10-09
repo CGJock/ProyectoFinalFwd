@@ -1,5 +1,6 @@
 import { useState, useEffect,  } from "react";
 import { get_institutes_data } from "../../../../services/fetch";
+import '../../../../styles/selectores.css'
 
 
 
@@ -35,7 +36,7 @@ const Selector_rols = ({id_rol,setid_rol}) => {
     <>
       
 
-        <select 
+        <select className='selector-rol'
         value={id_rol}
         onChange={(event) => setid_rol(event.target.value)}
         name="institution"
@@ -43,7 +44,7 @@ const Selector_rols = ({id_rol,setid_rol}) => {
         >
    
   {roles.map((element) => (
-  <option key={element.id_rol} value={element.id_rol}> 
+  <option  key={element.id_rol} value={element.id_rol}> 
     
     {element.rol_name}
     </option>

@@ -1,9 +1,13 @@
-import Inpts from "../../../components/inpts";
+import Inpts from "../../../components/Admin-components/admin-static-components/inpts";
 import { useTheContext } from "../../../context/ContextProvider";
 
 const Login = () => {
-    const { setUsername, setPassword } = useTheContext();
-}
+    const { username, setUsername, password, setPassword } = useTheContext();
+    const handleLogin = () => {
+
+    }
+    
+
 
 return (
     <>
@@ -27,3 +31,5 @@ return (
     </div>
      </>
     )
+
+}

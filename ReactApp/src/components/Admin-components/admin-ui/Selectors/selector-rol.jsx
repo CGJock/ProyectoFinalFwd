@@ -33,7 +33,7 @@ const Selector_rols = ({id_rol,setid_rol}) => {
   return (
     
     <>
-      <label>Selecciona el Rol del usuario</label>
+      
 
         <select 
         value={id_rol}

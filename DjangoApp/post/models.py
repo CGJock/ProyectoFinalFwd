@@ -24,7 +24,6 @@ class PostResponse(models.Model):
     description = models.TextField()
     response_date = models.DateField(auto_now_add=True)
     like_count = models.IntegerField(default=0)
-    USERS = models.ForeignKey(USERS, on_delete=models.CASCADE, related_name ='responses_as_users')
     like_count = models.IntegerField(default=0)
     
     def __str__(self):

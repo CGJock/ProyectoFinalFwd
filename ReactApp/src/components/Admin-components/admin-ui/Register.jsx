@@ -98,66 +98,62 @@ const Register = () => {
 
         <div className="name_container">
           <div>
-            <p>Nombre</p>
+            <p className="label_input">Nombre</p>
             <input type="text" name="name" value={ name } onChange={(event) => Setname(event.target.value)}/>
         </div>
         <div>
-          <p>Apellido</p>
+          <p className="label_input">Apellido</p>
           <input type="text" name="first_name" value={ first_name } onChange={(event) => setFirst_name(event.target.value)}/>
         </div>
         <div>
-          <p>Segundo Apellido</p>
+          <p className="label_input">Segundo Apellido</p>
           <input type="text" name="last_name" value={ last_name } onChange={(event) => setlast_name(event.target.value)}/>
         </div>
         </div>
 
         <div className="dni_gender_container">
           <div>
-            <p>Numero de cedula</p>
+            <p className="label_input">Numero de cedula</p>
             <input type="text" name="dni_number" value={ dni_number } onChange={(event) => Setdni_number(event.target.value)}/>
           </div>
           <div>
-            <Selector_gender  setsex={setsex} sex={sex}  />
+          <p className="label_input">Nombre de usuario</p>
+          <input type="text" name="username" value={ username } onChange={(event) => Setusername(event.target.value)} />
+            
           </div>
         </div>
 
         <div className="phonenumber_email_container">
           <div>
-          <p>Numero telefonico</p>
+          <p className="label_input">Numero telefonico</p>
           <input type="number" name="phone_number" value={ phone_number } onChange={(event) => setphone_number(event.target.value)}/>
           </div>
           <div>
-            <p>Correo electronico</p>
+            <p className="label_input">Correo electronico</p>
             <input type="email" name="email" value={ email } onChange={(event) => setemail(event.target.value)}/>
           </div>
         </div>
 
-        <p>Nombre de usuario</p>
-            <input type="text" name="username" value={ username } onChange={(event) => Setusername(event.target.value)} />
+        <div className="username_birthdate">
+          <div>
+            <p className="label_input">Gender</p>
+            <Selector_gender setsex={setsex} sex={sex}  />
+          </div>
+        
 
+          <div>
+            <p className="label_input">Fecha de nacimiento</p>
+            <input type="date"  value={birth_date} onChange={(event) => setbirth_date(event.target.value)}/>
+          </div>
+
+        </div>
         
 
         
-        
-
-        
-
-        
-
-        <label>Fecha de nacimiento</label>
-        <input type="date"  value={birth_date} onChange={(event) => setbirth_date(event.target.value)}/>
-
-        
-
-        {/* <label>Contrasenna</label>
-        <input type="text" name="password" value={ password } onChange={(event) => setpassword(event.target.value)}/> */}
-
-        
-
-        <label>Tipo de usuario</label>
-        
+        <div className="selector_rol_condicioinado">
+        <p className="label_input">Rol</p>
         <Selector_rols name='id_rol' value={id_rol} id_rol={id_rol} setid_rol={setid_rol}/>
-
+        </div>
        
         
        
@@ -191,7 +187,10 @@ const Register = () => {
 
             </div>
              )}
-            <button className='registerBtn' onClick={handle_form}> registro</button>
+
+             <div className="divButton">
+                <button className='registerBtn' onClick={handle_form}> registro</button>
+              </div>
             
         </div> 
       

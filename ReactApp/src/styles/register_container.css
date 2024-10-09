@@ -11,12 +11,50 @@
 .name_container{
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    column-gap: 15px;
+}
+.name_container  :focus {
+    outline: none;
 }
 .dni_gender_container{
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    column-gap: 150px;
+    align-items: center;
+   
 }
 .phonenumber_email_container{
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    column-gap: 150px;
+    border: solid blue 1px;
+}
+.username_birthdate{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 150px;
+    align-items: center;
+    padding-bottom: 5%;
+    border: solid green 1px;
+}
+input{
+    border-radius: 10px;
+    padding: 8px 20px 8px 20px;
+    background-color: rgb(10, 10, 10);
+}
+.label_input{
+    margin-right: 100px;
+    font-size: small;
+    
+}
+.button{
+    padding: 8px,10px,10px,8px;
+    width: 20%;
+}
+.divbutton{
+    width: 50%;
 }

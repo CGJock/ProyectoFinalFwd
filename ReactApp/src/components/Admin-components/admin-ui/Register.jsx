@@ -98,61 +98,59 @@ const Register = () => {
 
         <div className="name_container">
           <div>
-            <p className="label_input">Nombre</p>
             <input type="text" name="name" value={ name } onChange={(event) => Setname(event.target.value)}/>
+            <p className="label_input">Nombre</p>
         </div>
         <div>
-          <p className="label_input">Apellido</p>
           <input type="text" name="first_name" value={ first_name } onChange={(event) => setFirst_name(event.target.value)}/>
+          <p className="label_input">Apellido</p>
         </div>
         <div>
-          <p className="label_input">Segundo Apellido</p>
           <input type="text" name="last_name" value={ last_name } onChange={(event) => setlast_name(event.target.value)}/>
+          <p className="label_input">Segundo Apellido</p>
         </div>
         </div>
 
         <div className="dni_gender_container">
           <div>
-            <p className="label_input">Numero de cedula</p>
             <input type="text" name="dni_number" value={ dni_number } onChange={(event) => Setdni_number(event.target.value)}/>
+            <p className="label_input">Numero de cedula</p>
           </div>
           <div>
-          <p className="label_input">Nombre de usuario</p>
           <input type="text" name="username" value={ username } onChange={(event) => Setusername(event.target.value)} />
-            
+          <p className="label_input">Nombre de usuario</p>
           </div>
         </div>
 
         <div className="phonenumber_email_container">
           <div>
-          <p className="label_input">Numero telefonico</p>
           <input type="number" name="phone_number" value={ phone_number } onChange={(event) => setphone_number(event.target.value)}/>
+          <p className="label_input">Numero telefonico</p>
           </div>
           <div>
-            <p className="label_input">Correo electronico</p>
             <input type="email" name="email" value={ email } onChange={(event) => setemail(event.target.value)}/>
+            <p className="label_input">Correo electronico</p>
           </div>
         </div>
 
         <div className="username_birthdate">
           <div>
-            <p className="label_input">Gender</p>
             <Selector_gender setsex={setsex} sex={sex}  />
+            <p className="label_input">Gender</p>
           </div>
         
 
           <div>
-            <p className="label_input">Fecha de nacimiento</p>
             <input type="date"  value={birth_date} onChange={(event) => setbirth_date(event.target.value)}/>
+            <p className="label_input">Fecha de nacimiento</p>
           </div>
-
         </div>
         
 
         
         <div className="selector_rol_condicioinado">
-        <p className="label_input">Rol</p>
         <Selector_rols name='id_rol' value={id_rol} id_rol={id_rol} setid_rol={setid_rol}/>
+        <p className="label_input">Rol</p>
         </div>
        
         
@@ -160,30 +158,54 @@ const Register = () => {
         {id_rol == 2 && (
         <div className="student_inputs">
         
-        <h2>Agregue los datos relacionados al estudiante</h2>
-        
-        <Selector_institution setid_institution={setid_institution} id_institution={id_institution}/>
-        <Selector_grades setid_grade={setid_grade} grade={id_grade}/>
-        <Checkboxgovernment_subsidy setgovernment_subsidy={setgovernment_subsidy} government_subsidy={government_subsidy} />
-        <Checkscholarship setscholarship={setscholarship} scholarship={scholarship} />
+        <h3>Agregue los datos relacionados al estudiante</h3>
+        <div className="institution_grade_container">
+          <div>
+            <Selector_institution setid_institution={setid_institution} id_institution={id_institution}/>
+            <p className="label_input">Institucion</p>
+          </div>
+          <div>
+            <Selector_grades setid_grade={setid_grade} grade={id_grade}/>
+            <p className="label_input">Grado Academico</p>
+          </div>
+        </div>
 
+        <div className="subsidy_sholarship_containers">
+          <div  className="checkbox-container">
+            <Checkboxgovernment_subsidy setgovernment_subsidy={setgovernment_subsidy} government_subsidy={government_subsidy} />
+            <p className="label_input">Subsidio Gobernamental</p>
+          </div>
+          <div className="checkbox-container">
+            <Checkscholarship setscholarship={setscholarship} scholarship={scholarship} />
+            <p className="label_input">Beca</p>
+          </div>
+        </div>
         </div>
          )}
 
          {id_rol == 3 && (
        
-
+          
             <div className="pychologist_inputs">
-
-            <h2>Agregue los datos relacionados al psicologo</h2>
+              <h3>Agregue los datos relacionados al psicologo</h3>
+            <div className="contenedor-licencia-experiencia">
+              <div>
+                <input type="number" name="license_code" value={ license_code } onChange={(event) => setlicense_code(event.target.value)}/>
+                <p className="label_input">Codigo de licencia</p>
+              </div>
             
+              <div>
+                <input type="number" name="years_experience" value={ years_experience } onChange={(event) => setyears_experience(event.target.value)}/>
+                <p className="label_input">Annos Experiencia</p>
+               </div>
 
-            <label>Codigo de licencia</label>
-            <input type="number" name="license_code" value={ license_code } onChange={(event) => setlicense_code(event.target.value)}/>
+               <div>
+                <Checkboxavailability setavailability={setavailability} availability={availability} />
+                <p className="label_input">Disponibilidad</p>
+              </div>
+            </div>
 
-            <label>Annos Experiencia</label>
-            <input type="number" name="years_experience" value={ years_experience } onChange={(event) => setyears_experience(event.target.value)}/>
-            <Checkboxavailability setavailability={setavailability} availability={availability} />
+           
 
             </div>
              )}

@@ -29,7 +29,7 @@ const Rutas = () => {
 
       <Routes>
         <Route path="/home" element={<Home />} />
-        <Route path="/library" element={<Library />} />
+        {/* <Route path="/library" element={<Library />} /> */}
 
         <Route path="/FAQ" element={<FAQ />} />
         <Route path="/Profile/create-post" element={<Profile />} />

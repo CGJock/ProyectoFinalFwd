@@ -30,8 +30,7 @@ const Selector_grades = ({id_grade, setid_grade}) => {
   return (
     
     <div>
-      <label>Selecciona Grado Academico</label>
-
+    
         <select 
         value={id_grade}
         onChange={(event) => setid_grade(event.target.value)}

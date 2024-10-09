@@ -1,18 +1,21 @@
 import { useState} from "react";
 import {postRegister,  get_institutes_data} from "../../../services/fetch";
-import Selector_grades from "./selector-grades";
-import Selector_rols from "./selector-rol";
-import Selector_institution from "./selector-institution";
-import { Checkboxgovernment_subsidy } from "./checkbox-government_subsidy";
-import { Selector_gender } from "./checkbox-sex";
-import { Checkscholarship } from "./checkbox-scholarship";
-import { Checkboxavailability } from "./checkboxavailability";
+import Selector_grades from "./Selectors/selector-grades";
+import Selector_rols from "./Selectors/selector-rol";
+import Selector_institution from "./Selectors/selector-institution";
+import { Checkboxgovernment_subsidy } from "./Selectors/checkbox-government_subsidy";
+import { Selector_gender } from "./Selectors/checkbox-gender";
+import { Checkscholarship } from "./Selectors/checkbox-scholarship";
+import { Checkboxavailability } from "./Selectors/checkboxavailability";
+import  '../../../styles/register_container.css'
+import { AuthProvider, useAuth } from '../../../context/AuthContext';
 
 
 
 const Register = () => {
     
     //variables de inputs usuarios generales
+    const { setUserId } = useAuth()
     const [dni_number, Setdni_number] = useState('')
     const [sex, setsex] = useState(0)//para asignar el sexo masculino o femenino
     const [username, Setusername] = useState('')
@@ -22,7 +25,7 @@ const Register = () => {
     const [birth_date, setbirth_date] = useState('')
     const [last_name, setlast_name] = useState('')
     const [email, setemail] = useState('')
-    const [password, setpassword] = useState('')//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!pendiente implementar secrets
+    // const [password, setpassword] = useState('')//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!pendiente implementar secrets
     const [phone_number, setphone_number] = useState('')
     
     //variables para estudiantes
@@ -55,14 +58,15 @@ const Register = () => {
         
         if (id_rol == 2){
           user_data = {
-            id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,password,id_institution,id_grade,government_subsidy,scholarship
+            id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,id_institution,id_grade,government_subsidy,scholarship
           }
         }else if(id_rol == 3){
           user_data = {
-            id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,password,license_code,availability,years_experience
+            id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,license_code,availability,years_experience
           }
         }
-          let data = await get_institutes_data(apiUrl)
+        
+          let data  = await get_institutes_data(apiUrl)
 
           const profileExists = data.some((e) => e.dni_number == dni_number || e.email == email)
          
@@ -70,55 +74,86 @@ const Register = () => {
             if(profileExists) {
               alert('User already exists')
             }else{
-              console.log(user_data)
-              await postRegister(apiPost, user_data);
-              
-             console.log("log exitoso")
-               
+            try {
+              const response = await postRegister(apiPost, user_data);
+              console.log("Registration successful", response);
+              setUserId(response.data.id_user); // Guardar el ID del usuario en el contexto de autenticación
+          } catch (error) {
+              console.error("Registration failed", error);
+              alert('Registration failed, please try again.');
           }
-        }
+      }
+  }
           
 
           
     
 
   return (
-    <div className="register_form" >
+    <div className="register_container" >
+        <div className="header">
+          <h3>Registre un usuario</h3>
+          <h5>Por favor digite los datos acorde al tipo de usuario que desea registar</h5>
+        </div>
 
-    {/* <form style={{display: "flex",flexDirection: 'column'}}  method='POST' className="RegisterForm"> */}
-        <label>Cedula</label>
-        <input type="text" name="dni_number" value={ dni_number } onChange={(event) => Setdni_number(event.target.value)}/>
+        <div className="name_container">
+          <div>
+            <p className="label_input">Nombre</p>
+            <input type="text" name="name" value={ name } onChange={(event) => Setname(event.target.value)}/>
+        </div>
+        <div>
+          <p className="label_input">Apellido</p>
+          <input type="text" name="first_name" value={ first_name } onChange={(event) => setFirst_name(event.target.value)}/>
+        </div>
+        <div>
+          <p className="label_input">Segundo Apellido</p>
+          <input type="text" name="last_name" value={ last_name } onChange={(event) => setlast_name(event.target.value)}/>
+        </div>
+        </div>
 
-        <Selector_gender  setsex={setsex} sex={sex}  />
+        <div className="dni_gender_container">
+          <div>
+            <p className="label_input">Numero de cedula</p>
+            <input type="text" name="dni_number" value={ dni_number } onChange={(event) => Setdni_number(event.target.value)}/>
+          </div>
+          <div>
+          <p className="label_input">Nombre de usuario</p>
+          <input type="text" name="username" value={ username } onChange={(event) => Setusername(event.target.value)} />
+            
+          </div>
+        </div>
 
-        <label>Username</label>
-        <input type="text" name="username" value={ username } onChange={(event) => Setusername(event.target.value)} />
+        <div className="phonenumber_email_container">
+          <div>
+          <p className="label_input">Numero telefonico</p>
+          <input type="number" name="phone_number" value={ phone_number } onChange={(event) => setphone_number(event.target.value)}/>
+          </div>
+          <div>
+            <p className="label_input">Correo electronico</p>
+            <input type="email" name="email" value={ email } onChange={(event) => setemail(event.target.value)}/>
+          </div>
+        </div>
 
-        <label>Nombre</label>
-        <input type="text" name="name" value={ name } onChange={(event) => Setname(event.target.value)}/>
-
-        <label>Primer Apellido</label>
-        <input type="text" name="first_name" value={ first_name } onChange={(event) => setFirst_name(event.target.value)}/>
-
-        <label>Segundo Apellido</label>
-        <input type="text" name="last_name" value={ last_name } onChange={(event) => setlast_name(event.target.value)}/>
-
-        <label>Fecha de nacimiento</label>
-        <input type="date"  value={birth_date} onChange={(event) => setbirth_date(event.target.value)}/>
-
-        <label>Correo Electronico</label>
-        <input type="email" name="email" value={ email } onChange={(event) => setemail(event.target.value)}/>
-
-        <label>Contrasenna</label>
-        <input type="text" name="password" value={ password } onChange={(event) => setpassword(event.target.value)}/>
-
-        <label>Numero Telefonico</label>
-        <input type="number" name="phone_number" value={ phone_number } onChange={(event) => setphone_number(event.target.value)}/>
-
-        <label>Tipo de usuario</label>
+        <div className="username_birthdate">
+          <div>
+            <p className="label_input">Gender</p>
+            <Selector_gender setsex={setsex} sex={sex}  />
+          </div>
         
-        <Selector_rols name='id_rol' value={id_rol} id_rol={id_rol} setid_rol={setid_rol}/>
 
+          <div>
+            <p className="label_input">Fecha de nacimiento</p>
+            <input type="date"  value={birth_date} onChange={(event) => setbirth_date(event.target.value)}/>
+          </div>
+
+        </div>
+        
+
+        
+        <div className="selector_rol_condicioinado">
+        <p className="label_input">Rol</p>
+        <Selector_rols name='id_rol' value={id_rol} id_rol={id_rol} setid_rol={setid_rol}/>
+        </div>
        
         
        
@@ -152,7 +187,10 @@ const Register = () => {
 
             </div>
              )}
-            <button className='registerBtn' onClick={handle_form}> registro</button>
+
+             <div className="divButton">
+                <button className='registerBtn' onClick={handle_form}> registro</button>
+              </div>
             
         </div> 
       

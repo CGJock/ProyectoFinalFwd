@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postRegister } from '../services/fetch';
+import { login_user } from '../services/fetch';
+import { jwtDecode } from 'jwt-decode';
+
 
 // el componente 
 const AuthContext = createContext();
@@ -10,18 +12,23 @@ const AuthContext = createContext();
   const [User, setUser] = useState(null)
   const [Userrol, setUserrol] = useState(null)
   const [Token, setToken] = useState(null)
+  const navigate = useNavigate();
   
 
-  const Log =  async (user_data) => {
+  const Loggin =  async (user_data) => {
     try{
-    const response = await postRegister(user_data)
-    if (response.ok) {
-      const data = await response.json()
-      const token = document.cookie.includes('jwt')
-      setUser(data.id_user)
-      setUserrol(data.id_rol)
-      setToken(token)
-      console.log("esta es tu data",data)
+    const apiPost = "http://localhost:8000/api/user/user-login/"
+    const response = await login_user(apiPost,user_data)
+    if (response && response.jwt) {
+      const decodedToken = jwtDecode(response.jwt);
+      console.log(decodedToken,'este es la decode')
+      setUser(decodedToken.id_user)
+      setUserrol(decodedToken.id_rol)
+      setToken(response.jwt)
+      console.log("esta es tu data",response,Userrol,User)
+      console.log('userid:', Userrol)
+      if(Userrol == 1)
+        navigate('/administration')
       return;
     }
     throw new Error(response.message);
@@ -39,7 +46,7 @@ const AuthContext = createContext();
 
 
 return (
-    <AuthContext.Provider value={{Token,User,Userrol}}>
+    <AuthContext.Provider value={{Token, User, Userrol, Loggin, logout }}>
       {children}
     </AuthContext.Provider>
   );
@@ -52,3 +59,5 @@ export default  AuthProvider;
 export const useAuth = () => {
   return useContext(AuthContext);
 };
+
+

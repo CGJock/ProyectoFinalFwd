@@ -1,0 +1,126 @@
+.register_container{
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    
+}
+.header{
+    display: flex;
+    flex-direction: column;
+}
+.name_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    column-gap: 15px;
+}
+.name_container  :focus {
+    outline: none;
+}
+.dni_gender_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 150px;
+    align-items: center;
+   
+}
+.phonenumber_email_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 150px;
+    border: solid blue 1px;
+}
+.username_birthdate{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 150px;
+    align-items: center;
+    padding-bottom: 5%;
+    border: solid green 1px;
+}
+input{
+    border-radius: 10px;
+    padding: 8px 20px 8px 20px;
+    background-color: rgb(10, 10, 10);
+}
+.label_input{
+    margin-right: 100px;
+    font-size: small;
+    
+}
+.button{
+    padding: 8px,10px,10px,8px;
+    width: 20%;
+}
+.divbutton{
+    width: 50%;
+}
+.selector_rol_condicioinado{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.institution_grade_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 15%;
+    align-items: center;
+    padding-top: 5%;
+    border: solid green 1px;
+}
+.subsidy_sholarship_containers{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 5%;
+    align-items: center;
+    padding-top: 5%;
+    border: solid green 1px;
+    padding-left: 100px;
+}
+.contenedor-licencia-experiencia{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 5%;
+    align-items: center;
+    padding-top: 5%;
+    border: solid green 1px;
+}
+
+
+
+
+
+
+/* Estilos generales del checkbox */
+.checkbox[type="checkbox"] {
+    appearance: circle;
+    border-radius: 50%; /* Hace que sea circular */
+    height: 16px; /* Tamaño por defecto */
+    width: 16px;  /* Tamaño por defecto */
+    border: 1px solid black; /* Borde delgado */
+    background-color: white; /* Fondo blanco cuando no está marcado */
+    cursor: pointer;
+    
+  }
+  
+  /* Cuando el checkbox está marcado */
+  .checkbox[type="checkbox"]:checked {
+    background-color: black; /* Fondo negro cuando está marcado */
+  }
+  
+  /* Añadir una animación de transición suave */
+  .checkbox[type="checkbox"] {
+    transition: background-color 0.3s ease;
+  }
+  .checkbox-container{
+    display: flex;
+    flex-direction: column;
+  }
+  

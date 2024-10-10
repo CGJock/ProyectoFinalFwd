@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { get_institutes_data } from "../../../services/fetch";
+import { get_institutes_data } from "../../../../services/fetch";
 import React from 'react'
 
 
@@ -30,8 +30,7 @@ const Selector_grades = ({id_grade, setid_grade}) => {
   return (
     
     <div>
-      <label>Selecciona Grado Academico</label>
-
+    
         <select 
         value={id_grade}
         onChange={(event) => setid_grade(event.target.value)}

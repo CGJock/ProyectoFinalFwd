@@ -10,13 +10,12 @@ export const Checkscholarship = ({setscholarship, scholarship}) => {
 
   return (
     <>
-    <label>Beca De Institucion</label>
-      <input
+      <input className="checkbox"
         type="checkbox"
         checked={scholarship == 1} 
         onChange={handleChange}
       />
-      Checkbox is {scholarship == 1 ? 'Checked' : 'Unchecked'}
+     
     
     </>
   )

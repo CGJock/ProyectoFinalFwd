@@ -4,9 +4,12 @@ import Footer from "../../components/Admin-components/admin-static-components/fo
 // import CreatePost from '../../components/Admin-components/post/CreatePost'
 import PostList from "../../components/Admin-components/post/PostList";
 import PostForm from "../../components/Admin-components/post/PostForm";
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import VideoCarousel from '../../components/Admin-components/admin-static-components/VideoCarousel'
 
-import VideoCarousel from "../../components/Admin-components/admin-static-components/VideoCarousel";
+
+
+
 export const Home = () => {
   return (
     <>
@@ -17,12 +20,14 @@ export const Home = () => {
       <div>
         <VideoCarousel />
       </div>
+
       {/* Componente de posteos de publicaciones */}
       <div>
         <PostList />
         <PostForm />
 
       </div>
+
 
       <Footer />
     </>

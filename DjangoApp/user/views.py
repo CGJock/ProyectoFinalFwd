@@ -2,19 +2,27 @@ from rest_framework import viewsets, status
 from rest_framework.views import APIView  
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from user.models import USERS
 from student.models import STUDENT
 from student.serializers import StudentSerializer
 from psychologist.serializers import  PsychologistSerializer
-import json
+from rest_framework import serializers
+
+
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.http import urlsafe_base64_encode
+import random,string
+
 
 from grade.models import GRADE
 from instituto.models import  INSTITUTIONS
 from psychologist.models import PSYCHOLOGIST
 
 
-from .serializers import UserSerializer,UserLoginSerializer,DeleteUserSerializer
+from .serializers import UserSerializer,UserLoginSerializer,DeleteUserSerializer,ResetPasswordSerializer
 import jwt, datetime
 
 
@@ -22,7 +30,17 @@ import jwt, datetime
 class RegisterUserViewSet(viewsets.ModelViewSet):
     queryset = USERS.objects.all()  # Define el queryset para evitar el error
     serializer_class = UserSerializer
+    
+    def generate_password(self):
+            length = random.randint(8, 32)
+            characters = string.ascii_letters + string.digits + string.punctuation
+            return ''.join(random.choice(characters) for _ in range(length))
+    
+    
     def create(self, request):
+       
+        generated_password = self.generate_password()
+       
         user_data = {
             'id_rol': request.data.get('id_rol'),
             'dni_number':request.data.get('dni_number'),
@@ -33,13 +51,15 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
             "first_name":request.data.get('first_name'),
             "last_name":request.data.get('last_name'),
             "email":request.data.get('email'),
-            "password":make_password(request.data.get('password')),
+            # "password":generated_password,
             "phone_number":request.data.get('phone_number')
         }
         user_serializer = UserSerializer(data=user_data)
         
         if user_serializer.is_valid(raise_exception=True):
             user = user_serializer.save()
+            user.password = make_password(generated_password)  # Hashear y asignar la contraseña
+            user.save()
             
             if request.data.get('id_rol') == 2:
                student_data = {
@@ -74,10 +94,29 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
                 return Response({
                     "user": user_serializer.data,
                     "psychologist":psychologist_serializer.data
+    
                 },status=status.HTTP_201_CREATED)
 
+                
+            #se encripta el link 
+            encoded_pk = urlsafe_base64_encode(force_bytes(user.pk))
+            token = PasswordResetTokenGenerator().make_token(user)
+            # url = f"http://localhost:8000/reset-password/{encoded_pk}/{token}/"
+            url = f"http://localhost:8000/api/user/reset-password/"
+            
+            return Response({
+                "email": user.email,
+                "username": user.username,
+                "password": generated_password,
+                "reset_url": url,
+                'isActive' :user.is_active
+                })
+                
+              
            
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
         
 #se muestran todos los ususarios
 class UserListView(viewsets.ReadOnlyModelViewSet):
@@ -89,6 +128,7 @@ class UserListView(viewsets.ReadOnlyModelViewSet):
 class LoginUserViewSet(viewsets.ViewSet):
     queryset = USERS.objects.all()
     serializer_class = UserLoginSerializer
+    
     def create(self, request):
         email = request.data['email']
         password = request.data['password']
@@ -96,14 +136,15 @@ class LoginUserViewSet(viewsets.ViewSet):
         user = USERS.objects.filter(email=email).first()
         
         if user is None:
-            raise AuthenticationFailed("User not found")
+            raise AuthenticationFailed("El email no existe")
         
         if not user.check_password(password):
-            raise AuthenticationFailed("Incorrect password")
+            raise AuthenticationFailed("contrasenna incorrecta")
         
         # se setan las propiedades del payload
         payload = {
             "id_user": user.id_user,
+            'id_rol' : user.id_rol.id_rol,
             "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=120),#se setea el vencimiento del token
             "iat" : datetime.datetime.utcnow()
         }
@@ -119,10 +160,23 @@ class LoginUserViewSet(viewsets.ViewSet):
             'jwt': token
         }
         return response
+    
+
+class LogOutUserView(viewsets.ViewSet):
+    queryset = USERS.objects.all()
+    serializer_class = UserSerializer
+    def create(self,request):
+        response = Response()
+        response.delete_cookie('jwt')
+        response.data = {
+            'message' : "sesion borrada"
+        }
+        return Response
+  
 
       
             
-           
+    #para autentificar el estudiante       
 class UserViewSet(viewsets.ModelViewSet):
    queryset =  USERS.objects.all()
    serializer_class = UserLoginSerializer
@@ -133,51 +187,87 @@ class UserViewSet(viewsets.ModelViewSet):
         if not token:
            raise AuthenticationFailed("no autentificado")
         try:
-           token = jwt.decode(token, 'secret', algorithm='HS256')
+           payload = jwt.decode(token, 'secret', algorithm='HS256')
            
         except jwt.ExpiredSignatureError :
             raise AuthenticationFailed("no autentificado")
         
-        user =  USERS.objects.filter(id_user=token['id_user']).first()
+        user =  USERS.objects.filter(id_user=payload['id_user']).first()
         serializer = UserSerializer(user)
 
         return Response(serializer.data)
     
 
+
 class DeleteUser(viewsets.ModelViewSet):
     queryset = USERS.objects.all()
     serializer_class = DeleteUserSerializer
     
-    def delete(self,request,pk):
+    def destroy(self, request, pk):
+        # Obtiene la cookie del request
         user_cookie = request.COOKIES.get('jwt')
         
         if not user_cookie:
-            return Response({"message": "accion no permitida"},status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": "Acción no permitida"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Intenta decodificar el token JWT
         try:
-            cookie_dict = json.loads(user_cookie)
-        except json.JSONDecodeError:
-            return Response({"detail":"invalid cookie format"},status=status.HTTP_400_BAD_REQUEST)
+            decoded_cookie = jwt.decode(user_cookie, 'secret', algorithms=['HS256'])
+        except jwt.ExpiredSignatureError:
+            return Response({"detail": "El token ha expirado"}, status=status.HTTP_401_UNAUTHORIZED)
+        except jwt.InvalidTokenError:
+            return Response({"detail": "Formato de token invalido"}, status=status.HTTP_400_BAD_REQUEST)
         
-        # user_id_cookie = cookie_dict.get['id_user']
-        user_id_cookie = cookie_dict.get('id_rol')
+        # Obtén el id_rol de la cookie decodificada
+        id_rol = decoded_cookie.get('id_rol')
         
+        
+        # Verifica si el id_rol es válido y si tiene el valor 1 (rol de administrador)
+        if not id_rol or id_rol != 1:
+            return Response({'detail': 'No autorizado para eliminar este recurso',"id_rol":id_rol}, status=status.HTTP_403_FORBIDDEN)
+        
+        # Si el id_rol es 1, intenta obtener y eliminar el usuario
         try:
-        
             instance = USERS.objects.get(pk=pk)
-            
-        # Compara el id de la cookie con el id del usuario del modelo
-            if int(user_id_cookie) != 2:
-                return Response({'detail': 'Unauthorized to delete this resource'}, status=status.HTTP_403_FORBIDDEN)
         except USERS.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+        # Elimina el usuario
         instance.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-        
-        
 
-        
+    
 
+class ResetPasswordView(viewsets.ModelViewSet):
+        queryset = USERS.objects.all() 
+        serializer_class = ResetPasswordSerializer
+        
+        def update(self,request,pk=None):
+            token = request.COOKIES.get('jwt')
+            if not token:
+                raise AuthenticationFailed("No Autentificado")
+            try:
+                payload = jwt.decode(token, 'secret', algorithm='HS256')
+           
+            except jwt.ExpiredSignatureError :
+                raise AuthenticationFailed("Autentificacion Expirada")
+        
+            user =  USERS.objects.filter(pk=payload['id_user']).first()
+            if not user:
+                raise  AuthenticationFailed("no autentificado")
+
+            serializer = ResetPasswordSerializer(user, data=request.data)
+            if serializer.is_valid():
+                user.password = make_password(serializer.validated_data['new_password'])
+                user.save()
+                return Response({"message": "Contraseña actualizada correctamente."})
+        
+            return Response(serializer.errors, status=400)
+            
+            
+            
+            
+       
     
     
     

@@ -5,7 +5,7 @@ import  {Routes, Route} from "react-router-dom";
 import Home from '../pages/home/home'
 import Administration from '../pages/admin/administration';
 import Register from '../components/Admin-components/admin-ui/Register';
-import FAQ from '../components/Admin-components/admin-static-components/FAQ';
+import FAQ from '../components/home-components/FAQ';
 import PostList from '../components/Admin-components/post/PostList';
 // import CreatePost from '../components/Admin-components/post/CreatePost';
 import Login from '../pages/login/login'
@@ -14,9 +14,10 @@ import UsersContainer from '../components/administration-components/UsersContain
 import { Profile } from '../pages/profile/Profile';
 import { AuthProvider, useAuth } from '../context/AuthContext';
 import { useParams } from 'react-router-dom';
-import ProfileStudient from '../pages/phofile-user/ProfileStudient';
-import ProfilePsycho from "../pages/phofile-user/phofile-psycho/PhofilePsycho";
-import AboutMe from '../components/Admin-components/admin-static-components/AboutMe';
+import ProfileStudient from '../pages/student/ProfileStudient';
+import ProfilePsycho from "../pages/psychogist/PhofilePsycho";
+import AboutMe from '../components/home-components/AboutMe';
+import NavHome from '../components/home-components/NavHome';
 
 
 const Rutas = () => {
@@ -24,10 +25,10 @@ const Rutas = () => {
   const { userId :id } = useParams();
   return (
     <>
-
-    
-
+     <NavHome/>
       <Routes>
+       
+        
         <Route path="/home" element={<Home />} />
         {/* <Route path="/library" element={<Library />} /> */}
 

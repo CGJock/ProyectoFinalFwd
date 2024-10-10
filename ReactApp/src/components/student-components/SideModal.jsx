@@ -14,7 +14,7 @@ const SideModal = ({ isOpen, onClose }) => {
         <nav className="modal-nav">
           <ul>
             <li>
-              <Link to="/" className="home_link">
+              <Link to="/home" className="home_link">
                 Pagina principal
               </Link>
             </li>

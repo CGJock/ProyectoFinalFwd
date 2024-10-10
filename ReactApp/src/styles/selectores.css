@@ -39,6 +39,40 @@ select {
     cursor: pointer;
     outline: none;
 }
+.selector-rol{
+    width: 25%;
+    background: linear-gradient(135deg, #0f0f0f 0%, #060009 100%);
+    color: white;
+    border: none;
+    border-radius: 13px;
+    padding: 8px 20px 8px 20px; /* Espacio para la flecha personalizada */
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    appearance: none; /* Ocultar flecha nativa */
+    -webkit-appearance: none; /* Safari */
+    -moz-appearance: none; /* Firefox */
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    outline: none;
+}
+.institution-selector{
+    width: 100%;
+    background: linear-gradient(135deg, #0f0f0f 0%, #060009 100%);
+    color: white;
+    border: none;
+    border-radius: 13px;
+    padding: 8px 20px 8px 20px; /* Espacio para la flecha personalizada */
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    appearance: none; /* Ocultar flecha nativa */
+    -webkit-appearance: none; /* Safari */
+    -moz-appearance: none; /* Firefox */
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    outline: none;
+}
 
 /* Flecha personalizada */
 .custom-select::after {

@@ -59,6 +59,37 @@ const sendEmail = (email, username, password, reset_url) => {
 
 //###################################################################################################################################
 
+export const login_user = async(apiPost,user_data) => {
+    try {
+        // Make the POST request to register the user
+        const response = await fetch(apiPost, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user_data) // User data containing the input values
+        });
+
+        // Check if the response is ok
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || "Error al logearse");
+        }
+
+        // Parse the response data
+        const data = await response.json();
+        alert("Log exitoso");
+        
+
+        return data; // Return the data for further use if needed
+    } catch (error) {
+        console.error("Failed to process the data", error);
+        throw error; // Rethrow the error to handle it in the calling function
+    }
+};
+
+
+
 export const get_institutes_data = async(apiUrl) => {
   try{
       const response = await fetch(apiUrl);

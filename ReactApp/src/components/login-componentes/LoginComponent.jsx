@@ -13,23 +13,23 @@ export const LoginComponent = () => {
     const [password, setpassword] = useState('')
     const navigate = useNavigate()
     const [errorMessage, seterrorMessage] = useState('')
-    const { setUserId } = useAuth();
+    const { Loggin } = useAuth();//llama a la funcion desde el contexto
 
     async function handleLogin(){
-    const apiPost = "http://localhost:8000/api/user/user-login/"
+    
     const user_data = {
         email: email,
         password: password
     }
     console.log("Datos de usuario:", user_data)
-    const data =  await postRegister(apiPost,user_data)
+    const data =  await Loggin(user_data)
     
 
     try {
+      await Loggin(user_data);
     if(data && data.jwt){
         console.log("se encontro su usuario")
-        seterrorMessage("")
-        navigate('/home')
+       
     }
     }catch (error){
         console.log("error logn",error.message);

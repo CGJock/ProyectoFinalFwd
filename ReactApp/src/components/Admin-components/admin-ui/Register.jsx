@@ -8,14 +8,13 @@ import { Selector_gender } from "./Selectors/checkbox-gender";
 import { Checkscholarship } from "./Selectors/checkbox-scholarship";
 import { Checkboxavailability } from "./Selectors/checkboxavailability";
 import  '../../../styles/register_container.css'
-import { AuthProvider, useAuth } from '../../../context/AuthContext';
+
 
 
 
 const Register = () => {
     
     //variables de inputs usuarios generales
-    const { setUserId } = useAuth()
     const [dni_number, Setdni_number] = useState('')
     const [sex, setsex] = useState(0)//para asignar el sexo masculino o femenino
     const [username, Setusername] = useState('')

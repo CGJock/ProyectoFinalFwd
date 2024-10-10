@@ -1,6 +1,8 @@
 
-
-import Protected_routes from './proteced_routes';
+import {Protected_routes_admin} from './proteced_routes';
+import { Protected_routes_psychologyst } from './proteced_routes';
+import { Protected_routes_student } from './proteced_routes';
+import { ProfileStudent } from '../pages/student/student-profile';
 import  {Routes, Route} from "react-router-dom";
 import Home from '../pages/home/home'
 import Administration from '../pages/admin/administration';
@@ -12,14 +14,13 @@ import Login from '../pages/login/login'
 import PostForm from '../components/Admin-components/post/PostForm';
 import UsersContainer from '../components/administration-components/UsersContainer';
 import { Profile } from '../pages/profile/Profile';
-import { AuthProvider, useAuth } from '../context/AuthContext';
 import { useParams } from 'react-router-dom';
+import { ProfilePsychologist } from '../pages/psychologist/Profile-psychologist';
 
 
 
 const Rutas = () => {
-  const { userId } = useAuth();
-  const { userId :id } = useParams();
+ 
   return (
     <>
 
@@ -29,23 +30,39 @@ const Rutas = () => {
 
       <Routes>
         <Route path="/home" element={<Home />} />
-        <Route path="/library" element={<Library />} />
+        {/* <Route path="/library" element={<Library />} /> */}
 
         <Route path="/FAQ" element={<FAQ />} />
         <Route path="/Profile/create-post" element={<Profile />} />
         <Route path="/post-list" component={<PostList />} />
         <Route path='/login' element={<Login />} />
 
+        <Route
+        path='/profile/psychologist'
+        element={
+          <Protected_routes_psychologyst>
+            <ProfilePsychologist />
+          </Protected_routes_psychologyst>
+        
+        }></Route>
 
+
+        <Route
+        path='/profile/student'
+        element={
+          <Protected_routes_student>
+            <ProfileStudent />
+          </Protected_routes_student>
+        } ></Route>
       
 
 
         <Route
-          path="/Administration"
+          path="/administration"
           element={
-            <Protected_routes>
+            <Protected_routes_admin>
               <Administration />
-            </Protected_routes>
+            </Protected_routes_admin>
           }
 
         >

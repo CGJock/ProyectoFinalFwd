@@ -1,5 +1,5 @@
 
-import "../../../styles/faq.css";
+import "../../styles/faq.css";
 
 // Component that contains the FAQs a student might have
 const FAQ = () => {

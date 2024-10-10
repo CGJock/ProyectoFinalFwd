@@ -3,6 +3,7 @@ import '../../../styles/AboutMe.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import InteractiveMap from './InteractiveMap';
 
+
 const AboutMe = () => {
   return (
     <section className="about-me">

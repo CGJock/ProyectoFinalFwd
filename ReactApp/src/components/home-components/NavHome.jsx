@@ -31,7 +31,9 @@ const NavHome = () => {
             <ul className={`navHome-menu ${isOpen ? 'open' : ''}`}>
                 <li><Link to="/" className="home_link">Home</Link></li>
                 <li><Link to="/AboutMe"className="about_link">About</Link></li>
+                
                 <li><Link to="/FAQ" className="questions_link">FAQ</Link></li>
+                <li><Link to="/profileStudient"className="profileStudient">perfil</Link></li>
                 <li><Button variant="outline-secondary" onClick={handleShow} className="contact_link">Contact</Button>{' '}</li>
             </ul>
             </div>

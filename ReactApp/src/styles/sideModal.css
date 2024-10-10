@@ -1,0 +1,47 @@
+.side-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    display: flex;
+    justify-content: flex-start; /* Alinea el modal a la izquierda */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+.side-modal {
+    background: white;
+    width: 250px; /* Ancho del modal */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.close-button {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    align-self: flex-end; /* Alinea el botón de cerrar a la derecha */
+}
+
+.modal-nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+.modal-nav li {
+    margin: 15px 0; /* Espaciado entre enlaces */
+}
+
+.modal-nav a {
+    text-decoration: none;
+    color: #333; /* Color de los enlaces */
+}
+
+.modal-nav a:hover {
+    color: #007BFF; /* Color al pasar el mouse */
+}

@@ -7,26 +7,31 @@ import { ProfileStudent } from "../pages/student/student-profile"
 import { useAuth } from "../context/AuthContext"
 
 export const Protected_routes_admin = ({children}) => {
-  const User = useAuth();
-  const token = useAuth();
-  const Id_rol = User.Id_rol
-
-  if(token && Id_rol == 1) {
-    console.log(token,Id_rol)
-    return <Navigate to='/administration'  />;
+ const {Userrol} = useAuth();
+ const {Token} =  useAuth();
+ 
+  if(Userrol == 1) {
+    
+    return children;
     } else
     return  <Home/>
 }
 
 export const Protected_routes_psychologyst = (children) => {
-  return (
-    <ProfilePsychologist />
-    )
+  const {Userrol} = useAuth();
+  if(Userrol == 2) {
+    
+    return children;
+    } else
+    return  <Home/>
 }
 
 export const Protected_routes_student = (children)  => {
-  return (
-    <ProfileStudent />
-    )
-  }
+  const {Userrol} = useAuth()
+  if(Userrol == 3) {
+    
+    return children;
+    } else
+    return  <Home/>
+}
 

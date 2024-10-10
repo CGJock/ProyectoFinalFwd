@@ -9,9 +9,9 @@ const AuthContext = createContext();
 
 // auth provider esta pensado para envolver toda la aplicacion y darle contexto a todos los hijos (children)
  const AuthProvider = ({ children }) => {
-  const [User, setUser] = useState(null)
-  const [Userrol, setUserrol] = useState(null)
-  const [Token, setToken] = useState(null)
+  const [User, setUser] = useState(sessionStorage.getItem("User") || null);
+  const [Userrol, setUserrol] = useState(sessionStorage.getItem("Userrol") || null);
+  const [Token, setToken] = useState(sessionStorage.getItem("Token") || null);
   const navigate = useNavigate();
   
 
@@ -19,16 +19,22 @@ const AuthContext = createContext();
     try{
     const apiPost = "http://localhost:8000/api/user/user-login/"
     const response = await login_user(apiPost,user_data)
-    if (response && response.jwt) {
+    if (response && response.id_user && response.id_rol) {
       const decodedToken = jwtDecode(response.jwt);
-      console.log(decodedToken,'este es la decode')
-      setUser(decodedToken.id_user)
-      setUserrol(decodedToken.id_rol)
-      setToken(response.jwt)
-      console.log("esta es tu data",response,Userrol,User)
-      console.log('userid:', Userrol)
+      setUser(response.id_user)
+      setUserrol(response.id_rol)
+      setToken(decodedToken)
+      sessionStorage.setItem("Userrol", response.id_rol);
+      sessionStorage.setItem("User", response.id_user);
+      sessionStorage.setItem("Token", decodedToken);
+      
+      
       if(Userrol == 1)
-        navigate('/administration')
+        navigate('/administration/students')
+      else if(Userrol == 2)
+        navigate('profile/student')
+      else if(Userrol == 3)
+        navigate('/profile/psychologist')
       return;
     }
     throw new Error(response.message);

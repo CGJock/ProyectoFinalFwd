@@ -1,7 +1,7 @@
 import {Protected_routes_admin} from './proteced_routes';
 import { Protected_routes_psychologyst } from './proteced_routes';
 import { Protected_routes_student } from './proteced_routes';
-import { ProfileStudent } from '../pages/student/student-profile';
+
 import  {Routes, Route} from "react-router-dom";
 import Home from '../pages/home/home'
 import Administration from '../pages/admin/administration';
@@ -11,11 +11,17 @@ import PostList from '../components/Admin-components/post/PostList';
 import Login from '../pages/login/login'
 import UsersContainer from '../components/administration-components/UsersContainer';
 import { Profile } from '../pages/profile/Profile';
+import { useParams } from 'react-router-dom';
 import { ProfilePsychologist } from '../pages/psychologist/Profile-psychologist';
-import ProfileStudient from '../pages/student/ProfileStudient';
+
+
 import ProfilePsycho from "../pages/psychogist/PhofilePsycho";
-import NavHome from '../components/home-components/NavHome';
 import AboutMe from '../components/home-components/AboutMe';
+import NavHome from '../components/home-components/NavHome';
+
+import { Student } from '../pages/student/student';
+import ProfileStudent from '../components/student-components/ProfileStudent';
+
 
 const Rutas = () => {
  
@@ -29,10 +35,10 @@ const Rutas = () => {
         {/* <Route path="/library" element={<Library />} /> */}
 
         <Route path="/FAQ" element={<FAQ />} />
-        <Route path="/Profile/create-post" element={<Profile />} />
+        <Route path="/Profile/create-post" element={<ProfileStudent />} />
 
-        <Route path="/post-list" element={<PostList />} />
-        <Route path="/profileStudient" element={<ProfileStudient/>} />
+        <Route path="/post-list" component={<PostList />} />
+        
         <Route path="/profilePsycho" element={<ProfilePsycho/>} />
         <Route path='/login' element={<Login />} />
         <Route path='/AboutMe' element={<AboutMe />} />
@@ -51,9 +57,11 @@ const Rutas = () => {
         path='/profile/student'
         element={
           <Protected_routes_student>
-            <ProfileStudent />
+            <Student />
           </Protected_routes_student>
-        } ></Route>
+        } >
+          <Route path="/profile/student" element={<ProfileStudent />} />
+        </Route>
       
 
 
@@ -69,7 +77,7 @@ const Rutas = () => {
           {/* Aquí se definen las subrutas dentro de la ruta de administración */}
           <Route path="register" element={<Register />} />
           <Route path="students" element={<UsersContainer />} />
-          <Route path="profile/students/:id" element={<Profile />} />
+          
           {/* <Route path="profile/psycho/:id" element={<ProfilePsycho />} /> */}
         </Route>
     </Routes>

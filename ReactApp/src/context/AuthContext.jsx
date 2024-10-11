@@ -32,7 +32,7 @@ const AuthContext = createContext();
       if(Userrol == 1)
         navigate('/administration/students')
       else if(Userrol == 2)
-        navigate('profile/student')
+        navigate('/profile/student')
       else if(Userrol == 3)
         navigate('/profile/psychologist')
       return;

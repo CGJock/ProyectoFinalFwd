@@ -40,7 +40,7 @@ const PostForm = () => {
 
       const data = await response.json();
       console.log('Publicación creada:', data);
-      // Aquí puedes agregar lógica adicional, como limpiar el formulario o mostrar un mensaje de éxito
+      
       setTitle('');
       setDescription('');
       setImage(null); // Limpiar el estado de la imagen

@@ -2,8 +2,8 @@ import React from "react";
 import NavHome from "../../components/home-components/NavHome";
 import Footer from "../../components/home-components/footer";
 // import CreatePost from '../../components/Admin-components/post/CreatePost'
-import PostList from "../../components/Admin-components/post/PostList";
-import PostForm from "../../components/Admin-components/post/PostForm";
+import PostList from "../../components/post/PostList";
+import PostForm from "../../components/post/PostForm";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import VideoCarousel from '../../components/home-components/VideoCarousel'
 

@@ -76,7 +76,6 @@ const Register = () => {
             try {
               const response = await postRegister(apiPost, user_data);
               console.log("Registration successful", response);
-              setUserId(response.data.id_user); // Guardar el ID del usuario en el contexto de autenticación
           } catch (error) {
               console.error("Registration failed", error);
               alert('Registration failed, please try again.');

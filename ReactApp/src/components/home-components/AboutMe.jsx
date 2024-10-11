@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../styles/AboutMe.css';
+import '../../styles/AboutMe.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import InteractiveMap from './InteractiveMap';
 

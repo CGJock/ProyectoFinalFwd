@@ -25,9 +25,9 @@ class PostReplies(models.Model):
     description = models.TextField()
     replies_date = models.DateField(auto_now_add=True)
     like_count = models.IntegerField(default=0)
-    like_count = models.IntegerField(default=0)
+
     
     def __str__(self):
-        return f'Replies by {self.user_id} on {self.post.title}'
+        return f'Replies by {self.id_user} on {self.post_id.title}'
 
     

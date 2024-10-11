@@ -1,4 +1,3 @@
-
 import {Protected_routes_admin} from './proteced_routes';
 import { Protected_routes_psychologyst } from './proteced_routes';
 import { Protected_routes_student } from './proteced_routes';
@@ -9,19 +8,14 @@ import Administration from '../pages/admin/administration';
 import Register from '../components/Admin-components/admin-ui/Register';
 import FAQ from '../components/home-components/FAQ';
 import PostList from '../components/Admin-components/post/PostList';
-// import CreatePost from '../components/Admin-components/post/CreatePost';
 import Login from '../pages/login/login'
-// import PostForm from '../components/Admin-components/post/PostForm';
 import UsersContainer from '../components/administration-components/UsersContainer';
 import { Profile } from '../pages/profile/Profile';
-import { useParams } from 'react-router-dom';
 import { ProfilePsychologist } from '../pages/psychologist/Profile-psychologist';
-
 import ProfileStudient from '../pages/student/ProfileStudient';
 import ProfilePsycho from "../pages/psychogist/PhofilePsycho";
-import AboutMe from '../components/home-components/AboutMe';
 import NavHome from '../components/home-components/NavHome';
-
+import AboutMe from '../components/home-components/AboutMe';
 
 const Rutas = () => {
  
@@ -37,10 +31,11 @@ const Rutas = () => {
         <Route path="/FAQ" element={<FAQ />} />
         <Route path="/Profile/create-post" element={<Profile />} />
 
-        <Route path="/post-list" component={<PostList />} />
+        <Route path="/post-list" element={<PostList />} />
         <Route path="/profileStudient" element={<ProfileStudient/>} />
         <Route path="/profilePsycho" element={<ProfilePsycho/>} />
         <Route path='/login' element={<Login />} />
+        <Route path='/AboutMe' element={<AboutMe />} />
 
         <Route
         path='/profile/psychologist'

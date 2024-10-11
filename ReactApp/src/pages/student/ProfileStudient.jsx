@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import "../../styles/profileStudient.css";
 import { saveToLocalStorage, getFromLocalStorage, fileToBase64 } from '../../services/storageUtils';
 import SideModal from '../../components/student-components/SideModal';
+import PostForm from '../../components/Admin-components/post/PostForm';
+import PostList from '../../components/Admin-components/post/PostList';
 
 const ProfileStudient = () => {
     const [image, setImage] = useState(null);
@@ -60,8 +62,11 @@ const ProfileStudient = () => {
     return (
         <div className="container">
             <h2>Perfil de Usuario</h2>
+
+            {/* boton que abre el modal de la izquierdo */}
             <button onClick={toggleModal}>Abrir Menú</button>
             <SideModal isOpen={isModalOpen} onClose={toggleModal} />
+            {/* contenedor la imagen de perfil */}
             <div className="ProfileStudientContainer">
                 <div className="imageContainer">
                     {image ? (
@@ -84,6 +89,8 @@ const ProfileStudient = () => {
                         agregar foto de perfil
                     </button>
                 </div>
+                {/* añadir la descripcion */}
+                <div className="infoContainer">
                 <textarea
                     value={tempDescription}
                     onChange={handleTempDescriptionChange}
@@ -96,15 +103,31 @@ const ProfileStudient = () => {
                 >
                     Añadir Descripción
                 </button>
+                {/* informacion guardada */}
                 <div className="savedDescription">
                     <h4>Descripción Guardada:</h4>
                     <p>{description}</p>
                 </div>
             </div>
+            <div>
+        <PostList />
+        <PostForm />
 
+      </div>
         </div>
-        
+        </div>
     );
 };
 
 export default ProfileStudient;
+
+
+
+
+
+
+
+
+
+
+

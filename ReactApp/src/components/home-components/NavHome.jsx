@@ -29,7 +29,7 @@ const NavHome = () => {
           ☰
         </button>
             <ul className={`navHome-menu ${isOpen ? 'open' : ''}`}>
-                <li><Link to="/" className="home_link">Home</Link></li>
+                <li><Link to="/home" className="home_link">Home</Link></li>
                 <li><Link to="/AboutMe"className="about_link">About</Link></li>
                 
                 <li><Link to="/FAQ" className="questions_link">FAQ</Link></li>

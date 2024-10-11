@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import '../../../styles/nav-home.css';
+import '../../styles/nav-home.css';
 import { useState } from "react";
 import { Modal, Button, Alert } from "react-bootstrap";
 

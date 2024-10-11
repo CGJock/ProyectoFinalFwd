@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import "../../styles/profileStudient.css";
 import { saveToLocalStorage, getFromLocalStorage, fileToBase64 } from '../../services/storageUtils';
-import SideModal from '../../components/student-components/SideModal';
+import SideModal from './SideModal';
 
-const ProfileStudient = () => {
+const ProfileStudent = () => {
     const [image, setImage] = useState(null);
     const [description, setDescription] = useState('');
     const [tempDescription, setTempDescription] = useState('');
@@ -107,4 +107,4 @@ const ProfileStudient = () => {
     );
 };
 
-export default ProfileStudient;
+export default ProfileStudent;

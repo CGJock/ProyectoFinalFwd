@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../../../styles/SideModal.css";
+import "../../styles/SideModal.css";
 
 const SideModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;

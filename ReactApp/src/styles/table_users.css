@@ -1,57 +1,92 @@
-
-.table-users-container{
+.table-users-container {
     width: 120%;
     display: grid;
-    overflow-x: a;
-    margin: 0 auto; 
+    overflow-x: auto;
+    margin: 0 auto;
     margin-left: 0px;
-}
-.container-header{
+    font-family: Arial, sans-serif;
+    border: 1px solid #4a0e4e;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .container-header {
     display: flex;
-    gap: 10px;
-    padding-left: 0;
+    gap: 5px;
+    padding: 12px 0;
     width: 100%;
-    padding: 0;
-    border: 2px solid black;
+    background-color: #4a0e4e;
+    color: white;
+    font-weight: bold;
     flex-direction: row;
-    white-space: nowrap; /* Evitar que el texto haga saltos de línea */
-    overflow: hidden; /* Ocultar el desbordamiento del contenido */
-    text-overflow: ellipsis; /* Mostrar '...' si el contenido es muy largo */
-}
-.table-body{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  
+  .table-body {
     display: grid;
-    column-gap: 25px;
-    gap: 10px;
-    padding-left: 0;
+    gap: 5px;
     width: 100%;
-    padding: 0;
-    row-gap: 2px;
-    border: 2px solid purple;   
-}
-.table-id-user,.table-dni{
-width: 75px;
-text-align: center;
-border: solid blue 1px;
-}
-
-
-.table-cell{
-    border: 1px solid red;
+    padding: 10px 0;
+    background-color: #f9f2fa;
+  }
+  
+  .table-id-user, .table-dni {
+    width: 75px;
+    text-align: center;
+    border: 1px solid #4a0e4e;
+  }
+  
+  .table-cell {
+    border: 1px solid #4a0e4e;
     text-align: center;
     align-items: center;
     vertical-align: middle;
-    width: 100% ;
-}
-
-.table-row{
-    border: 2px solid yellow;
+    width: 100%;
+    padding: 8px;
+    background-color: #ffffff;
+  }
+  
+  .table-row {
+    border: 1px solid #4a0e4e;
     display: flex;
     flex-direction: row;
-    gap: 5%;
-    
-}
-.row-{
+    gap: 5px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .table-row:hover {
+    background-color: #e6d0e8;
+  }
+  
+  .row- {
     text-align: center;
     align-items: center;
-    border: 2px solid green;
-}
+    border: 1px solid #4a0e4e;
+    padding: 8px;
+    flex: 1;
+    min-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .table-users-container {
+      width: 100%;
+    }
+    
+    .container-header,
+    .table-row {
+      font-size: 14px;
+    }
+    
+    .row- {
+      min-width: 80px;
+    }
+  }

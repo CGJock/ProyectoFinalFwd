@@ -21,10 +21,6 @@ class RegisterStudentViewSet(viewsets.ModelViewSet):
             return Response(student_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
       
 
-
-class StudentListView(viewsets.ReadOnlyModelViewSet):
-    queryset = STUDENT.objects.all()
-    serializer_class = StudentSerializer
             
 
 class StudentsUser(viewsets.ViewSet):

@@ -14,3 +14,5 @@ class PSYCHOLOGIST(models.Model):
     def __str__(self):
         return self.id_psychologist
     
+    
+    

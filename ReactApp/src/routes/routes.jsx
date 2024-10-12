@@ -13,13 +13,12 @@ import PostList from '../components/post/PostList';
 import Login from '../pages/login/login'
 // import PostForm from '../components/Admin-components/post/PostForm';
 import UsersContainer from '../components/Admin-components/admin-ui/UsersContainer';
-import { Profile } from '../pages/profile/Profile';
-import { useParams } from 'react-router-dom';
+// import { Profile } from '../pages/profile/Profile';
 import { ProfilePsychologist } from '../pages/psychologist/psychologist';
 
 
 import ProfilePsycho from "../components/psychologist-components/PhofilePsycho";
-import AboutMe from '../components/home-components/AboutMe';
+// import AboutMe from '../components/home-components/AboutMe';
 import NavHome from '../components/home-components/NavHome';
 
 import { Student } from '../pages/student/student';

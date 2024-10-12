@@ -1,32 +1,32 @@
 import { Navigate } from "react-router-dom"
-import Administration from "../pages/admin/administration"
-import Home  from "../pages/home/home"
-
-import { ProfilePsychologist } from "../pages/psychologist/Profile-psychologist"
-import { ProfileStudent } from "../pages/student/student-profile"
+import Home from "../pages/home/home";
 import { useAuth } from "../context/AuthContext"
 
 export const Protected_routes_admin = ({children}) => {
-  const User = useAuth();
-  const token = useAuth();
-  const Id_rol = User.Id_rol
-
-  if(token && Id_rol == 1) {
-    console.log(token,Id_rol)
-    return <Navigate to='/administration'  />;
+ const {Userrol} = useAuth();
+ const {Token} =  useAuth();
+ 
+  if(Userrol == 1) {
+    
+    return children;
     } else
-    return  <Home/>
+    return  <Navigate to="/home"/>
 }
 
-export const Protected_routes_psychologyst = (children) => {
-  return (
-    <ProfilePsychologist />
-    )
+export const Protected_routes_psychologyst = ({children}) => {
+  const {Userrol} = useAuth();
+  if(Userrol == 3 || Userrol == 1) {
+    
+    return children;
+    } else
+    return  <Navigate to="/home"/>
 }
 
-export const Protected_routes_student = (children)  => {
-  return (
-    <ProfileStudent />
-    )
-  }
-
+export const Protected_routes_student = ({children})  => {
+  const {Userrol} = useAuth()
+  if(Userrol == 2 || Userrol == 1) {
+    
+    return children;
+    } else
+    return  <Navigate to="/home"/>
+}

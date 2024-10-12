@@ -132,7 +132,6 @@ class LoginUserViewSet(viewsets.ViewSet):
     def create(self, request):
         email = request.data['email']
         password = request.data['password']
-        print(password,email)
         user = USERS.objects.filter(email=email).first()
         
         if user is None:
@@ -157,7 +156,10 @@ class LoginUserViewSet(viewsets.ViewSet):
         response.set_cookie('jwt', value=token, httponly=True)#se setea la cookie
         
         response.data = {
-            'jwt': token
+            'jwt': token,
+            'id_user': user.id_user,
+            'id_rol':  user.id_rol.id_rol
+
         }
         return response
     

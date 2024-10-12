@@ -1,7 +1,7 @@
 
 import Register from "../../components/Admin-components/admin-ui/Register"
 
-import UsersContainer from "../../components/administration-components/UsersContainer"
+import UsersContainer from "../../components/Admin-components/admin-ui/UsersContainer"
 import { Outlet } from 'react-router-dom';
 
 const Administration = () => {

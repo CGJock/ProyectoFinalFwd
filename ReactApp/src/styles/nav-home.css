@@ -31,7 +31,8 @@
 .questions_link,
 .home_link,
 .about_link,
-.contact_link {
+.contact_link,
+.profileStudient {
   color: #979da6;
   cursor: pointer;
 }

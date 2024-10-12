@@ -79,8 +79,6 @@ export const login_user = async(apiPost,user_data) => {
         // Parse the response data
         const data = await response.json();
         alert("Log exitoso");
-        
-
         return data; // Return the data for further use if needed
     } catch (error) {
         console.error("Failed to process the data", error);

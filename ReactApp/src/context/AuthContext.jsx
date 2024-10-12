@@ -20,10 +20,11 @@ const AuthContext = createContext();
     const apiPost = "http://localhost:8000/api/user/user-login/"
     const response = await login_user(apiPost,user_data)
     if (response && response.jwt) {
+      console.log(response,'esta es la rspuesta')
       const decodedToken = jwtDecode(response.jwt);
-      console.log(decodedToken,'este es la decode')
-      setUser(decodedToken.id_user)
-      setUserrol(decodedToken.id_rol)
+      console.log(response,decodedToken,'este es la decode')
+      setUser(response.id_user)
+      setUserrol(response.id_rol)
       setToken(response.jwt)
       console.log("esta es tu data",response,Userrol,User)
       console.log('userid:', Userrol)

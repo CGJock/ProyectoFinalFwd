@@ -1,7 +1,7 @@
 import { useEffect,  useState } from 'react'
 
 import { get_institutes_data } from '../../../services/fetch';
-import '../../../styles/register_container.css'
+import '../../../styles/table_users.css'
 
 
 
@@ -28,9 +28,9 @@ const UsersContainer = () => {
         <div className="table-cell">Genero</div>
         <div className="table-cell">Institucion</div>
         <div className="table-cell">Grado</div>
-        <div className="table-cell">Beca</div>
-        <div className="table-cell">Subsidio</div>
-        <div className="table-cell">Institucion Publica</div>
+        <div className="table-small">Beca</div>
+        <div className="table-small">Subsidio</div>
+        <div className="table-small">Institucion Publica</div>
         <div className="table-cell">Direccion Insitucion</div>
     </div>
 
@@ -38,17 +38,17 @@ const UsersContainer = () => {
     <div className="table-body">
       {data.map((student) => (
         <div className="table-row" key={student.id_user.id_user}>
-          <div className="row-id-user">{student.id_user.id_user}</div>
-          <div className="row-dni">{student.id_user.dni_number}</div>
+          <div className="row-">{student.id_user.id_user}</div>
+          <div className="row-">{student.id_user.dni_number}</div>
           <div className="row-">{student.id_user.name}</div>
           <div className="row-">{student.id_user.first_name} </div>
           <div className="row-">{student.id_user.last_name}</div>
-          <div className="row-">{student.id_user.sex}</div>
+          <div className="row-">{student.id_user.sex ? "masculino" : "femenino"}</div>
           <div className="row-">{student.id_institution.institution_name}</div>
-          <div className="row-">{student.id_grade}</div>
-          <div className="row-">{student.scholarship ? "Sí" : "No"}</div>
-          <div className="row-">{student.government_subsidy ? "Sí" : "No"} </div>
-          <div className="row-">{student.scholarship ? "Sí" : "No"} </div>
+          <div className="row-">{student.id_grade.grade_name}</div>
+          <div className="row-small">{student.scholarship ? "Sí" : "No"}</div>
+          <div className="row-small">{student.government_subsidy ? "Sí" : "No"} </div>
+          <div className="row-small">{student.id_institution.public_institution ? "Sí" : "No"} </div>
           <div className='row'>{student.id_institution.institution_address}</div>
           
         </div>

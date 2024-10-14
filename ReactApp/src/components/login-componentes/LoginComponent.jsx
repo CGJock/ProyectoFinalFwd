@@ -21,7 +21,7 @@ export const LoginComponent = () => {
         email: email,
         password: password
     }
-    console.log("Datos de usuario:", user_data)
+    
     const data =  await Loggin(user_data)
     
 
@@ -29,6 +29,7 @@ export const LoginComponent = () => {
       await Loggin(user_data);
     if(data && data.jwt){
         console.log("se encontro su usuario")
+        console.log(data,'esto es la data del user')
        
     }
     }catch (error){

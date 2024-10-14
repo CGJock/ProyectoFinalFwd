@@ -9,9 +9,12 @@ const AuthContext = createContext();
 
 // auth provider esta pensado para envolver toda la aplicacion y darle contexto a todos los hijos (children)
  const AuthProvider = ({ children }) => {
-  const [User, setUser] = useState(sessionStorage.getItem("User") || null);
-  const [Userrol, setUserrol] = useState(sessionStorage.getItem("Userrol") || null);
+  const [SessionData, setSessionData] = useState(JSON.parse(sessionStorage.Session_data || null));
+  const [IdUser, setIdUser] = useState(SessionData.id_user);
+  const [Userrol, setUserrol] = useState(SessionData.id_rol);
   const [Token, setToken] = useState(sessionStorage.getItem("Token") || null);
+  
+
   const navigate = useNavigate();
   
 
@@ -21,9 +24,13 @@ const AuthContext = createContext();
     const response = await login_user(apiPost,user_data)
     if (response && response.id_user && response.id_rol) {
       const decodedToken = jwtDecode(response.jwt);
-      setUser(response.id_user)
+      
+      setIdUser(setSessionData.id_user)
+      console.log(IdUser)
       setUserrol(response.id_rol)
       setToken(decodedToken)
+      setSessionData(response)
+      sessionStorage.setItem('Session_data', JSON.stringify(response));
       sessionStorage.setItem("Userrol", response.id_rol);
       sessionStorage.setItem("User", response.id_user);
       sessionStorage.setItem("Token", decodedToken);
@@ -44,15 +51,13 @@ const AuthContext = createContext();
   };
 
   const logout  = () => {
-    setUser(null)
-    setUserrol(null)
-    setToken(null)
+    setSessionData(null)
   };
 
 
 
 return (
-    <AuthContext.Provider value={{Token, User, Userrol, Loggin, logout }}>
+    <AuthContext.Provider value={{Token, IdUser, Userrol, Loggin, logout }}>
       {children}
     </AuthContext.Provider>
   );

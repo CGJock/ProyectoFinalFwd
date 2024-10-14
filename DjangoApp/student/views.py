@@ -27,9 +27,11 @@ class StudentsUser(viewsets.ViewSet):
     
     def list(self, request, ):
         # Recupera todos los estudiantes con sus usuarios relacionados
-        students = STUDENT.objects.select_related('id_user','id_institution').all()
+        students = STUDENT.objects.select_related('id_user','id_institution','id_grade').all()
         serializer = StudentSerializer(students, many=True)
         return Response(serializer.data)
+    
+    
 
 
 

@@ -23,6 +23,7 @@ import NavHome from '../components/home-components/NavHome';
 
 import { Student } from '../pages/student/student';
 import ProfileStudent from '../components/student-components/ProfileStudent';
+import { TicketComponent } from '../components/student-components/TicketComponent';
 
 
 const Rutas = () => {
@@ -62,6 +63,7 @@ const Rutas = () => {
           </Protected_routes_student>
         } >
           <Route path="/profile/student" element={<ProfileStudent />} />
+          <Route path='/profile/student/create-ticket/' element={<TicketComponent />} />
         </Route>
       
 

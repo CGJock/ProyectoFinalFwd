@@ -59,7 +59,7 @@ const ProfileStudent = () => {
 
     return (
         <div className="container">
-            <h2>Perfil de Usuario</h2>
+            {/* <h2>Perfil de Usuario</h2>
             <button onClick={toggleModal}>Abrir Menú</button>
             <SideModal isOpen={isModalOpen} onClose={toggleModal} />
             <div className="ProfileStudientContainer">
@@ -100,7 +100,7 @@ const ProfileStudent = () => {
                     <h4>Descripción Guardada:</h4>
                     <p>{description}</p>
                 </div>
-            </div>
+            </div> */}
 
         </div>
         

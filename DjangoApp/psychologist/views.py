@@ -53,6 +53,11 @@ class CreateTicket(viewsets.ModelViewSet):
             return Response(ticket_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 
+class TicketList(viewsets.ReadOnlyModelViewSet):
+    queryset = TICKET.objects.all()
+    serializer_class = TicketSerializer
+        
+
 
 
 

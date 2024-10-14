@@ -12,7 +12,7 @@ class TicketSerializer(serializers.ModelSerializer):
     id_user = serializers.PrimaryKeyRelatedField(queryset=USERS.objects.all())
     class Meta:
         model=TICKET
-        fields=['id_user']
+        fields=['id_ticket','id_user','state']
         
         
         

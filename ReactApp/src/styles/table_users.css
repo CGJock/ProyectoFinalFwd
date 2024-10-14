@@ -7,7 +7,7 @@
 
 .container-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   text-align: center;
   gap: 10px; /* Space between header cells */
   padding: 10px; /* Add padding for better spacing */
@@ -22,24 +22,25 @@
 
 .table-body {
   display: flex;
+  justify-content: space-evenly;
   text-align: center;
+  align-items: center;
   width: 100%;
   gap: 10px;
-  column-gap: 30px;
   flex-direction: column; /* Stack rows vertically */
-  column-gap: 30px; /* Space between rows */
+ 
   border:  solid rgb(255, 0, 221) 1px;
 }
 
 .table-row {
   display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  gap: 10px; /* Space between cells */
-  padding: 10px;
-  padding: 10px; /* Add padding for better spacing */
+  column-gap: 30px;
+  text-align: center;
+  gap: 10px;
+  justify-content: space-evenly;
+  width: 100%;
   background-color: #f8f9fa; /* Light background for rows */
-  border: 1px solid #124e8a; /* Border for rows */
+  border: 3px solid #168a12; /* Border for rows */
   border-radius: 5px; /* Rounded corners for rows */
   transition: background-color 0.3s; /* Smooth hover effect */
 }

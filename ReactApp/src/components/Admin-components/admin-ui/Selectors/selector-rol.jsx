@@ -9,7 +9,8 @@ import '../../../../styles/selectores.css'
 
 const Selector_rols = ({id_rol,setid_rol}) => {
     
-    
+  console.log(id_rol)
+  console.log(typeof(id_rol))
     const [roles, setroles] = useState([])
     
     
@@ -38,7 +39,7 @@ const Selector_rols = ({id_rol,setid_rol}) => {
 
         <select className='selector-rol'
         value={id_rol}
-        onChange={(event) => setid_rol(event.target.value)}
+        onChange={(event) => setid_rol(parseInt(event.target.value))}
         name="institution"
         id="institution"
         >

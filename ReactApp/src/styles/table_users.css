@@ -1,92 +1,90 @@
 .table-users-container {
-    width: 120%;
-    display: grid;
-    overflow-x: auto;
-    margin: 0 auto;
-    margin-left: 0px;
-    font-family: Arial, sans-serif;
-    border: 1px solid #4a0e4e;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
+ width: 1400px;
+  max-width: 1600px; /* Set a maximum width for larger screens */
+  margin: 0 auto; /* Center the table container */
   
+}
+
+.container-header {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  gap: 10px; /* Space between header cells */
+  padding: 10px; /* Add padding for better spacing */
+  column-gap: 30px;
+  padding-left: 10px;
+  background-color: #007bff; /* Header background color */
+  color: white; /* Text color for the header */
+  border-radius: 5px; /* Rounded corners for the header */
+  font-weight: bold; /* Bold text for better visibility */
+  white-space: nowrap; /* Prevent line breaks */
+}
+
+.table-body {
+  display: flex;
+  text-align: center;
+  width: 100%;
+  gap: 10px;
+  column-gap: 30px;
+  flex-direction: column; /* Stack rows vertically */
+  column-gap: 30px; /* Space between rows */
+  border:  solid rgb(255, 0, 221) 1px;
+}
+
+.table-row {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  gap: 10px; /* Space between cells */
+  padding: 10px;
+  padding: 10px; /* Add padding for better spacing */
+  background-color: #f8f9fa; /* Light background for rows */
+  border: 1px solid #124e8a; /* Border for rows */
+  border-radius: 5px; /* Rounded corners for rows */
+  transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+.table-row:hover {
+  background-color: #e2e6ea; /* Change background on hover */
+}
+
+.table-cell {
+  text-align: center; /* Center text in cells */
+  flex: 1; /* Allow cells to grow and fill space equally */
+  
+}
+
+.table-id-user,
+.table-dni {
+  min-width: 75px; /* Set a minimum width for specific columns */
+}
+
+.row- {
+  text-align: center; /* Center text in row cells */
+  margin-left: 5px;
+  margin-right: 50px;
+  border: solid red 2px;
+}
+.row-small {
+  text-align: center; /* Center text in row cells */
+  max-width: 35px;
+  margin-left: 5px;
+  margin-right: 75px;
+  border: solid red 2px;
+  flex: 0.5;
+}
+
+
+@media (max-width: 768px) {
   .container-header {
-    display: flex;
-    gap: 5px;
-    padding: 12px 0;
-    width: 100%;
-    background-color: #4a0e4e;
-    color: white;
-    font-weight: bold;
-    flex-direction: row;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    position: sticky;
-    top: 0;
-    z-index: 1;
+    flex-direction: column; /* Stack header cells on smaller screens */
   }
-  
-  .table-body {
-    display: grid;
-    gap: 5px;
-    width: 100%;
-    padding: 10px 0;
-    background-color: #f9f2fa;
-  }
-  
-  .table-id-user, .table-dni {
-    width: 75px;
-    text-align: center;
-    border: 1px solid #4a0e4e;
-  }
-  
-  .table-cell {
-    border: 1px solid #4a0e4e;
-    text-align: center;
-    align-items: center;
-    vertical-align: middle;
-    width: 100%;
-    padding: 8px;
-    background-color: #ffffff;
-  }
-  
+
   .table-row {
-    border: 1px solid #4a0e4e;
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
-    margin-bottom: 5px;
-    transition: background-color 0.3s ease;
+    flex-direction: column; /* Stack row cells on smaller screens */
   }
-  
-  .table-row:hover {
-    background-color: #e6d0e8;
+
+  .table-cell {
+    min-width: 100%; /* Allow cells to take full width */
   }
-  
-  .row- {
-    text-align: center;
-    align-items: center;
-    border: 1px solid #4a0e4e;
-    padding: 8px;
-    flex: 1;
-    min-width: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .table-users-container {
-      width: 100%;
-    }
-    
-    .container-header,
-    .table-row {
-      font-size: 14px;
-    }
-    
-    .row- {
-      min-width: 80px;
-    }
-  }
+}

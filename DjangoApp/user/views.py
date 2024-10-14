@@ -61,7 +61,7 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
             user.password = make_password(generated_password)  # Hashear y asignar la contraseña
             user.save()
             
-            if request.data.get('id_rol') == 2:
+            if int(request.data.get('id_rol')) == 2:
                student_data = {
                 "government_subsidy":request.data.get("government_subsidy"),
                 "scholarship":request.data.get("scholarship"),  
@@ -78,7 +78,7 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
 
                },status=status.HTTP_201_CREATED)
                
-            elif request.data.get('id_rol') == 3:
+            elif int(request.data.get('id_rol')) == 3:
                 psychologist_data  = {
                     'license_code': request.data.get('license_code'),
                     'availability': request.data.get('availability'),

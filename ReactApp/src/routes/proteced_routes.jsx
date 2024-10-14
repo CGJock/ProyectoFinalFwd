@@ -6,7 +6,7 @@ export const Protected_routes_admin = ({children}) => {
  const {Userrol} = useAuth();
  const {Token} =  useAuth();
  
-  if(Userrol == 1) {
+  if(parseInt(Userrol) == 1) {
     
     return children;
     } else
@@ -15,7 +15,7 @@ export const Protected_routes_admin = ({children}) => {
 
 export const Protected_routes_psychologyst = ({children}) => {
   const {Userrol} = useAuth();
-  if(Userrol == 3 || Userrol == 1) {
+  if(parseInt(Userrol) == 3 || parseInt(Userrol) == 1) {
     
     return children;
     } else
@@ -24,7 +24,7 @@ export const Protected_routes_psychologyst = ({children}) => {
 
 export const Protected_routes_student = ({children})  => {
   const {Userrol} = useAuth()
-  if(Userrol == 2 || Userrol == 1) {
+  if(parseInt(Userrol) == 2 || parseInt(Userrol) == 1) {
     
     return children;
     } else

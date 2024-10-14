@@ -13,6 +13,7 @@ import  '../../../styles/register_container.css'
 
 
 const Register = () => {
+ 
     
     //variables de inputs usuarios generales
     const [dni_number, Setdni_number] = useState('')

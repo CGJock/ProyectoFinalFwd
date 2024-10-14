@@ -1,5 +1,6 @@
 from django.db import models
 from user.models import USERS
+from django.utils import timezone
 
 # Create your models here.
 
@@ -13,6 +14,16 @@ class PSYCHOLOGIST(models.Model):
     
     def __str__(self):
         return self.id_psychologist
+    
+
+class TICKET(models.Model):
+    id_ticket = models.AutoField(primary_key=True)
+    id_user = models.ForeignKey(USERS, on_delete=models.CASCADE)
+    crated_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
+    state = models.CharField(default='pending', max_length=55)
+    
+    
     
     
     

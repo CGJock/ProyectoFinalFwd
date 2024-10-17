@@ -24,6 +24,7 @@ class USERS(AbstractUser):
     password = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=8)
     last_login = models.DateTimeField(null=True, blank=True)
+    is_active = models.BooleanField(default=False)
     
 
      

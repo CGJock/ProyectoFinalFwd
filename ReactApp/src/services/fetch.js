@@ -2,6 +2,7 @@
 //servicio con metodo post para registrar usuarios
 import emailjs from "emailjs-com"; // Ensure you have EmailJS installed
 // import jwtDecode from 'jwt-decode';
+import Cookies from 'js-cookie';
 
 export const postRegister = async (apiPost, user_data) => {
     try {
@@ -17,12 +18,12 @@ export const postRegister = async (apiPost, user_data) => {
         // Check if the response is ok
         if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(errorData.detail || "Error in registration");
+            throw new Error(errorData.detail || "Error al registrarse");
         }
 
         // Parse the response data
         const data = await response.json();
-        alert("User registered successfully");
+        alert("Te has registrado correctamente");
 
       
 
@@ -30,9 +31,9 @@ export const postRegister = async (apiPost, user_data) => {
         sendEmail(data.email, data.username, data.password, data.reset_url);
         
 
-        return data; // Return the data for further use if needed
+        return data; 
     } catch (error) {
-        console.error("Failed to process the data", error);
+        console.error("Error al procesar la data", error);
         throw error; // Rethrow the error to handle it in the calling function
     }
 };
@@ -50,6 +51,8 @@ const sendEmail = (email, username, password, reset_url) => {
         .then(
             (response) => {
                 console.log("Email sent successfully", response.status, response.text);
+                alert('se ha enviado un correo con tu conta a',  email);
+
             },
             (err) => {
                 console.error("Error sending email", err);
@@ -61,14 +64,19 @@ const sendEmail = (email, username, password, reset_url) => {
 
 export const login_user = async(apiPost,user_data) => {
     try {
+        const csrftoken = Cookies.get('csrftoken');
+        
         // Make the POST request to register the user
         const response = await fetch(apiPost, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
             },
-            body: JSON.stringify(user_data) // User data containing the input values
+            body: JSON.stringify(user_data), // User data containing the input values
+            credentials:'include'
         });
+        console.log(response)
 
         // Check if the response is ok
         if (!response.ok) {
@@ -78,6 +86,8 @@ export const login_user = async(apiPost,user_data) => {
 
         // Parse the response data
         const data = await response.json();
+        console.log(data)
+        
         alert("Log exitoso");
         return data; // Return the data for further use if needed
     } catch (error) {

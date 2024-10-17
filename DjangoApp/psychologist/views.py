@@ -1,6 +1,6 @@
-from .models import PSYCHOLOGIST
+from .models import PSYCHOLOGIST,PACIENTFILES,EXPEDIENT
 from rest_framework import viewsets
-from .serializers import PsychologistSerializer
+from .serializers import PsychologistSerializer,PacientFilesSerializer,ExpedientSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
@@ -13,6 +13,10 @@ from .models import TICKET
 import jwt
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.decorators import action
+from django.urls import reverse_lazy
+# add the imports to the top
+from django.views.generic.edit import CreateView
+from rest_framework.views import APIView
 
 # Create your views here.
 class RegisterPsychologistViewSet(viewsets.ModelViewSet):
@@ -30,6 +34,8 @@ class RegisterPsychologistViewSet(viewsets.ModelViewSet):
 class PychologistsList(viewsets.ReadOnlyModelViewSet):
     queryset = PSYCHOLOGIST.objects.all()
     serializer_class = PsychologistSerializer
+    
+
     
 
 class CreateTicket(viewsets.ModelViewSet):
@@ -56,14 +62,30 @@ class CreateTicket(viewsets.ModelViewSet):
 class TicketList(viewsets.ReadOnlyModelViewSet):
     queryset = TICKET.objects.all()
     serializer_class = TicketSerializer
+    
+    
+class FileUploadView(viewsets.ModelViewSet):
+    queryset = PACIENTFILES.objects.all()
+    serializer_class = PacientFilesSerializer
+    model = PACIENTFILES
+    fields = ['file' ]
+    success_url = reverse_lazy('PACIENTFILES')
+    
+    def get_context_data(self,request, **kwargs):
+        fields = request.data.get('file')
+        fields['documents'] = PACIENTFILES.objects.all()
+        return fields
         
 
 
 
 
-class CreateCase(viewsets.ViewSet):
-    @action(detail=True, methods=['POST'])
-    def Assign_case(request):
+class CreateCase(viewsets.ModelViewSet):
+    queryset = EXPEDIENT.objects.all()
+    serializer_class = ExpedientSerializer
+    
+    
+    def Assign_case(self,request,*args, **kwargs):
         
         token = request.COOKIES.get('jwt')
         
@@ -75,17 +97,20 @@ class CreateCase(viewsets.ViewSet):
         except jwt.ExpiredSignatureError :
                 raise AuthenticationFailed("no autentificado")
             
-        user =  USERS.objects.filter(id_user=payload['id_user']).first()
+        admin =  USERS.objects.filter(id_user=payload['id_user']).first()
         
-        if user:
+            
+        pacient_id = request.data.get('user_id')
+        
+        if admin:
             
             try:
                 #encuentra un studiante, sin caso
-                pacient = user
+                pacient = USERS.objects.find(id_user=pacient_id)
                 if not pacient:
                     return  Response({'error':'No existe un paciente con ese id'},status=status.HTTP_404_NOT_FOUND)
         
-                psychologist = PSYCHOLOGIST.objects.select_related('id_user','id_user').annotate(pacient_count=Count('pacient')).filter(pacient_count__lt=4).first()
+                psychologist = PSYCHOLOGIST.objects.filter(pacient_count__lt=4).order_by()
         
                 if not psychologist:
                     return  Response({'error':'No hay psicologos disponibles'},status=status.HTTP_404_NOT_FOUND)

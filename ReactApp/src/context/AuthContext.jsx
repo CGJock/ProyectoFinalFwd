@@ -2,46 +2,60 @@ import React, { createContext, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login_user } from '../services/fetch';
 import { jwtDecode } from 'jwt-decode';
+import { useEffect } from 'react';
+import Cookies from "js-cookie";
 
 
 // el componente 
 const AuthContext = createContext();
 
 // auth provider esta pensado para envolver toda la aplicacion y darle contexto a todos los hijos (children)
- const AuthProvider = ({ children }) => {
-  const [SessionData, setSessionData] = useState(JSON.parse(sessionStorage.Session_data || null));
-  const [IdUser, setIdUser] = useState(SessionData.id_user);
-  const [Userrol, setUserrol] = useState(SessionData.id_rol);
-  const [Token, setToken] = useState(sessionStorage.getItem("Token") || null);
+  const AuthProvider = ({ children }) => {
+  // const [SessionData, setSessionData] = useState(JSON.parse(sessionStorage.Session_data || null));
+  // const [IdUser, setIdUser] = useState(SessionData ? SessionData.id_user : null);
+  // const [Userrol, setUserrol] = useState(SessionData ? SessionData.id_rol : null);
+  const [Token, setToken] = useState(null);
+  const navigate = useNavigate()
+  useEffect(() => {
+    
+     Cookies.set("dd", 'hola', { expires: 7, path: "/" });
+  }, []);
+ 
+  // Get a cookie
+  // const userToken = Cookies.get("csrftoken");
+  // console.log(userToken)
+
+  
+  
   
 
-  const navigate = useNavigate();
-  
 
   const Loggin =  async (user_data) => {
     try{
-    const apiPost = "http://localhost:8000/api/user/user-login/"
+    const apiPost = "http://localhost:8000/api/user/login-user/"
     const response = await login_user(apiPost,user_data)
-    if (response && response.id_user && response.id_rol) {
-      const decodedToken = jwtDecode(response.jwt);
+    
+    if (response) {
+      console.log(response)
+      const token_raw = response.access;
+      console.log("Raw JWT Token:", token_raw);
+      Cookies.set("jwt", token_raw, { expires: 7, path: "/" });
+      console.log(Cookies.get('jwt'))
       
-      setIdUser(setSessionData.id_user)
-      console.log(IdUser)
-      setUserrol(response.id_rol)
+      const decodedToken = jwtDecode(token_raw);
       setToken(decodedToken)
-      setSessionData(response)
-      sessionStorage.setItem('Session_data', JSON.stringify(response));
-      sessionStorage.setItem("Userrol", response.id_rol);
-      sessionStorage.setItem("User", response.id_user);
-      sessionStorage.setItem("Token", decodedToken);
       
+      console.log(decodedToken)
       
-      if(Userrol == 1)
+    
+      
+      navigate('/home')
+      if(decodedToken.id_rol == 1)
         navigate('/administration/students')
-      else if(Userrol == 2)
-        navigate('/profile/student')
-      else if(Userrol == 3)
-        navigate('/profile/psychologist')
+      // else if(Userrol == 2)
+      //   navigate('/profile/student')
+      // else if(Userrol == 3)
+      //   navigate('/profile/psychologist')
       return;
     }
     throw new Error(response.message);
@@ -51,13 +65,13 @@ const AuthContext = createContext();
   };
 
   const logout  = () => {
-    setSessionData(null)
+    // setSessionData(null)
   };
 
 
 
 return (
-    <AuthContext.Provider value={{Token, IdUser, Userrol, Loggin, logout }}>
+    <AuthContext.Provider value={{ Token ,Loggin, logout }}>
       {children}
     </AuthContext.Provider>
   );

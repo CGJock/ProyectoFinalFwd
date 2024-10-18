@@ -2,15 +2,16 @@ import React from "react";
 import NavHome from "../../components/home-components/NavHome";
 import Footer from "../../components/home-components/footer";
 // import CreatePost from '../../components/Admin-components/post/CreatePost'
-import PostList from "../../components/post/PostList";
-import PostForm from "../../components/post/PostForm";
+import { useAuth } from "../../context/AuthContext";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import VideoCarousel from '../../components/home-components/VideoCarousel'
 
 
-
-
 export const Home = () => {
+const {Token}  = useAuth()
+console.log(Token)
+
   return (
     <>
       <div>
@@ -22,11 +23,11 @@ export const Home = () => {
       </div>
 
       {/* Componente de posteos de publicaciones */}
-      <div>
+      {/* <div>
         <PostList />
         <PostForm />
 
-      </div>
+      </div> */}
 
 
       <Footer />

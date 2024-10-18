@@ -56,13 +56,13 @@ const Rutas = () => {
 
 
         <Route
-        path='/profile/student'
+        path='/profile'
         element={
           <Protected_routes_student>
             <Student />
           </Protected_routes_student>
         } >
-          <Route path="/profile/student" element={<ProfileStudent />} />
+          <Route path="student" element={<ProfileStudent />} />
           <Route path='/profile/student/create-ticket/' element={<TicketComponent />} />
         </Route>
       

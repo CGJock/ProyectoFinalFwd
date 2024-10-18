@@ -15,18 +15,21 @@ const AuthContext = createContext();
 // auth provider esta pensado para envolver toda la aplicacion y darle contexto a todos los hijos (children)
   const AuthProvider = ({ children }) => {
   const [Token, setToken] = useState(sessionStorage.getItem('token_raw')|| null);
-  const [decodedToken, setdecodedToken] = useState(jwtDecode(Token))
-  const [id_user, setid_user] = useState(decodedToken.id_user)
+  const [decodedToken, setdecodedToken] = useState(null)
+  const [id_user, setid_user] = useState(null)
   const [User_data, setUser_data] = useState(null)
   const navigate = useNavigate()
   useEffect(() => {
     // Al cargar el componente, intenta decodificar el token y obtener el id_user y id_rol
-    
     if (Token) {
-        const decodedToken = jwtDecode(Token);
-        setid_user(decodedToken.id_user);
-        
-        
+      try {
+        const decoded = jwtDecode(Token); // Decodifica el token solo si no es null
+        setdecodedToken(decoded);
+        setid_user(decoded.id_user);
+      } catch (error) {
+        console.error('Error decoding token:', error); // Maneja el error
+        setdecodedToken(null); // Resetea el estado si hay un error
+      }
     }
 }, [Token]); // Solo se
 
@@ -55,6 +58,7 @@ useEffect(() => {
     const response = await login_user(apiPost,user_data)
     
     if (response) {
+      console.log(response)
       
       const token_raw = response.access;
       sessionStorage.setItem('token_raw', token_raw);

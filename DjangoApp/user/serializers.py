@@ -49,23 +49,24 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             'password': attrs.get("password")
         }
 
-        # This is answering the original question, but do whatever you need here. 
-        # For example in my case I had to check a different model that stores more user info
-        # But in the end, you should obtain the username to continue.
+        #se encuentra al usuario
         user_obj = USERS.objects.filter(email=attrs.get("username")).first() or USERS.objects.filter(username=attrs.get("username")).first()
         if user_obj:
             credentials['username'] = user_obj.username
-            
+
         data = super().validate(credentials)
-        # Adding custom claims to the token payload
+        
         refresh = self.get_token(self.user)
-        # Add extra fields to token payload
-        refresh['email'] = self.user.email
-        # Assuming the role is stored in a `role` field on the User model or related model
-        # You need to adapt this based on your actual implementation (e.g., using a Profile model, or User attribute)
-        refresh['rol_id'] = getattr(self.user.rol_id, 'id', None) 
-        # Add the same info to the response data if you want to return it in the response body
-        data['email'] = self.user.email
-        data['rol_id'] = getattr(self.user.rol_id, 'id', None) 
-        return data
+        
+        #se setean los datos en el payload del token
        
+        refresh['email'] = self.user.email
+        refresh['id_user'] = self.user.id_user
+
+
+        #estos son los datos que iran en la respuesta
+        data['email'] = self.user.email
+        
+        data['id_user'] = self.user.id_user
+       
+        return data

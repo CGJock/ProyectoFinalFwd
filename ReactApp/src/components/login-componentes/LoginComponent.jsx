@@ -11,7 +11,6 @@ import { useAuth } from '../../context/AuthContext';
 export const LoginComponent = () => {
     const [username, setusername] = useState('')
     const [password, setpassword] = useState('')
-    const navigate = useNavigate()
     const [errorMessage, seterrorMessage] = useState('')
     const { Loggin } = useAuth();//llama a la funcion desde el contexto
 

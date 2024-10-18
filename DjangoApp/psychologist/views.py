@@ -17,6 +17,9 @@ from django.urls import reverse_lazy
 # add the imports to the top
 from django.views.generic.edit import CreateView
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny  
+
 
 # Create your views here.
 class RegisterPsychologistViewSet(viewsets.ModelViewSet):
@@ -41,6 +44,8 @@ class PychologistsList(viewsets.ReadOnlyModelViewSet):
 class CreateTicket(viewsets.ModelViewSet):
     serializer_class = TicketSerializer
     queryset = TICKET.objects.all()
+    authentication_classes = []
+    permission_classes = [AllowAny]
     
     def create(self,request,*args, **kwargs):
         #se obtiene el usuario del request
@@ -67,6 +72,8 @@ class TicketList(viewsets.ReadOnlyModelViewSet):
 class FileUploadView(viewsets.ModelViewSet):
     queryset = PACIENTFILES.objects.all()
     serializer_class = PacientFilesSerializer
+    authentication_classes = []
+    permission_classes = [AllowAny]
     model = PACIENTFILES
     fields = ['file' ]
     success_url = reverse_lazy('PACIENTFILES')
@@ -83,6 +90,8 @@ class FileUploadView(viewsets.ModelViewSet):
 class CreateCase(viewsets.ModelViewSet):
     queryset = EXPEDIENT.objects.all()
     serializer_class = ExpedientSerializer
+    authentication_classes = []
+    permission_classes = [AllowAny]
     
     
     def Assign_case(self,request,*args, **kwargs):

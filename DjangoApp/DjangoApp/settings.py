@@ -162,14 +162,16 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         
     ),
-    'DEFAULT_PERMISSION_CLASSES': [ 'rest_framework.permissions.IsAuthenticated', ],
+    'DEFAULT_PERMISSION_CLASSES': (
+         'rest_framework.permissions.IsAuthenticated', 
+    ),
 }
 # Optional: Set JWT lifetime (default is 5 minutes)
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'USER_ID_FIELD': 'email', # Field to use for user identification
+    'USER_ID_FIELD': 'id_user', # Field to use for user identification
     'USER_ID_CLAIM': 'id_user', # Claim to use for user identification in the token
     'AUTH_HEADER_TYPES': ('Bearer',),
 }

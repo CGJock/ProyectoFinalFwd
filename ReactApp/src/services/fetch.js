@@ -76,7 +76,8 @@ export const login_user = async(apiPost,user_data) => {
             body: JSON.stringify(user_data), // User data containing the input values
             credentials:'include'
         });
-        console.log(response)
+        
+        
 
         // Check if the response is ok
         if (!response.ok) {
@@ -86,7 +87,8 @@ export const login_user = async(apiPost,user_data) => {
 
         // Parse the response data
         const data = await response.json();
-        console.log(data)
+        Cookies.set('access_token', data.access, { secure: true, sameSite: 'Lax' });
+        
         
         alert("Log exitoso");
         return data; // Return the data for further use if needed
@@ -96,19 +98,57 @@ export const login_user = async(apiPost,user_data) => {
     }
 };
 
+export const refreshAccessToken = async () => {
+    try {
+        const refresh_token = Cookies.get('refresh_token'); // Obtén el refresh token de las cookies
+
+        if (!refresh_token) throw new Error("No hay refresh token disponible.");
+
+        const response = await fetch('http://localhost:8000/api/user/token/refresh/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ refresh: refresh_token }),
+        });
+
+        if (!response.ok) throw new Error("Error al refrescar el token.");
+
+        const data = await response.json();
+        Cookies.set('access_token', data.access); // Guarda el nuevo token
+        console.log("Access token refrescado exitosamente.");
+
+    } catch (error) {
+        console.error("Failed to refresh access token", error);
+        throw error;
+    }
+};
 
 
-export const get_institutes_data = async(apiUrl) => {
-  try{
-      const response = await fetch(apiUrl);
-      const data = await response.json()
-      console.log(data)
-      return data
-    
-  } catch(error){
-    console.log("error en el servidor")
-  }
-  
-}
+export const get_institutes_data = async (apiUrl) => {
+    try {
+        const access_token = Cookies.get('access_token'); // Recupera el token
+        console.log({'access_token':access_token})
 
+        const response = await fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${access_token}`, // Incluye el access token
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || "Error al obtener los datos.");
+        }
+
+        const data = await response.json();
+        console.log(data);
+        return data;
+
+    } catch (error) {
+        console.error("Error en el servidor", error);
+        throw error;
+    }
+};
 

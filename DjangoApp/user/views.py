@@ -12,7 +12,7 @@ from psychologist.serializers import  PsychologistSerializer
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken, TokenError
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.permissions import AllowAny  
 
 
 from django.utils.encoding import force_bytes
@@ -34,6 +34,7 @@ from django.shortcuts import get_object_or_404
 class RegisterUserViewSet(viewsets.ModelViewSet):
     queryset = USERS.objects.all()  # Define el queryset para evitar el error
     serializer_class = UserSerializer
+    permission_classes = [AllowAny]
     
     def generate_password(self):
             length = random.randint(8, 32)
@@ -120,12 +121,13 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     
-        
+   
 #se muestran todos los ususarios
 class UserListView(viewsets.ReadOnlyModelViewSet):
     queryset = USERS.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated] 
     
     
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -207,26 +209,21 @@ class LogOutUserView(viewsets.ViewSet):
       
             
     #para autentificar el estudiante       
-class UserViewSet(viewsets.ModelViewSet):
-   queryset =  USERS.objects.all()
-   serializer_class = UserLoginSerializer
-   
-   def get(self,request):
-        token = request.COOKIES.get('jwt')
-       
-        if not token:
-           raise AuthenticationFailed("no autentificado")
+class UserViewSet(APIView):
+    # authentication_classes = []
+    permission_classes = [IsAuthenticated]
+    # permission_classes = [AllowAny]
+    def get(self,request,id_user):
         try:
-           payload = jwt.decode(token, 'secret', algorithm='HS256')
-           
-        except jwt.ExpiredSignatureError :
-            raise AuthenticationFailed("no autentificado")
-        
-        user =  USERS.objects.filter(id_user=payload['id_user']).first()
-        serializer = UserSerializer(user)
-
-        return Response(serializer.data)
+            user = USERS.objects.get(id_user=id_user)
+            serializer = UserSerializer(user) 
+            return Response(serializer.data,status=200)
+        except USERS.DoesNotExist:
+            return Response({'error': 'no se encontro el user'}, status=404)
     
+       
+       
+           
 
 
 class DeleteUser(viewsets.ModelViewSet):

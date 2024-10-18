@@ -9,8 +9,8 @@ import VideoCarousel from '../../components/home-components/VideoCarousel'
 
 
 export const Home = () => {
-const {decodedToken}  = useAuth()
-console.log(decodedToken)
+const {Token}  = useAuth()
+console.log(Token)
 
   return (
     <>

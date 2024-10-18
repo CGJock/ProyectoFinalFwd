@@ -16,6 +16,8 @@ class GradeViewSet(viewsets.ModelViewSet):
 class  GradeViewList(viewsets.ReadOnlyModelViewSet):
     queryset = GRADE.objects.all()
     serializer_class =  GradeSerializer
+    authentication_classes = []
+    permission_classes = [AllowAny]
 
 
     

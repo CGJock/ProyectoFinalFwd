@@ -1,12 +1,20 @@
 .register_container{
     display: flex;
     flex-direction: column;
-    width: auto;
+    width: 1400px;
+    max-width: 1600px; /* Set a maximum width for larger screens */
+    margin: 0 auto; /
     
 }
 .header{
     display: flex;
     flex-direction: column;
+    background-color: #007bff; /* Header background color */
+    color: white; /* Text color for the header */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+    border-radius: 8px; 
+    margin-top: 0px;
+    margin-bottom:  15px;
 }
 .name_container{
     display: flex;

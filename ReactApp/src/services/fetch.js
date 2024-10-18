@@ -6,12 +6,17 @@ import Cookies from 'js-cookie';
 
 export const postRegister = async (apiPost, user_data) => {
     try {
+        const csrftoken = Cookies.get('csrftoken');
+        const access_token = Cookies.get('access_token')
         // Make the POST request to register the user
         const response = await fetch(apiPost, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+                'Authorization': `Bearer ${access_token}`, // Incluye el access token
             },
+            credentials: 'include',
             body: JSON.stringify(user_data) // User data containing the input values
         });
 
@@ -47,15 +52,20 @@ const sendEmail = (email, username, password, reset_url) => {
     };
 
     emailjs
-        .send("service_73e4kpp", "template_23n6rd4", templateParams, "WaYegO_6CWZJoBg6b")
+        .send(
+            "service_73e4kpp", 
+            "template_23n6rd4", 
+            templateParams, 
+            "WaYegO_6CWZJoBg6b"
+        )
         .then(
             (response) => {
-                console.log("Email sent successfully", response.status, response.text);
-                alert('se ha enviado un correo con tu conta a',  email);
-
+                console.log("Email enviado con éxito:", response.status, response.text);
+                alert(`Se ha enviado un correo a: ${email}`);
             },
             (err) => {
-                console.error("Error sending email", err);
+                console.error("Error al enviar el correo:", err);
+                alert(`Hubo un error al enviar el correo: ${err.text || err.message}`);
             }
         );
 };

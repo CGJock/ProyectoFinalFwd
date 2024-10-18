@@ -15,8 +15,9 @@ const AuthContext = createContext();
 // auth provider esta pensado para envolver toda la aplicacion y darle contexto a todos los hijos (children)
   const AuthProvider = ({ children }) => {
   const [Token, setToken] = useState(sessionStorage.getItem('token_raw')|| null);
-  const [id_user, setid_user] = useState(null)
-  const [id_rol, setid_rol] = useState(null)
+  const [decodedToken, setdecodedToken] = useState(jwtDecode(Token))
+  const [id_user, setid_user] = useState(decodedToken.id_user)
+  const [User_data, setUser_data] = useState(null)
   const navigate = useNavigate()
   useEffect(() => {
     // Al cargar el componente, intenta decodificar el token y obtener el id_user y id_rol
@@ -24,10 +25,28 @@ const AuthContext = createContext();
     if (Token) {
         const decodedToken = jwtDecode(Token);
         setid_user(decodedToken.id_user);
-        console.log(id_user)
+        
         
     }
 }, [Token]); // Solo se
+
+const apiPost = "http://localhost:8000/api/user/user"
+useEffect(() => {
+  const fetchUserData = async () => {
+    if (id_user) { // Verificar que id_user tenga valor antes de llamar a la API
+      try {
+          const userData = await user_fetch(apiPost,id_user); 
+          setUser_data(userData); // Actualiza el estado con la información del usuario
+          
+      } catch (error) {
+          console.error("Error fetching user data:", error);
+      }
+    }
+  };
+
+  fetchUserData();
+}, [id_user]); 
+
  
 
   const Loggin =  async (user_data) => {
@@ -39,18 +58,12 @@ const AuthContext = createContext();
       
       const token_raw = response.access;
       sessionStorage.setItem('token_raw', token_raw);
-      setToken(token_raw)
-      const decodedToken = jwtDecode(token_raw)
-      setid_user(decodedToken.id_user)
-      setid_user(decodedToken.id_user)
-      // await find_user();
 
-      
-      if(response.id_rol == 1)
+      if(User_data.id_rol == 1)
         navigate('/administration/students')
-      else if(response.id_rol == 2)
+      else if(User_data.id_rol == 2)
         navigate('/profile/student')
-      else if(response.id_rol == 3)
+      else if(User_data.id_rol == 3)
         navigate('/profile/psychologist')
       return;
     }
@@ -59,6 +72,7 @@ const AuthContext = createContext();
       console.error(err);
     }
   };
+
 
 
 

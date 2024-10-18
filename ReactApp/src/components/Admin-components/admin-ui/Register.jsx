@@ -7,7 +7,7 @@ import { Checkboxgovernment_subsidy } from "./Selectors/checkbox-government_subs
 import { Selector_gender } from "./Selectors/checkbox-gender";
 import { Checkscholarship } from "./Selectors/checkbox-scholarship";
 import { Checkboxavailability } from "./Selectors/checkboxavailability";
-import  '../../../styles/register_container.css'
+import  '../../../styles/administrator-styles/register_container.css'
 
 
 
@@ -164,7 +164,7 @@ const Register = () => {
             <p className="label_input">Institucion</p>
           </div>
           <div>
-            <Selector_grades setid_grade={setid_grade} grade={id_grade}/>
+            <Selector_grades setid_grade={setid_grade} id_grade={id_grade}/>
             <p className="label_input">Grado Academico</p>
           </div>
         </div>

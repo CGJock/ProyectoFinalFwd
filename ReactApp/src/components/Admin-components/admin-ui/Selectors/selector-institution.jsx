@@ -2,7 +2,7 @@
 import { useState, useEffect} from "react";
 import { refreshAccessToken } from "../../../../services/fetch";
 import Cookies from 'js-cookie';
-import '../../../../styles/selectores.css'
+import '../../../../styles/administrator-styles/selectores.css'
 
 
 
@@ -14,6 +14,8 @@ const Selector_institution = ({id_institution,setid_institution}) => {
 const [institutions, setinstitutions] = useState([])
 
 const apiUrl = 'http://localhost:8000/api/instituto/institutions/'
+
+console.log(id_institution)
 const getInstitutions = async () => {
   
   try {

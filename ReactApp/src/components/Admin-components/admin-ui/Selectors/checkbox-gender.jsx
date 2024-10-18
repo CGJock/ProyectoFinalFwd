@@ -1,4 +1,4 @@
-import '../../../../styles/selectores.css'
+import '../../../../styles/administrator-styles/selectores.css'
 
 export const Selector_gender = ({sex,setsex}) => {
     

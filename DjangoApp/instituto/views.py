@@ -17,6 +17,9 @@ class InstitutionViewSet(viewsets.ModelViewSet):
 class InstitutionsList(viewsets.ReadOnlyModelViewSet):
     queryset = INSTITUTIONS.objects.all()
     serializer_class = InstitutoSerializer
+    authentication_classes = []
+    permission_classes = [AllowAny]
+    
     
 
 

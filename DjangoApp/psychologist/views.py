@@ -67,6 +67,8 @@ class CreateTicket(viewsets.ModelViewSet):
 class TicketList(viewsets.ReadOnlyModelViewSet):
     queryset = TICKET.objects.all()
     serializer_class = TicketSerializer
+    authentication_classes = []
+    permission_classes = [AllowAny]
     
     
 class FileUploadView(viewsets.ModelViewSet):

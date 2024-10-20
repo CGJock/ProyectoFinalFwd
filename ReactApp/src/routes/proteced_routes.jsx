@@ -61,10 +61,12 @@ useEffect(() => {
 }
 
 export const Protected_routes_psychologyst = ({children}) => {
+  const [id_rol, setid_rol] = useState(null)
   const [Token, setToken] = useState(sessionStorage.getItem('token_raw')|| null);
   const [decodedToken, setdecodedToken] = useState(jwtDecode(Token))
-  const [id_user, setid_user] = useState(decodedToken.id_rol)
-  
+  const [id_user, setid_user] = useState(decodedToken.id_user)
+ const [User, setUser] = useState(null)
+ 
   if(id_user == 3 || id_user == 1) {
     
     return children;
@@ -73,9 +75,12 @@ export const Protected_routes_psychologyst = ({children}) => {
 }
 
 export const Protected_routes_student = ({children})  => {
+  const [id_rol, setid_rol] = useState(null)
   const [Token, setToken] = useState(sessionStorage.getItem('token_raw')|| null);
   const [decodedToken, setdecodedToken] = useState(jwtDecode(Token))
-  const [id_user, setid_user] = useState(decodedToken.id_rol)
+  const [id_user, setid_user] = useState(decodedToken.id_user)
+ const [User, setUser] = useState(null)
+ 
   
   
   

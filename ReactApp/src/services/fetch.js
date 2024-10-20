@@ -50,6 +50,7 @@ const sendEmail = (email, username, password, reset_url) => {
         user_password: password,
         reset_url: reset_url,
     };
+    console.log({'template': templateParams})
 
     emailjs
         .send(

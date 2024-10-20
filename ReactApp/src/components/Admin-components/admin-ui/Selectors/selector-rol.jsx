@@ -12,7 +12,7 @@ const Selector_rols = ({id_rol,setid_rol}) => {
     
   console.log(id_rol)
   console.log(typeof(id_rol))
-    const [roles, setroles] = useState([])
+  const [roles, setroles] = useState([])
     
     
     

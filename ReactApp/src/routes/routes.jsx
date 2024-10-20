@@ -16,6 +16,8 @@ import UsersContainer from '../components/Admin-components/admin-ui/UsersContain
 // import { Profile } from '../pages/profile/Profile';
 import { ProfilePsychologist } from '../pages/psychologist/psychologist';
 
+import { TicketsView } from '../components/Admin-components/admin-ui/TicketsView';
+
 
 import ProfilePsycho from "../components/psychologist-components/PhofilePsycho";
 // import AboutMe from '../components/home-components/AboutMe';
@@ -63,7 +65,7 @@ const Rutas = () => {
           </Protected_routes_student>
         } >
           <Route path="student" element={<ProfileStudent />} />
-          <Route path='/profile/student/create-ticket/' element={<TicketComponent />} />
+          <Route path='student/create-ticket' element={<TicketComponent />} />
         </Route>
       
 
@@ -80,6 +82,7 @@ const Rutas = () => {
           {/* Aquí se definen las subrutas dentro de la ruta de administración */}
           <Route path="register" element={<Register />} />
           <Route path="students" element={<UsersContainer />} />
+          <Route path="tickets" element={<TicketsView />} />
           
           {/* <Route path="profile/psycho/:id" element={<ProfilePsycho />} /> */}
         </Route>

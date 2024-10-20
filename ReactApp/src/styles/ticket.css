@@ -15,8 +15,12 @@
     font-size: 1.8rem;
   }
   
-  .header h4 {
-    color: #666;
+  .header  {
+    background-color: #8f03a1;
+    
+  }
+  H4{
+    color: #000000;
     margin: 10px 0;
     font-weight: 400;
   }

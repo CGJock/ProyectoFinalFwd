@@ -4,6 +4,7 @@ import { ProfileStudent } from './student-profile'
 import SideModal from '../../components/student-components/SideModal'
 
 
+
 export const Student = () => {
   return (
     <>

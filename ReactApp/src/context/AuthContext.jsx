@@ -96,4 +96,95 @@ export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-  
+
+
+// Crea el contexto de la imagen
+const ImageContext = createContext();
+
+// Crea el provider
+export const ImageProvider = ({ children }) => {
+    const [image, setImage] = useState(null);
+
+    // Cargar la imagen guardada en localStorage al cargar el componente
+    useEffect(() => {
+        const savedImage = getFromLocalStorage('profileImage');
+        if (savedImage) {
+            setImage(savedImage);
+        }
+    }, []);
+
+    // Guardar la imagen en localStorage
+    useEffect(() => {
+        if (image) {
+            saveToLocalStorage('profileImage', image);
+        }
+    }, [image]);
+
+    // Función para manejar el cambio de imagen
+    const handleImageChange = async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const base64Image = await fileToBase64(file);
+            setImage(base64Image);
+        }
+    };
+
+    return (
+        <ImageContext.Provider value={{
+            image,
+            handleImageChange
+        }}>
+            {children}
+        </ImageContext.Provider>
+    );
+};
+
+// Hook personalizado para acceder al contexto
+export const useImage = () => {
+    return useContext(ImageContext);
+};
+
+
+
+
+// /////////////////////
+// Crear el contexto
+const EmailContext = createContext();
+
+// Proveedor del contexto
+export const EmailProvider = ({ children }) => {
+  const [showAlert, setShowAlert] = useState(false);
+
+  const handleSubmit = async (formData) => {
+    try {
+      const response = await fetch("", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setShowAlert(true); // Mostrar la alerta
+        setTimeout(() => setShowAlert(false), 5000); // Ocultar después de 5 segundos
+      } else {
+        console.error("Error al enviar el correo:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error en la conexión:", error);
+    }
+  };
+
+  return (
+    <EmailContext.Provider value={{ handleSubmit, showAlert }}>
+      {children}
+    </EmailContext.Provider>
+  );
+};
+
+// Hook para usar el contexto
+export const useEmail = () => {
+  return useContext(EmailContext);
+};
+

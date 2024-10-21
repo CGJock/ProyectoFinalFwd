@@ -3,7 +3,7 @@ import NavHome from "../../components/home-components/NavHome";
 import Footer from "../../components/home-components/footer";
 
 // import CreatePost from '../../components/Admin-components/post/CreatePost'
-import { useAuth } from "../../context/AuthContext";
+// import { useAuth } from "../../context/AuthContext";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import VideoCarousel from '../../components/home-components/VideoCarousel'
@@ -11,8 +11,8 @@ import VideoCarousel from '../../components/home-components/VideoCarousel'
 
 
 export const Home = () => {
-const {Token}  = useAuth()
-console.log(Token)
+// const {Token}  = useAuth()
+// console.log(Token)
 
   return (
     <>

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'student',
     'psychologist',
     'library',
+    
 ]
 
 MIDDLEWARE = [

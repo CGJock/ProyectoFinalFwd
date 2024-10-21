@@ -5,7 +5,7 @@ from user.models import USERS
 
 class Post(models.Model):
     post_id  = models.AutoField(primary_key=True)
-    id_user = models.ForeignKey(USERS, on_delete= models.CASCADE, )
+    id_user = models.ForeignKey(USERS, on_delete= models.CASCADE )
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     image_url = models.URLField(max_length=500, null=True, blank=True)

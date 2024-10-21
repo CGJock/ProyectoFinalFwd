@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../../styles/library.css';
+import '../../styles/library.css';
 
 const Library = () => {
   const [books, setBooks] = useState([]);

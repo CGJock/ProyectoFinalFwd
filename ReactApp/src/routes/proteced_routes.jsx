@@ -1,92 +1,82 @@
-import { Navigate, useSearchParams } from "react-router-dom"
-import Home from "../pages/home/home";
-import { useAuth } from "../context/AuthContext"
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import { jwtDecode } from "jwt-decode";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { user_fetch } from "../services/user_fetch";
-
-export const Protected_routes_admin = ({children}) => {
-  const [id_rol, setid_rol] = useState(null)
-  const [Token, setToken] = useState(sessionStorage.getItem('token_raw')|| null);
-  const [decodedToken, setdecodedToken] = useState(jwtDecode(Token))
-  const [id_user, setid_user] = useState(decodedToken.id_user)
- const [User, setUser] = useState(null)
- 
+import Cookies from 'js-cookie';
+import { Spinner } from "../components/utilities/spinner";
 
 
-  
-  useEffect(() => {
-    // Al cargar el componente, intenta decodificar el token y obtener el id_user y id_rol
-    console.log(Token)
-    if (Token) {
-        setdecodedToken(jwtDecode(Token));
-        
-}
-}, [Token]); // Solo se
- 
+const Protected_routes = ({ allowedRoles, children }) => {
+    const Token = Cookies.get('Token');
+    const [decodedToken, setDecodedToken] = useState(Token ? jwtDecode(Token) : null);
+    const { id_user } = useAuth();
+    const [User, setUser] = useState(null);
+    const [id_rol, setIdRol] = useState(null);
+    const [loading, setLoading] = useState(true); // Estado de carga
+    const apiPost = "http://localhost:8000/api/user/user";
 
- useEffect(() => {
-  console.log("id_user actualizado:", id_user);
-}, [id_user]); // Este useEffect se ejecutará cuando id_user cambie
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (id_user) {
+                try {
+                    console.log('fetchin user_id :', id_user);
+                    const userData = await user_fetch(apiPost, id_user);
+                    console.log('User data fetched:', userData);
 
-const apiPost = "http://localhost:8000/api/user/user"
-useEffect(() => {
-  const fetchUserData = async () => {
-    if (id_user) { // Verificar que id_user tenga valor antes de llamar a la API
-      try {
-          const userData = await user_fetch(apiPost, id_user); 
-          setUser(userData); // Actualiza el estado con la información del usuario
-      } catch (error) {
-          console.error("Error fetching user data:", error);
-      }
+                    if (userData) {
+                        setUser(userData);
+                        setIdRol(userData.id_rol);
+                    } else {
+                        console.error('No se encontro la data de usuario');
+                    }
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
+                } finally {
+                    setLoading(false); // Finaliza la carga
+                }
+            } else {
+                console.log('No user ID econtrado');
+                setLoading(false); // Finaliza la carga si no hay id_user
+            }
+        };
+
+        fetchUserData();
+    }, [id_user, apiPost]);
+
+    // Muestra un mensaje de carga mientras los datos se obtienen, esto evita que se cargue el componente antes de los datos 
+    if (loading) {
+        return <div><Spinner /></div>; // O un spinner de carga
     }
-  };
 
-  fetchUserData();
-}, [apiPost, id_user]); 
+    // Redireccionar si User o id_rol son null
+    if (User === null || id_rol === null) {
+        console.log('Redirecting to home, user not found or role not available');
+        return <Navigate to='/home' />;
+    }
 
- 
+    console.log('User:', User);
+    console.log('Rol ID:', id_rol);
+    console.log('Allowed Roles:', allowedRoles);
 
- if(!Token) {
-  return <Navigate to='/home'/>;
- }
- 
-  if(id_user == 1) {
-    console.log(true)
-    
-    
-    return children;
-    } else
-    return  <Navigate to="/home"/>
-}
+    // Verifica que id_rol sea un número antes de compararlo
+    if (allowedRoles.includes(Number(id_rol))) {
+        return children;
+    } else {
+        console.log('Role not allowed, redirecting to home');
+        return <Navigate to='/home' />;
+    }
+};
 
-export const Protected_routes_psychologyst = ({children}) => {
-  const [id_rol, setid_rol] = useState(null)
-  const [Token, setToken] = useState(sessionStorage.getItem('token_raw')|| null);
-  const [decodedToken, setdecodedToken] = useState(jwtDecode(Token))
-  const [id_user, setid_user] = useState(decodedToken.id_user)
- const [User, setUser] = useState(null)
- 
-  if(id_user == 3 || id_user == 1) {
-    
-    return children;
-    } else
-    return  <Navigate to="/home"/>
-}
+// Rutas protegidas según los roles
+export const Protected_routes_admin = ({ children }) => (
+    <Protected_routes allowedRoles={[1]}>{children}</Protected_routes>
+);
 
-export const Protected_routes_student = ({children})  => {
-  const [id_rol, setid_rol] = useState(null)
-  const [Token, setToken] = useState(sessionStorage.getItem('token_raw')|| null);
-  const [decodedToken, setdecodedToken] = useState(jwtDecode(Token))
-  const [id_user, setid_user] = useState(decodedToken.id_user)
- const [User, setUser] = useState(null)
- 
-  
-  
-  
-  if(id_user == 2 || id_user == 1) {
-    
-    return children;
-    } else
-    return  <Navigate to="/home"/>
-}
+export const Protected_routes_psychologyst = ({ children }) => (
+    <Protected_routes allowedRoles={[1, 3]}>{children}</Protected_routes>
+);
+
+export const Protected_routes_student = ({ children }) => (
+    <Protected_routes allowedRoles={[1, 2]}>{children}</Protected_routes>
+);

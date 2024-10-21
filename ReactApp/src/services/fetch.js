@@ -3,6 +3,12 @@
 import emailjs from "emailjs-com"; // Ensure you have EmailJS installed
 // import jwtDecode from 'jwt-decode';
 import Cookies from 'js-cookie';
+import { jwtDecode } from "jwt-decode";
+import  {isTokenExpired}   from "./token";
+import { refreshAccessToken } from "./token";
+
+
+
 
 export const postRegister = async (apiPost, user_data) => {
     try {
@@ -20,20 +26,26 @@ export const postRegister = async (apiPost, user_data) => {
             body: JSON.stringify(user_data) // User data containing the input values
         });
 
-        // Check if the response is ok
+        // verificar si la respuesta es ok
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.detail || "Error al registrarse");
         }
 
-        // Parse the response data
+        // inserta la datga en json 
         const data = await response.json();
         alert("Te has registrado correctamente");
 
-      
+      const templateParams = {
+        email: data.email,
+        username: data.username,
+        password: data.password,
+        reset_url: data.reset_url
+
+      }
 
         // Send the email using the response data
-        sendEmail(data.email, data.username, data.password, data.reset_url);
+        sendEmail(templateParams);
         
 
         return data; 
@@ -43,32 +55,20 @@ export const postRegister = async (apiPost, user_data) => {
     }
 };
 
-const sendEmail = (email, username, password, reset_url) => {
-    const templateParams = {
-        to_email: email,
-        user_name: username,
-        user_password: password,
-        reset_url: reset_url,
-    };
-    console.log({'template': templateParams})
-
-    emailjs
-        .send(
+const sendEmail = async (templateParams) => {
+  try {
+    const response = await emailjs.send(
             "service_73e4kpp", 
             "template_23n6rd4", 
             templateParams, 
             "WaYegO_6CWZJoBg6b"
-        )
-        .then(
-            (response) => {
-                console.log("Email enviado con éxito:", response.status, response.text);
-                alert(`Se ha enviado un correo a: ${email}`);
-            },
-            (err) => {
+        );
+       
+         alert(`Se ha enviado un correo a: ${email}`);
+            }catch (err)  {
                 console.error("Error al enviar el correo:", err);
                 alert(`Hubo un error al enviar el correo: ${err.text || err.message}`);
             }
-        );
 };
 
 //###################################################################################################################################
@@ -77,12 +77,15 @@ export const login_user = async(apiPost,user_data) => {
     try {
         const csrftoken = Cookies.get('csrftoken');
         
+        
+        
         // Make the POST request to register the user
         const response = await fetch(apiPost, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken
+                'X-CSRFToken': csrftoken,
+                
             },
             body: JSON.stringify(user_data), // User data containing the input values
             credentials:'include'
@@ -109,37 +112,20 @@ export const login_user = async(apiPost,user_data) => {
     }
 };
 
-export const refreshAccessToken = async () => {
-    try {
-        const refresh_token = Cookies.get('refresh_token'); // Obtén el refresh token de las cookies
 
-        if (!refresh_token) throw new Error("No hay refresh token disponible.");
 
-        const response = await fetch('http://localhost:8000/api/user/token/refresh/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ refresh: refresh_token }),
-        });
-
-        if (!response.ok) throw new Error("Error al refrescar el token.");
-
-        const data = await response.json();
-        Cookies.set('access_token', data.access); // Guarda el nuevo token
-        console.log("Access token refrescado exitosamente.");
-
-    } catch (error) {
-        console.error("Failed to refresh access token", error);
-        throw error;
-    }
-};
 
 
 export const get_institutes_data = async (apiUrl) => {
     try {
-        const access_token = Cookies.get('access_token'); // Recupera el token
+        let access_token = Cookies.get('access_token'); // Recupera el token
         console.log({'access_token':access_token})
+
+        const token_state =  isTokenExpired(access_token)
+        if(token_state) {
+           await refreshAccessToken();
+           access_token = Cookies.get('access_token')
+        }
 
         const response = await fetch(apiUrl, {
             method: 'GET',

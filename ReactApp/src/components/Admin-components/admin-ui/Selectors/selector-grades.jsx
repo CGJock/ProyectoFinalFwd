@@ -2,7 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import React from 'react'
 import Cookies from 'js-cookie';
 import '../../../../styles/administrator-styles/selectores.css'
-import { refreshAccessToken } from "../../../../services/fetch";
+import { refreshAccessToken } from "../../../../services/token";
+
 
 
 

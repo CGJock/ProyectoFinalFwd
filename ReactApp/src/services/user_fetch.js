@@ -1,11 +1,20 @@
 import Cookies from 'js-cookie';
+import { refreshAccessToken } from './token';
+import { isTokenExpired } from './token';
+
 
 export const user_fetch = async (apiPost, user_id) => {
     try {
         const csrftoken = Cookies.get('csrftoken');
-        const access_token = Cookies.get('access_token'); // Recupera el access token actual
+        let access_token = Cookies.get('access_token'); // Recupera el access token actual
 
         const url = `${apiPost}/${user_id}`
+        const token_expired =  isTokenExpired(access_token)
+        if(token_expired) {
+           await refreshAccessToken();
+           access_token = Cookies.get('access_token')
+           
+        }
 
         // Primera solicitud para logear
         let response = await fetch(url, {

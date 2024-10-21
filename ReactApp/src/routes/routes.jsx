@@ -2,6 +2,9 @@
 import {Protected_routes_admin} from './proteced_routes';
 import { Protected_routes_psychologyst } from './proteced_routes';
 import { Protected_routes_student } from './proteced_routes';
+import { useEffect,useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { user_fetch } from '../services/user_fetch';
 
 import  {Routes, Route} from "react-router-dom";
 import Home from '../pages/home/home'
@@ -29,6 +32,10 @@ import { TicketComponent } from '../components/student-components/TicketComponen
 
 
 const Rutas = () => {
+  
+  
+
+
  
   return (
     <>
@@ -64,8 +71,8 @@ const Rutas = () => {
             <Student />
           </Protected_routes_student>
         } >
-          <Route path="student" element={<ProfileStudent />} />
-          <Route path='student/create-ticket' element={<TicketComponent />} />
+          <Route path="student" element={<ProfileStudent />} />{/*profile/student*/}
+          <Route path='student/create-ticket' element={<TicketComponent />} />{/*profile/student/create-ticket*/}
         </Route>
       
 
@@ -80,9 +87,9 @@ const Rutas = () => {
 
         >
           {/* Aquí se definen las subrutas dentro de la ruta de administración */}
-          <Route path="register" element={<Register />} />
-          <Route path="students" element={<UsersContainer />} />
-          <Route path="tickets" element={<TicketsView />} />
+          <Route path="register" element={<Register />} />{/*Administration/register*/}
+          <Route path="students" element={<UsersContainer />} />{/*Administration/students*/}
+          <Route path="tickets" element={<TicketsView />} />{/*Administration/tickets*/}
           
           {/* <Route path="profile/psycho/:id" element={<ProfilePsycho />} /> */}
         </Route>

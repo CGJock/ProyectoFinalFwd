@@ -12,7 +12,11 @@ from psychologist.serializers import  PsychologistSerializer
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken, TokenError
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.permissions import AllowAny  
+from rest_framework.permissions import AllowAny 
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.views import TokenRefreshView
+
+ 
 
 
 from django.utils.encoding import force_bytes
@@ -134,7 +138,11 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import CustomTokenObtainPairSerializer
 
 class LoginUserViewSet(TokenObtainPairView):
-    serializer_class = CustomTokenObtainPairSerializer  
+    serializer_class = CustomTokenObtainPairSerializer 
+    permission_classes = [AllowAny]
+    authentication_classes = []
+    
+     
     
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
@@ -296,6 +304,19 @@ class ResetPasswordView(viewsets.ModelViewSet):
             
        
     
+class CustomTokenRefreshView(TokenRefreshView):
+    permission_classes = [AllowAny]
+    authentication_classes = []  # No requiere autenticación para refrescar
+
+    def post(self, request, *args, **kwargs):
+        # Obtiene el refresh token de la cookie HTTP-only
+        refresh_token = request.COOKIES.get('refresh_token')
+        if not refresh_token:
+            return Response({"detail": "No hay refresh token disponible."}, status=400)
+
+        # Llame al método padre para refrescar el token
+        request.data['refresh'] = refresh_token
+        return super().post(request, *args, **kwargs)
     
     
 

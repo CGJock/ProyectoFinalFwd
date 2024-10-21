@@ -7,6 +7,7 @@ export const Student = () => {
   return (
     <>
     <ProfileStudent />
+    <SideModal />
         <Outlet />
     </>
   )

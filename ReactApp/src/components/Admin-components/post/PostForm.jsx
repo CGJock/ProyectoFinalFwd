@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../../context/AuthContext';
 
-const PostForm = () => {
+const PostForm = ({ onPostCreated }) => {
   const { User } = useAuth(); // Obtenemos el User ID del contexto
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState(''); 
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
 
@@ -40,10 +40,16 @@ const PostForm = () => {
 
       const data = await response.json();
       console.log('Publicación creada:', data);
-      
-      setTitle('');
-      setDescription('');
+
+      // Limpiar el formulario
+      setTitle(''); //limpiar el titulo del form
+      setDescription(''); //limpiar la descripción del form
       setImage(null); // Limpiar el estado de la imagen
+
+      // Llamar la función para actualizar las publicaciones
+      if (onPostCreated) {
+        onPostCreated(); 
+      }
     } catch (error) {
       console.error('Error creando publicación:', error);
     }
@@ -60,7 +66,7 @@ const PostForm = () => {
 
       <label>Imagen (opcional)</label>
       <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-
+{/* btn para hacer la publicacion */}
       <button type="submit">Publicar</button>
     </form>
   );

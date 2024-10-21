@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import "../../styles/profileStudient.css";
 import { saveToLocalStorage, getFromLocalStorage, fileToBase64 } from '../../services/storageUtils';
 import SideModal from './SideModal';
+import PostList from "../Admin-components/post/PostList"
+import PostForm from "../Admin-components/post/PostForm"
 
 const ProfileStudent = () => {
     const [image, setImage] = useState(null);
@@ -64,6 +66,7 @@ const ProfileStudent = () => {
             {/* boton que abre el modal de la izquierdo */}
             <button onClick={toggleModal}>Abrir Menú</button>
             <SideModal isOpen={isModalOpen} onClose={toggleModal} />
+       
             {/* contenedor la imagen de perfil */}
             <div className="ProfileStudientContainer">
                 <div className="imageContainer">
@@ -88,6 +91,8 @@ const ProfileStudent = () => {
                     </button>
                 </div>
                 {/* añadir la descripcion */}
+                <PostList />
+                <PostForm />
                 <div className="infoContainer">
                 <textarea
                     value={tempDescription}
@@ -106,12 +111,9 @@ const ProfileStudent = () => {
                     <h4>Descripción Guardada:</h4>
                     <p>{description}</p>
                 </div>
+                {/* <PostList />
+                <PostForm /> */}
             </div>
-            <div>
-        <PostList />
-        <PostForm />
-
-      </div>
         </div>
         </div>
     );

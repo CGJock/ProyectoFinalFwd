@@ -4,9 +4,11 @@ import { ExpedienteModal } from "./CreateExpedient";
 import '../../../styles/administrator-styles/tickets_views.css'
 
 export const TicketsView = () => {
-  const [Show, setShow] = useState(False)
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  
+  const [Show, setShow] = useState(false)
+
+  const handleShow = () => setShow(!Show)
+  
   const [data, setdata] = useState([]);
   useEffect(() => {
     getData(); 
@@ -20,11 +22,11 @@ export const TicketsView = () => {
     console.log
   }
 
-  async function update_ticket(id,data) {
-    const edit_link = 
+  // async function update_ticket(id,data) {
+  //   const edit_link = 
 
     
-  }
+  // }
 
     return (
       <>
@@ -43,13 +45,13 @@ export const TicketsView = () => {
                 <div className="row-">{e.id_ticket}</div>
                 <div className="row-">{e.id_user}</div>
                 <div className="row-">{e.state}</div>
-                <div onClick={() =>  setShow(!Show)}> <button>Procesar Ticket</button></div>
+                <div> <button onClick={() => handleShow(e.id_ticket,e.id_user)}> Procesar Ticket</button></div>
               </div>
             ))}
           </div>
         </div>
 
-        <ExpedienteModal Show={Show} handleClose={handleClose} handleShow={handleShow}/>
+        <ExpedienteModal setShow={setShow} Show={Show} handleShow={handleShow}/>
       </>
     );
 };

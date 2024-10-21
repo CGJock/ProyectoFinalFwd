@@ -10,7 +10,7 @@ const AuthContext = createContext();
 
 // auth provider esta pensado para envolver toda la aplicacion y darle contexto a todos los hijos (children)
   const AuthProvider = ({ children }) => {
-  const [Token, setToken] = useState(sessionStorage.getItem('token_raw')|| null);
+  const Token =  Cookies.get('Token');
   const [decodedToken, setdecodedToken] = useState(null)
   const [id_user, setid_user] = useState(null)
   const [UserInfo, setUserInfo] = useState(null)

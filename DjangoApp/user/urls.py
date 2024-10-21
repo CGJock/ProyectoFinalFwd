@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from user.views import UserListView,RegisterUserViewSet,LoginUserViewSet,UserViewSet,DeleteUser,LogOutUserView,ResetPasswordView
+from user.views import UserListView,RegisterUserViewSet,LoginUserViewSet,UserViewSet,DeleteUser,LogOutUserView,ResetPasswordView,CustomTokenRefreshView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -40,7 +40,7 @@ router_user.register(prefix='reset-password',viewset=ResetPasswordView, basename
 urlpatterns = [
     path('',include(router_user.urls)),
         path('login-user/', LoginUserViewSet.as_view(), name='login-user'),
-        path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+        path('token/refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
         path('user/<int:id_user>/', UserViewSet.as_view(), name='user-detail')
         
 ]

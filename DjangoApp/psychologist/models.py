@@ -29,7 +29,7 @@ class EXPEDIENT(models.Model):
     id_expedient = models.AutoField(primary_key=True)
     id_pacient  = models.ForeignKey(USERS, on_delete=models.CASCADE)
     id_psychologist = models.ForeignKey(PSYCHOLOGIST, on_delete=models.CASCADE)
-    observations = models.TextField(max_length=250)
+    observations = models.TextField(max_length=250, blank=True, null=True)
     crated_at = models.DateTimeField(default=timezone.now)
     
 class PACIENTFILES(models.Model):

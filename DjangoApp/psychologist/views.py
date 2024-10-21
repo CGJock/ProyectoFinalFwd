@@ -63,10 +63,28 @@ class CreateTicket(viewsets.ModelViewSet):
         elif ticket_serializer.errors:
             return Response(ticket_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
+    def partial_update(self, request, *args, **kwargs):
+        # Busca el ticket que se desea actualizar
+        try:
+            ticket = self.get_object()  # Obtiene el ticket por pk o cualquier identificador
+        except TICKET.DoesNotExist:
+            return Response({"error": "Ticket no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+        
+        # Actualiza parcialmente el ticket con los datos enviados
+        ticket_serializer = self.get_serializer(ticket, data=request.data, partial=True)
+        
+        if ticket_serializer.is_valid():
+            ticket_serializer.save()
+            return Response(ticket_serializer.data, status=status.HTTP_200_OK)
+        elif ticket_serializer.errors:
+            return Response(ticket_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 
 class TicketList(viewsets.ReadOnlyModelViewSet):
     queryset = TICKET.objects.all()
     serializer_class = TicketSerializer
+    authentication_classes = []
+    permission_classes = [AllowAny]
     
     
 class FileUploadView(viewsets.ModelViewSet):
@@ -89,54 +107,42 @@ class FileUploadView(viewsets.ModelViewSet):
 
 class CreateCase(viewsets.ModelViewSet):
     queryset = EXPEDIENT.objects.all()
-    serializer_class = ExpedientSerializer
-    authentication_classes = []
-    permission_classes = [AllowAny]
+    serializer_class = ExpedientSerializer 
+    permission_classes = [IsAuthenticated]
     
     
-    def Assign_case(self,request,*args, **kwargs):
+    def create(self,request,*args, **kwargs):
         
-        token = request.COOKIES.get('jwt')
-        
-        if not token:
-            raise AuthenticationFailed("no autentificado")
+        id_user = request.data.get('id_user')
+            
         try:
-            payload = jwt.decode(token, 'secret', algorithm='HS256')
-            
-        except jwt.ExpiredSignatureError :
-                raise AuthenticationFailed("no autentificado")
-            
-        admin =  USERS.objects.filter(id_user=payload['id_user']).first()
+            #encuentra un studiante, sin caso
+            pacient = USERS.objects.get(id_user=id_user)
         
-            
-        pacient_id = request.data.get('user_id')
-        
-        if admin:
-            
-            try:
-                #encuentra un studiante, sin caso
-                pacient = USERS.objects.find(id_user=pacient_id)
-                if not pacient:
+        except USERS.DoesNotExist:
                     return  Response({'error':'No existe un paciente con ese id'},status=status.HTTP_404_NOT_FOUND)
+        try:
+            #encuentra al primer psicologo con menos de 4 casos para hacer una reparticion justa
+            psychologist = PSYCHOLOGIST.objects.filter(pacient_count__lt=4).order_by('pacient_count').first()
         
-                psychologist = PSYCHOLOGIST.objects.filter(pacient_count__lt=4).order_by()
+            if not psychologist:
+                raise PSYCHOLOGIST.DoesNotExist
+        except PSYCHOLOGIST.DoesNotExist:
+            return Response({'error': 'No hay psicólogos disponibles'}, status=status.HTTP_404_NOT_FOUND)
         
-                if not psychologist:
-                    return  Response({'error':'No hay psicologos disponibles'},status=status.HTTP_404_NOT_FOUND)
+        expedient_data = {
+            'pacient': pacient.id_user,
+            'id_psychologist': psychologist.id
+        } 
+        Expedient_Serializer = self.get_serializer(data=expedient_data)
         
-            
-                pacient.psychologist =  psychologist
-                pacient.save()
-            
-                return Response({f'psicologo: {psychologist} asignado a {pacient} '})
-        
-            except Exception as e:
+        if Expedient_Serializer.isvalid():
+            Expedient_Serializer.save()
                 
-                return Response({'error': str(e)}, status=500)
+            return Response(ticket_serializer.data,status=status.HTTP_201_CREATED)
+        elif ticket_serializer.errors:
+            return Response(ticket_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-
-        return  Response({'error': 'No existe un paciente con ese id'}, status=404)
-
     
     
     

@@ -1,6 +1,6 @@
 
 import { useState, useEffect} from "react";
-import { refreshAccessToken } from "../../../../services/fetch";
+import { refreshAccessToken } from "../../../../services/token";
 import Cookies from 'js-cookie';
 import '../../../../styles/administrator-styles/selectores.css'
 
@@ -14,16 +14,12 @@ const Selector_institution = ({id_institution,setid_institution}) => {
 const [institutions, setinstitutions] = useState([])
 
 const apiUrl = 'http://localhost:8000/api/instituto/institutions/'
+console.log({'id_institution': id_institution})
 
-console.log(id_institution)
-const getInstitutions = async () => {
-  
+const getinstitutions = async () => {
   try {
-    const csrftoken = Cookies.get('csrftoken');
-    const access_token = Cookies.get('access_token');
     
-    console.log({ access_token, csrftoken }); // Verifica los valores
-
+    const access_token = Cookies.get('access_token');
     const response = await fetch(apiUrl, {
       method: 'GET',
       headers: {
@@ -32,7 +28,6 @@ const getInstitutions = async () => {
       },
       credentials: 'include',
     });
-
     if (!response.ok) {
       const errorData = await response.json();
       if (errorData.code === 'token_not_valid') {
@@ -43,13 +38,13 @@ const getInstitutions = async () => {
           const newAccessToken = Cookies.get('access_token'); // Verifica el nuevo token
           if (!newAccessToken) throw new Error("No se pudo refrescar el token");
           
-          return getInstitutions(); // Reintenta la solicitud
+          return getinstitutions(); // Reintenta la solicitud
         } catch (refreshError) {
           console.error("Error al refrescar el token:", refreshError);
           throw refreshError;
         }
       }
-      throw new Error(errorData.detail || "Error al obtener ;as instituciones.");
+      throw new Error(errorData.detail || "Error al obtener los roles.");
     }
 
     const data = await response.json();
@@ -58,10 +53,10 @@ const getInstitutions = async () => {
     console.error('Error al hacer el fetch:', error);
   }
 };
-  
+
 useEffect(() => {
-  getInstitutions()
-},[])
+  getinstitutions();
+}, []); // O [id_rol] si depende de ese valor
 
 
  return (
@@ -70,7 +65,7 @@ useEffect(() => {
 
         <select className="institution-selector"
         value={id_institution}
-        onChange={(event) => setid_institution(event.target.value)}
+        onChange={(event) => setid_institution(parseInt(event.target.value))}
         name="institution"
         id="institution"
         >

@@ -1,5 +1,5 @@
 import { useState, useEffect,  } from "react";
-import { refreshAccessToken } from "../../../../services/fetch";
+import { refreshAccessToken } from "../../../../services/token";
 import Cookies from 'js-cookie';
 import '../../../../styles/administrator-styles/selectores.css'
 
@@ -12,7 +12,7 @@ const Selector_rols = ({id_rol,setid_rol}) => {
     
   console.log(id_rol)
   console.log(typeof(id_rol))
-    const [roles, setroles] = useState([])
+  const [roles, setroles] = useState([])
     
     
     

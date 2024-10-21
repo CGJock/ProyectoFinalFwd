@@ -66,7 +66,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         #estos son los datos que iran en la respuesta
         data['email'] = self.user.email
-        
+        data
         data['id_user'] = self.user.id_user
        
         return data

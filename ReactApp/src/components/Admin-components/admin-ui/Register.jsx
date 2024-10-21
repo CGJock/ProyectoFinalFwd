@@ -50,6 +50,7 @@ const Register = () => {
       const apiUrl = 'http://localhost:8000/api/user/users/'          //api para ver todos los usuarios
       
       let user_data = {}
+      console.log(id_grade)
 
         if(!user_data) {
         alert('Please fill all the fields')
@@ -160,22 +161,22 @@ const Register = () => {
         <h3>Agregue los datos relacionados al estudiante</h3>
         <div className="institution_grade_container">
           <div>
-            <Selector_institution setid_institution={setid_institution} id_institution={id_institution}/>
+            <Selector_institution value={id_institution} setid_institution={setid_institution} id_institution={id_institution}/>
             <p className="label_input">Institucion</p>
           </div>
           <div>
-            <Selector_grades setid_grade={setid_grade} id_grade={id_grade}/>
+            <Selector_grades value={id_grade} setid_grade={setid_grade} id_grade={id_grade}/>
             <p className="label_input">Grado Academico</p>
           </div>
         </div>
 
         <div className="subsidy_sholarship_containers">
           <div  className="checkbox-container">
-            <Checkboxgovernment_subsidy setgovernment_subsidy={setgovernment_subsidy} government_subsidy={government_subsidy} />
+            <Checkboxgovernment_subsidy value={government_subsidy} setgovernment_subsidy={setgovernment_subsidy} government_subsidy={government_subsidy} />
             <p className="label_input">Subsidio Gobernamental</p>
           </div>
           <div className="checkbox-container">
-            <Checkscholarship setscholarship={setscholarship} scholarship={scholarship} />
+            <Checkscholarship value={scholarship} setscholarship={setscholarship} scholarship={scholarship} />
             <p className="label_input">Beca</p>
           </div>
         </div>

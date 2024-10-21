@@ -15,8 +15,14 @@
     font-size: 1.8rem;
   }
   
-  .header h4 {
-    color: #666;
+  .header  {
+    border: solid #8f03a1 1px;
+    border-radius: 8px;
+    background-color: white;
+    
+  }
+  H4{
+    color: #000000;
     margin: 10px 0;
     font-weight: 400;
   }

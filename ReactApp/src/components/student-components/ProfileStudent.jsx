@@ -59,9 +59,13 @@ const ProfileStudent = () => {
 
     return (
         <div className="container">
-            {/* <h2>Perfil de Usuario</h2>
+
+            <h2>Perfil de Usuario</h2>
+
+
             <button onClick={toggleModal}>Abrir Menú</button>
             <SideModal isOpen={isModalOpen} onClose={toggleModal} />
+            {/* contenedor la imagen de perfil */}
             <div className="ProfileStudientContainer">
                 <div className="imageContainer">
                     {image ? (
@@ -84,6 +88,8 @@ const ProfileStudent = () => {
                         agregar foto de perfil
                     </button>
                 </div>
+                {/* añadir la descripcion */}
+                <div className="infoContainer">
                 <textarea
                     value={tempDescription}
                     onChange={handleTempDescriptionChange}
@@ -96,14 +102,17 @@ const ProfileStudent = () => {
                 >
                     Añadir Descripción
                 </button>
+                {/* informacion guardada */}
                 <div className="savedDescription">
                     <h4>Descripción Guardada:</h4>
                     <p>{description}</p>
                 </div>
             </div> */}
 
+
+      </div>
         </div>
-        
+        </div>
     );
 };
 

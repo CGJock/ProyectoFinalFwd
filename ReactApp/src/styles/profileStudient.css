@@ -1,32 +1,29 @@
-
+/* Contenedor principal */
 .container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row; /* Cambiado a fila para que la imagen y descripción estén lado a lado */
+    justify-content: space-between;
+    align-items: flex-start;
     margin: 20px auto;
-    max-width: 600px;
+    max-width: 900px;
     padding: 20px;
-    max-width: 600px;
     background-color: #f0f2f5;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 900px;
-    height: 900px;
-    
-
 }
 
-.profileContainer {
+/* Contenedor del perfil */
+.ProfileStudientContainer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* Para que los elementos estén en fila */
     align-items: center;
-    width: 700%;
+    width: 100%;
 }
 
- .imageContainer {
+/* Imagen de perfil */
+.imageContainer {
     position: relative;
-    margin-bottom: 20px;
-    margin-left: 800px;
+    margin-right: 20px; /* Espaciado entre la imagen y la descripción */
 }
 
 .image {
@@ -36,27 +33,50 @@
     object-fit: cover;
     border: 3px solid #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #e1e1e1;
-} 
+}
 
-.placeholder {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background-color: #e1e1e1;
+/* Contenedor de la información (botones y descripción) */
+.infoContainer {
     display: flex;
-    align-items: center; 
-    justify-content: center;
-    color: #562f2f;
-    font-size: 300px;
+    flex-direction: column; /* Para que el botón y el área de texto estén uno debajo del otro */
+    align-items: flex-start;
+    width: 100%;
 }
 
-.fileInput {
-    display: none;
-}
-
+/* Botón de cambiar imagen */
 .uploadButton {
-    margin-top: 10px;
+    padding: 5px 15px;
+    background-color: #0000ad;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.uploadButton:hover {
+    background-color: #00008b;
+}
+
+/* Área de texto para la descripción */
+.textArea {
+    width: 100%;
+    max-width: 500px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    resize: none;
+    margin-bottom: 10px;
+}
+
+.textArea:focus {
+    border-color: #040471;
+    box-shadow: 0 0 4px rgba(24, 119, 242, 0.5);
+}
+
+/* Botón para guardar la descripción */
+.saveDescriptionButton {
     padding: 5px 15px;
     background-color: #0000ad;
     color: white;
@@ -66,23 +86,13 @@
     font-size: 14px;
 }
 
-.uploadButton:hover {
-    background-color: #0000ad;
+.saveDescriptionButton:hover {
+    background-color: #00008b;
 }
 
-.textArea {
+/* Contenedor de la descripción final */
+.savedDescription {
+    margin-top: 20px;
+    text-align: left;
     width: 100%;
-    height: 100px;
-    padding: 10px;
-    border: 1px solid #3f4c5f;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    font-size: 16px;
-    resize: none;
-    outline: none;
 }
-
-.textArea:focus {
-    border-color: #040471;
-    box-shadow: 0 0 4px rgba(24, 119, 242, 0.5);
-}  

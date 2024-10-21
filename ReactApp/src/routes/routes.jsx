@@ -1,4 +1,3 @@
-
 import {Protected_routes_admin} from './proteced_routes';
 import { Protected_routes_psychologyst } from './proteced_routes';
 import { Protected_routes_student } from './proteced_routes';
@@ -8,6 +7,7 @@ import Home from '../pages/home/home'
 import Administration from '../pages/admin/administration';
 import Register from '../components/Admin-components/admin-ui/Register';
 import FAQ from '../components/home-components/FAQ';
+
 import PostList from '../components/post/PostList';
 // import CreatePost from '../components/Admin-components/post/CreatePost';
 import Login from '../pages/login/login'
@@ -44,6 +44,7 @@ const Rutas = () => {
         
         <Route path="/profilePsycho" element={<ProfilePsycho/>} />
         <Route path='/login' element={<Login />} />
+        <Route path='/AboutMe' element={<AboutMe />} />
 
         <Route
         path='/profile/psychologist'

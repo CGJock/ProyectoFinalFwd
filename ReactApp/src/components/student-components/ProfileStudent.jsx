@@ -59,9 +59,10 @@ const ProfileStudent = () => {
 
     return (
         <div className="container">
+
             <h2>Perfil de Usuario</h2>
 
-            {/* boton que abre el modal de la izquierdo */}
+
             <button onClick={toggleModal}>Abrir Menú</button>
             <SideModal isOpen={isModalOpen} onClose={toggleModal} />
             {/* contenedor la imagen de perfil */}
@@ -106,10 +107,8 @@ const ProfileStudent = () => {
                     <h4>Descripción Guardada:</h4>
                     <p>{description}</p>
                 </div>
-            </div>
-            <div>
-        <PostList />
-        <PostForm />
+            </div> */}
+
 
       </div>
         </div>

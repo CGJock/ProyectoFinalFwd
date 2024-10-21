@@ -1,0 +1,40 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1400px;
+    margin: 0 auto;
+    max-width: 1600px;
+    background-color: #222; /* Negro oscuro */
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+    border-radius: 8px; /* Bordes redondeados para el navbar */
+    margin-bottom: 2px;
+}
+
+.navbar h1 {
+    color: white;
+    margin: 0;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 15px; /* Espacio entre botones */
+    
+}
+
+.nav-button {
+    background-color: #444; /* Gris oscuro */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px; /* Bordes redondeados para los botones */
+    cursor: pointer;
+    text-decoration: none; /* Elimina subrayado de links */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Transiciones suaves */
+}
+
+.nav-button:hover {
+    background-color: #666; /* Gris claro en hover */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Sombra en hover */
+}

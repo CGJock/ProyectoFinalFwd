@@ -7,20 +7,23 @@ import Home from '../pages/home/home'
 import Administration from '../pages/admin/administration';
 import Register from '../components/Admin-components/admin-ui/Register';
 import FAQ from '../components/home-components/FAQ';
-import PostList from '../components/Admin-components/post/PostList';
+
+import PostList from '../components/post/PostList';
+// import CreatePost from '../components/Admin-components/post/CreatePost';
 import Login from '../pages/login/login'
-import UsersContainer from '../components/administration-components/UsersContainer';
-import { Profile } from '../pages/profile/Profile';
-import { useParams } from 'react-router-dom';
-import { ProfilePsychologist } from '../pages/psychologist/Profile-psychologist';
+// import PostForm from '../components/Admin-components/post/PostForm';
+import UsersContainer from '../components/Admin-components/admin-ui/UsersContainer';
+// import { Profile } from '../pages/profile/Profile';
+import { ProfilePsychologist } from '../pages/psychologist/psychologist';
 
 
-import ProfilePsycho from "../pages/psychogist/PhofilePsycho";
-import AboutMe from '../components/home-components/AboutMe';
+import ProfilePsycho from "../components/psychologist-components/PhofilePsycho";
+// import AboutMe from '../components/home-components/AboutMe';
 import NavHome from '../components/home-components/NavHome';
 
 import { Student } from '../pages/student/student';
 import ProfileStudent from '../components/student-components/ProfileStudent';
+import { TicketComponent } from '../components/student-components/TicketComponent';
 
 
 const Rutas = () => {
@@ -54,13 +57,14 @@ const Rutas = () => {
 
 
         <Route
-        path='/profile/student'
+        path='/profile'
         element={
           <Protected_routes_student>
             <Student />
           </Protected_routes_student>
         } >
-          <Route path="/profile/student" element={<ProfileStudent />} />
+          <Route path="student" element={<ProfileStudent />} />
+          <Route path='/profile/student/create-ticket/' element={<TicketComponent />} />
         </Route>
       
 

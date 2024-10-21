@@ -5,23 +5,6 @@ from rol.models import ROL
 
 # Create your models here.
 
-# class USERMANAGER(AbstractUser):
-#     def create_user(self, email, password=None, **extra_fields):
-#         if not email:
-#             raise ValueError('Se debe ingresasr un correo')
-#         email = self.normalize_email(email)
-#         user = self.model(email=email, **extra_fields)
-#         user.set_password(password)  #se guarda la password para el hash
-#         user.save(using=self._db)
-#         user.setpermissions_based_on_role()#para asignar permisos segun rol 
-#         return user
-    
-
-#     def create_superuser(self, email, password=None, **extra_fields):
-#         extra_fields.setdefault('is_staff', True)
-#         extra_fields.setdefault('is_superuser', True)
-
-#         return self.create_user(email, password, **extra_fields)
     
     
 class USERS(AbstractUser):
@@ -41,6 +24,7 @@ class USERS(AbstractUser):
     password = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=8)
     last_login = models.DateTimeField(null=True, blank=True)
+    is_active = models.BooleanField(default=True)
     
 
      

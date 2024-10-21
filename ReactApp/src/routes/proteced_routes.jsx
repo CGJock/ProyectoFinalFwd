@@ -1,12 +1,59 @@
-import { Navigate } from "react-router-dom"
+import { Navigate, useSearchParams } from "react-router-dom"
 import Home from "../pages/home/home";
 import { useAuth } from "../context/AuthContext"
+import { jwtDecode } from "jwt-decode";
+import { useEffect,useState } from "react";
+import { user_fetch } from "../services/user_fetch";
 
 export const Protected_routes_admin = ({children}) => {
- const {Userrol} = useAuth();
- const {Token} =  useAuth();
+  const [id_rol, setid_rol] = useState(null)
+  const [Token, setToken] = useState(sessionStorage.getItem('token_raw')|| null);
+  const [decodedToken, setdecodedToken] = useState(jwtDecode(Token))
+  const [id_user, setid_user] = useState(decodedToken.id_user)
+ const [User, setUser] = useState(null)
  
-  if(Userrol == 1) {
+
+
+  
+  useEffect(() => {
+    // Al cargar el componente, intenta decodificar el token y obtener el id_user y id_rol
+    console.log(Token)
+    if (Token) {
+        setdecodedToken(jwtDecode(Token));
+        
+}
+}, [Token]); // Solo se
+ 
+
+ useEffect(() => {
+  console.log("id_user actualizado:", id_user);
+}, [id_user]); // Este useEffect se ejecutará cuando id_user cambie
+
+const apiPost = "http://localhost:8000/api/user/user"
+useEffect(() => {
+  const fetchUserData = async () => {
+    if (id_user) { // Verificar que id_user tenga valor antes de llamar a la API
+      try {
+          const userData = await user_fetch(apiPost, id_user); 
+          setUser(userData); // Actualiza el estado con la información del usuario
+      } catch (error) {
+          console.error("Error fetching user data:", error);
+      }
+    }
+  };
+
+  fetchUserData();
+}, [apiPost, id_user]); 
+
+ 
+
+ if(!Token) {
+  return <Navigate to='/home'/>;
+ }
+ 
+  if(id_user == 1) {
+    console.log(true)
+    
     
     return children;
     } else
@@ -14,19 +61,42 @@ export const Protected_routes_admin = ({children}) => {
 }
 
 export const Protected_routes_psychologyst = ({children}) => {
-  const {Userrol} = useAuth();
-  if(Userrol == 3 || Userrol == 1) {
+  const [Token, setToken] = useState(sessionStorage.getItem('token_raw')|| null);
+  const [decodedToken, setdecodedToken] = useState(jwtDecode(Token))
+  const [id_user, setid_user] = useState(decodedToken.id_rol)
+  
+  if(id_user == 3 || id_user == 1) {
     
     return children;
     } else
     return  <Navigate to="/home"/>
 }
 
-export const Protected_routes_student = ({children})  => {
-  const {Userrol} = useAuth()
-  if(Userrol == 2 || Userrol == 1) {
-    
-    return children;
-    } else
-    return  <Navigate to="/home"/>
-}
+export const Protected_routes_student = ({ children }) => {
+  const [Token, setToken] = useState(sessionStorage.getItem('token_raw') || null);
+  const [id_user, setid_user] = useState(null);
+//se crea un useeffect para controlar las veces que está funciono se va a hacer al mismo 
+//tiempo que se busca capturar los errores del token si este es nulo o indefinido
+  useEffect(() => {
+      if (Token) {
+          try {
+              const decodedToken = jwtDecode(Token);
+              setid_user(decodedToken.id_rol); // Actualiza id_user solo si el token es válido
+          } catch (error) {
+              console.error("Error decodificando el token:", error);
+              setid_user(null); // O manejar de otra forma, como redirigir
+          }
+      }
+  }, [Token]);
+
+  if (!Token) {
+      return <Navigate to='/home' />;
+  }
+
+  // Comprobación de id_user
+  if (id_user === 2 || id_user === 1) {
+      return children;
+  } else {
+      return <Navigate to="/home" />;
+  }
+};

@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-import os 
+from datetime import timedelta
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -147,9 +148,34 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://react_app:5173",
 ]
-
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:5173',  # Add your frontend URL here
+]
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+# Add REST framework configuration
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+         'rest_framework.permissions.IsAuthenticated', 
+    ),
+}
+# Optional: Set JWT lifetime (default is 5 minutes)
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'USER_ID_FIELD': 'id_user', # Field to use for user identification
+    'USER_ID_CLAIM': 'id_user', # Claim to use for user identification in the token
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}
+
 IMGUR_CLIENT_ID = 'cc5933407f174ac'

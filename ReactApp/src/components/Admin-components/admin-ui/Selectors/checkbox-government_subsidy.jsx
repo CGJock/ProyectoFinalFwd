@@ -1,4 +1,4 @@
-
+import '../../../../styles/administrator-styles/selectores.css'
 
 export const Checkboxgovernment_subsidy = ({setgovernment_subsidy, government_subsidy}) => {
     

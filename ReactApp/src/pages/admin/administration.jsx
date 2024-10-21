@@ -1,14 +1,15 @@
 
 import Register from "../../components/Admin-components/admin-ui/Register"
+import { AdminNav } from "../../components/Admin-components/admin-ui/AdminNav";
 
-import UsersContainer from "../../components/administration-components/UsersContainer"
+import UsersContainer from "../../components/Admin-components/admin-ui/UsersContainer"
 import { Outlet } from 'react-router-dom';
 
 const Administration = () => {
   return (
    <>
    
-    <h1>Pagina de administracion</h1>
+    <AdminNav/>
     <main>
     <Outlet />
     </main>

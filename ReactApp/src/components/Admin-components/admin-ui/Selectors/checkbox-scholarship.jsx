@@ -1,5 +1,5 @@
 
-
+import '../../../../styles/administrator-styles/selectores.css'
 export const Checkscholarship = ({setscholarship, scholarship}) => {
     
 

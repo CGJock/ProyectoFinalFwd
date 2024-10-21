@@ -4,11 +4,15 @@ from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import check_password
 from user.models import USERS
 from student.models import STUDENT
 from student.serializers import StudentSerializer
 from psychologist.serializers import  PsychologistSerializer
 from rest_framework import serializers
+from rest_framework_simplejwt.tokens import AccessToken, RefreshToken, TokenError
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny  
 
 
 from django.utils.encoding import force_bytes
@@ -22,14 +26,15 @@ from instituto.models import  INSTITUTIONS
 from psychologist.models import PSYCHOLOGIST
 
 
-from .serializers import UserSerializer,UserLoginSerializer,DeleteUserSerializer,ResetPasswordSerializer
-import jwt, datetime
-
+from .serializers import UserSerializer,UserLoginSerializer,DeleteUserSerializer,ResetPasswordSerializer,CustomTokenObtainPairSerializer
+from datetime import timedelta,datetime
+from django.shortcuts import get_object_or_404
 
 
 class RegisterUserViewSet(viewsets.ModelViewSet):
     queryset = USERS.objects.all()  # Define el queryset para evitar el error
     serializer_class = UserSerializer
+    permission_classes = [AllowAny]
     
     def generate_password(self):
             length = random.randint(8, 32)
@@ -51,7 +56,6 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
             "first_name":request.data.get('first_name'),
             "last_name":request.data.get('last_name'),
             "email":request.data.get('email'),
-            # "password":generated_password,
             "phone_number":request.data.get('phone_number')
         }
         user_serializer = UserSerializer(data=user_data)
@@ -61,7 +65,7 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
             user.password = make_password(generated_password)  # Hashear y asignar la contraseña
             user.save()
             
-            if request.data.get('id_rol') == 2:
+            if int(request.data.get('id_rol')) == 2:
                student_data = {
                 "government_subsidy":request.data.get("government_subsidy"),
                 "scholarship":request.data.get("scholarship"),  
@@ -78,7 +82,7 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
 
                },status=status.HTTP_201_CREATED)
                
-            elif request.data.get('id_rol') == 3:
+            elif int(request.data.get('id_rol')) == 3:
                 psychologist_data  = {
                     'license_code': request.data.get('license_code'),
                     'availability': request.data.get('availability'),
@@ -117,51 +121,77 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     
-        
+   
 #se muestran todos los ususarios
 class UserListView(viewsets.ReadOnlyModelViewSet):
     queryset = USERS.objects.all()
     serializer_class = UserSerializer
+    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated] 
+    
+    
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import CustomTokenObtainPairSerializer
+
+class LoginUserViewSet(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer  
+    
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        refresh_token = response.data.get('refresh')
+        # Set the refresh token as an HTTP-only cookie
+        if refresh_token:
+            response.set_cookie(
+                key='refresh_token',
+                value=refresh_token,
+                httponly=True,
+                secure=True,  # Use secure cookies in production (HTTPS)
+                samesite='Lax',  # Use 'Strict' or 'Lax' based on your requirements
+                expires=datetime.now() + timedelta(days=7)  # Adjust expiration time as needed
+            )
+            # Optionally, remove the refresh token from the response body
+            del response.data['refresh']
+        return response
+    
  
  
  #clase para setear la cooki con el hash   
-class LoginUserViewSet(viewsets.ViewSet):
-    queryset = USERS.objects.all()
-    serializer_class = UserLoginSerializer
+# class LoginUserViewSet(CustomTokenObtainPairSerializer):
+#     queryset = USERS.objects.all()
+#     serializer_class = UserLoginSerializer
     
-    def create(self, request):
-        email = request.data['email']
-        password = request.data['password']
-        user = USERS.objects.filter(email=email).first()
+#     def create(self, request):
+#         email = request.data['email']
+#         password = request.data['password']
         
-        if user is None:
-            raise AuthenticationFailed("El email no existe")
+#         try:
+#             user = get_object_or_404(USERS, email=email)
+#         except user.DoesNotExist:
+#             raise AuthenticationFailed("Account does  not exist")
+#         if user is None:
+#             raise AuthenticationFailed("El email no existe")
         
-        if not user.check_password(password):
-            raise AuthenticationFailed("contrasenna incorrecta")
+#         if not user.check_password(password):
+#             raise AuthenticationFailed(f"contrasenna incdorrecta{password}")
+        
+    
         
         # se setan las propiedades del payload
-        payload = {
-            "id_user": user.id_user,
-            'id_rol' : user.id_rol.id_rol,
-            "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=120),#se setea el vencimiento del token
-            "iat" : datetime.datetime.utcnow()
-        }
-        
+   
         #se encripta el token 
-        token =  jwt.encode(payload, "secret", algorithm="HS256")
+        # token =  jwt.encode(payload, "secret", algorithm="HS256")
         
-        response = Response()
+        # response = Response()
         
-        response.set_cookie('jwt', value=token, httponly=True)#se setea la cookie
+        # response.set_cookie('jwt', value=token, httponly=True)#se setea la cookie
         
-        response.data = {
-            'jwt': token,
-            'id_user': user.id_user,
-            'id_rol':  user.id_rol.id_rol
+        # response.data = {
+        #     'jwt': token,
+        #     'id_user': user.id_user,
+        #     'id_rol':  user.id_rol.id_rol
 
-        }
-        return response
+        # }
+        # return response
     
 
 class LogOutUserView(viewsets.ViewSet):
@@ -179,26 +209,21 @@ class LogOutUserView(viewsets.ViewSet):
       
             
     #para autentificar el estudiante       
-class UserViewSet(viewsets.ModelViewSet):
-   queryset =  USERS.objects.all()
-   serializer_class = UserLoginSerializer
-   
-   def get(self,request):
-        token = request.COOKIES.get('jwt')
-       
-        if not token:
-           raise AuthenticationFailed("no autentificado")
+class UserViewSet(APIView):
+    # authentication_classes = []
+    permission_classes = [IsAuthenticated]
+    # permission_classes = [AllowAny]
+    def get(self,request,id_user):
         try:
-           payload = jwt.decode(token, 'secret', algorithm='HS256')
-           
-        except jwt.ExpiredSignatureError :
-            raise AuthenticationFailed("no autentificado")
-        
-        user =  USERS.objects.filter(id_user=payload['id_user']).first()
-        serializer = UserSerializer(user)
-
-        return Response(serializer.data)
+            user = USERS.objects.get(id_user=id_user)
+            serializer = UserSerializer(user) 
+            return Response(serializer.data,status=200)
+        except USERS.DoesNotExist:
+            return Response({'error': 'no se encontro el user'}, status=404)
     
+       
+       
+           
 
 
 class DeleteUser(viewsets.ModelViewSet):

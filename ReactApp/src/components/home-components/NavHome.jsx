@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import '../../styles/nav-home.css';
 import { useState } from "react";
 import { Modal, Button, Alert } from "react-bootstrap";
-
+import { useEmail } from '../../context/AuthContext.jsx'
 const NavHome = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [showModal, setShowModal] = useState(false);

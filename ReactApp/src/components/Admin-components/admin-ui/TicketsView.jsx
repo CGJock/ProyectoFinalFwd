@@ -1,8 +1,12 @@
-import { GET } from "../../../services/crud";
+import { GET,PUT } from "../../../services/crud";
 import { useState, useEffect } from "react";
+import { ExpedienteModal } from "./CreateExpedient";
 import '../../../styles/administrator-styles/tickets_views.css'
 
 export const TicketsView = () => {
+  const [Show, setShow] = useState(False)
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const [data, setdata] = useState([]);
   useEffect(() => {
     getData(); 
@@ -14,6 +18,12 @@ export const TicketsView = () => {
     setdata(datos);
     console.log(datos);
     console.log
+  }
+
+  async function update_ticket(id,data) {
+    const edit_link = 
+
+    
   }
 
     return (
@@ -33,10 +43,13 @@ export const TicketsView = () => {
                 <div className="row-">{e.id_ticket}</div>
                 <div className="row-">{e.id_user}</div>
                 <div className="row-">{e.state}</div>
+                <div onClick={() =>  setShow(!Show)}> <button>Procesar Ticket</button></div>
               </div>
             ))}
           </div>
         </div>
+
+        <ExpedienteModal Show={Show} handleClose={handleClose} handleShow={handleShow}/>
       </>
     );
 };

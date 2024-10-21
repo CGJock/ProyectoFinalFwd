@@ -9,18 +9,34 @@ import { Spinner } from "../components/utilities/spinner";
 
 const Protected_routes = ({ allowedRoles, children }) => {
     const Token = Cookies.get('Token');
-    const [decodedToken, setDecodedToken] = useState(Token ? jwtDecode(Token) : null);
+    const [decodedToken, setDecodedToken] = useState(null);
     const { id_user } = useAuth();
     const [User, setUser] = useState(null);
     const [id_rol, setIdRol] = useState(null);
-    const [loading, setLoading] = useState(true); // Estado de carga
+    const [loading, setLoading] = useState(true);
     const apiPost = "http://localhost:8000/api/user/user";
 
+    // Decodificar el token solo si existe y está disponible
+    useEffect(() => {
+        if (Token) {
+            try {
+                const decoded = jwtDecode(Token);
+                setDecodedToken(decoded);
+            } catch (error) {
+                console.error("Error decoding token:", error);
+                setLoading(false); // Detener la carga en caso de error
+            }
+        } else {
+            setLoading(false); // Detener la carga si no hay token
+        }
+    }, [Token]);
+
+    // Obtener datos de usuario si el id_user está disponible
     useEffect(() => {
         const fetchUserData = async () => {
-            if (id_user) {
+            if (id_user && decodedToken) {
                 try {
-                    console.log('fetchin user_id :', id_user);
+                    console.log('Fetching user ID:', id_user);
                     const userData = await user_fetch(apiPost, id_user);
                     console.log('User data fetched:', userData);
 
@@ -28,29 +44,29 @@ const Protected_routes = ({ allowedRoles, children }) => {
                         setUser(userData);
                         setIdRol(userData.id_rol);
                     } else {
-                        console.error('No se encontro la data de usuario');
+                        console.error('No se encontró la data de usuario');
                     }
                 } catch (error) {
                     console.error("Error fetching user data:", error);
                 } finally {
-                    setLoading(false); // Finaliza la carga
+                    setLoading(false); // Finalizar la carga
                 }
             } else {
-                console.log('No user ID econtrado');
-                setLoading(false); // Finaliza la carga si no hay id_user
+                console.log('No user ID encontrado');
+                setLoading(false); // Finalizar la carga si no hay id_user
             }
         };
 
-        fetchUserData();
-    }, [id_user, apiPost]);
+        if (id_user && decodedToken) fetchUserData();
+    }, [id_user, decodedToken, apiPost]);
 
-    // Muestra un mensaje de carga mientras los datos se obtienen, esto evita que se cargue el componente antes de los datos 
+    // Mostrar spinner de carga
     if (loading) {
-        return <div><Spinner /></div>; // O un spinner de carga
+        return <div><Spinner /></div>;
     }
 
     // Redireccionar si User o id_rol son null
-    if (User === null || id_rol === null) {
+    if (!User || !id_rol) {
         console.log('Redirecting to home, user not found or role not available');
         return <Navigate to='/home' />;
     }
@@ -59,7 +75,7 @@ const Protected_routes = ({ allowedRoles, children }) => {
     console.log('Rol ID:', id_rol);
     console.log('Allowed Roles:', allowedRoles);
 
-    // Verifica que id_rol sea un número antes de compararlo
+    // Verificar que id_rol sea un número antes de compararlo
     if (allowedRoles.includes(Number(id_rol))) {
         return children;
     } else {

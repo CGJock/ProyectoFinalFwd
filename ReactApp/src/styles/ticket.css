@@ -16,7 +16,9 @@
   }
   
   .header  {
-    background-color: #8f03a1;
+    border: solid #8f03a1 1px;
+    border-radius: 8px;
+    background-color: white;
     
   }
   H4{

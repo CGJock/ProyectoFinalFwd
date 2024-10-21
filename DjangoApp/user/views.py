@@ -13,7 +13,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken, TokenError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny 
-from rest_framework.permissions import IsAuthenticated
+
 from rest_framework_simplejwt.views import TokenRefreshView
 
  
@@ -218,7 +218,6 @@ class LogOutUserView(viewsets.ViewSet):
             
     #para autentificar el estudiante       
 class UserViewSet(APIView):
-    # authentication_classes = []
     permission_classes = [IsAuthenticated]
     # permission_classes = [AllowAny]
     def get(self,request,id_user):
@@ -303,7 +302,7 @@ class ResetPasswordView(viewsets.ModelViewSet):
             
             
        
-    
+ #view para refrescar el token    
 class CustomTokenRefreshView(TokenRefreshView):
     permission_classes = [AllowAny]
     authentication_classes = []  # No requiere autenticación para refrescar

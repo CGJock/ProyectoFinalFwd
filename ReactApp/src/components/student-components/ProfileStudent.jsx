@@ -7,7 +7,7 @@ import PostList from "../Admin-components/post/PostList";
 import PostForm from "../Admin-components/post/PostForm";
 
 const ProfileStudent = () => {
-    const { image, handleImageChange } = useImage(); 
+    const { image, handleImageChange } = useImage() || { image: null, handleImageChange: () => {} };
     const [tempDescription, setTempDescription] = useState('');
     const [description, setDescription] = useState('');
     const [isModalOpen, setModalOpen] = useState(false);

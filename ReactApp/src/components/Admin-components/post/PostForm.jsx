@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../../context/AuthContext';
 
 const PostForm = ({ onPostCreated }) => {
-  const { User } = useAuth(); // Obtenemos el User ID del contexto
+  const { User } = useAuth() || {}; 
   const [title, setTitle] = useState(''); 
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);

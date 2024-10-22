@@ -88,7 +88,7 @@ return (
   );
 };
 
-export default  AuthProvider;
+
 
 
 //este hook personlaizado utiliza usercontex para acceder al contexto de autentificacion de todos los componentes
@@ -101,47 +101,74 @@ export const useAuth = () => {
 // Crea el contexto de la imagen
 const ImageContext = createContext();
 
-// Crea el provider
+// Función para obtener un valor desde LocalStorage
+const getFromLocalStorage = (key) => {
+  try {
+    const storedValue = localStorage.getItem(key);
+    return storedValue ? JSON.parse(storedValue) : null;
+  } catch (error) {
+    console.error(`Error obteniendo ${key} desde localStorage`, error);
+    return null;
+  }
+};
+
+// Función para guardar un valor en LocalStorage
+const saveToLocalStorage = (key, value) => {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.error(`Error guardando ${key} en localStorage`, error);
+  }
+};
+
+// Función para convertir un archivo a base64
+const fileToBase64 = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+};
+
+// Crea el provider para el contexto de la imagen
 export const ImageProvider = ({ children }) => {
-    const [image, setImage] = useState(null);
+  const [image, setImage] = useState(null);
 
-    // Cargar la imagen guardada en localStorage al cargar el componente
-    useEffect(() => {
-        const savedImage = getFromLocalStorage('profileImage');
-        if (savedImage) {
-            setImage(savedImage);
-        }
-    }, []);
+  // Cargar la imagen guardada en localStorage al cargar el componente
+  useEffect(() => {
+    const savedImage = getFromLocalStorage('profileImage');
+    if (savedImage) {
+      setImage(savedImage);
+    }
+  }, []);
 
-    // Guardar la imagen en localStorage
-    useEffect(() => {
-        if (image) {
-            saveToLocalStorage('profileImage', image);
-        }
-    }, [image]);
+  // Guardar la imagen en localStorage
+  useEffect(() => {
+    if (image) {
+      saveToLocalStorage('profileImage', image);
+    }
+  }, [image]);
 
-    // Función para manejar el cambio de imagen
-    const handleImageChange = async (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const base64Image = await fileToBase64(file);
-            setImage(base64Image);
-        }
-    };
+  // Función para manejar el cambio de imagen
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const base64Image = await fileToBase64(file);
+      setImage(base64Image);
+    }
+  };
 
-    return (
-        <ImageContext.Provider value={{
-            image,
-            handleImageChange
-        }}>
-            {children}
-        </ImageContext.Provider>
-    );
+  return (
+    <ImageContext.Provider value={{ image, handleImageChange }}>
+      {children}
+    </ImageContext.Provider>
+  );
 };
 
 // Hook personalizado para acceder al contexto
 export const useImage = () => {
-    return useContext(ImageContext);
+  return useContext(ImageContext);
 };
 
 

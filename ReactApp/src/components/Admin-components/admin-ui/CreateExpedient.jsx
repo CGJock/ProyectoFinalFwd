@@ -1,25 +1,43 @@
 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { GET,PUT } from '../../../services/crud';
 import {  useEffect } from 'react';
 import { useState } from 'react';
+import { useAuth } from '../../../context/AuthContext';
 
-export const ExpedienteModal = ({ Show, setShow }) => {
+export const ExpedienteModal = ({ Show, setShow, id_user }) => {
     const [TicketStatus, setTicketStatus] = useState('')
+    const {id_ticket} = useAuth()
+    const {ticket_user_id} = useAuth()
+
     
     const handleClose = () => setShow(!Show);
     const handleShow = () => setShow(!Show);
 
-    function gestionar_data(params) {
-      
+   
+    async function gestionar_data(TicketStatus) {
+      let updated_data = {
+        
+        "state": TicketStatus
+      }
+      const api_link = 'http://localhost:8000/api/psychologist/list-tickets/'
+      let data = await  GET(api_link)
+      if(data){
+        const find_data = data.some((e) => e.id_ticket == id_ticket && e.id_user == ticket_user_id)
+      if(find_data){
+      const update_link =  `http://localhost:8000/api/psychologist/update-ticket/${id_ticket}/`
+        await PUT(updated_data,update_link)
+        alert('ticket actualizado')
+      }else {
+        alert('No se encontró el ticket')
+      }
+
+    }
+
     }
    
-
-    
-  
-    
-    
-      return (
+ return (
         <>  
       
           <Modal
@@ -32,7 +50,7 @@ export const ExpedienteModal = ({ Show, setShow }) => {
               <Modal.Title>Procesar Ticket</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <label htmlFor="Nombre" >procesa los datos </label>
+              <label htmlFor="Nombre" >Determina si el ticket sera rechazado o aprovado</label>
               <select className='selector_gender'
                 value={TicketStatus}
                 onChange={(event) => setTicketStatus(event.target.value)}
@@ -47,6 +65,13 @@ export const ExpedienteModal = ({ Show, setShow }) => {
                 </option>
                 
                 </select>
+                <div>
+                <h4>{ticket_user_id}</h4>
+                <h4>{id_ticket}</h4>
+                <label>La solicitud sera:  {TicketStatus}</label>
+
+                <h1>paco</h1>
+                </div>
     
               
             </Modal.Body>
@@ -54,11 +79,11 @@ export const ExpedienteModal = ({ Show, setShow }) => {
               <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="primary" onClick={ () => gestionar_data() }>Procesar</Button>
+              <Button variant="primary" onClick={ () => gestionar_data(TicketStatus) }>Procesar</Button>
             </Modal.Footer>
           </Modal>
         </>
       );
     }
     
-   
+  

@@ -54,7 +54,6 @@ export const GET = async(apiPost) => {
         });
         
         
-
         // Check if the response is ok
         if (!response.ok) {
             const errorData = await response.json();
@@ -70,18 +69,18 @@ export const GET = async(apiPost) => {
     }
 };
 
-export const PUT = async(edit_link,data) => {
+export const PUT = async(updated_data,edit_link) => {
     try{
         const csrftoken = Cookies.get('csrftoken');
         const access_token = Cookies.get('access_token')
         const response = await fetch(edit_link, {
-           method: 'PUT',
+           method: 'PATCH',
            headers:{
             'Content-Type': 'application/json',
             'X-CSRFToken': csrftoken,
             'Authorization': `Bearer ${access_token}`, // Incluye el access token
            } ,
-           body: JSON.stringify(data),
+           body: JSON.stringify(updated_data),
            credentials: 'include'
         })
         if (!response.ok) {

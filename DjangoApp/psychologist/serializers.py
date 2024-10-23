@@ -1,12 +1,14 @@
 from rest_framework import serializers
 from psychologist.models import PSYCHOLOGIST,TICKET,PACIENTFILES,EXPEDIENT
 from user.models import USERS
+from user.serializers import UserSerializer
 
 #form registro psychologist
 class PsychologistSerializer(serializers.ModelSerializer):
+    id_user = UserSerializer()
     class Meta:
         model=PSYCHOLOGIST
-        fields='__all__'
+        fields=['id_user','id_psychologist','pacient_count','availability','license_code','years_experience']
         
 class TicketSerializer(serializers.ModelSerializer):
     id_user = serializers.PrimaryKeyRelatedField(queryset=USERS.objects.all())

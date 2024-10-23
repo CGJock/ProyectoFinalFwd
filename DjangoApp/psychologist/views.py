@@ -63,15 +63,28 @@ class CreateTicket(viewsets.ModelViewSet):
         elif ticket_serializer.errors:
             return Response(ticket_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
+
+class UpdateTicket(viewsets.ModelViewSet):
+    serializer_class = TicketSerializer
+    queryset = TICKET.objects.all()
+    authentication_classes = []
+    permission_classes = [AllowAny]
+        
     def partial_update(self, request, *args, **kwargs):
+        id_ticket = kwargs.get('id_ticket')#se obtiene el id desde la ruta
         # Busca el ticket que se desea actualizar
         try:
-            ticket = self.get_object()  # Obtiene el ticket por pk o cualquier identificador
+            ticket = TICKET.objects.get(id_ticket=id_ticket) # Obtiene el ticket por pk o cualquier identificador
         except TICKET.DoesNotExist:
             return Response({"error": "Ticket no encontrado"}, status=status.HTTP_404_NOT_FOUND)
         
         # Actualiza parcialmente el ticket con los datos enviados
-        ticket_serializer = self.get_serializer(ticket, data=request.data, partial=True)
+        ticket_data = {
+    
+            'state': request.data.get('state'),
+
+            }
+        ticket_serializer = self.get_serializer(ticket, data=ticket_data, partial=True)
         
         if ticket_serializer.is_valid():
             ticket_serializer.save()
@@ -142,6 +155,15 @@ class CreateCase(viewsets.ModelViewSet):
             return Response(ticket_serializer.data,status=status.HTTP_201_CREATED)
         elif ticket_serializer.errors:
             return Response(ticket_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+
+class PsychologistUser(viewsets.ViewSet):
+    def list(self, request, ):
+        # Recupera todos los psicologos con sus usuarios relacionados
+        psychologists = PSYCHOLOGIST.objects.select_related('id_user').all()
+        serializer = PsychologistSerializer(psychologists, many=True)
+        return Response(serializer.data)
+    
         
     
     

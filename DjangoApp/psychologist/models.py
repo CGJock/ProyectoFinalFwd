@@ -9,7 +9,7 @@ from django.utils import timezone
 class PSYCHOLOGIST(models.Model):
     id_user = models.ForeignKey(USERS, on_delete=models.CASCADE)
     id_psychologist = models.AutoField(primary_key=True)
-    pacient_count = models.IntegerField()
+    pacient_count = models.IntegerField(default=0)
     license_code = models.CharField(max_length=100)
     availability   = models.BooleanField()
     years_experience  = models.IntegerField()

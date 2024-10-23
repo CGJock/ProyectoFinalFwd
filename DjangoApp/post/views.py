@@ -1,5 +1,5 @@
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import viewsets,  status
+from rest_framework import viewsets, status
 from post.models import Post, PostReplies
 from user.models import USERS
 from .serializers import PostSerializer, PostResponseSerializer
@@ -14,7 +14,7 @@ import requests
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = []
 
     def create(self, request, *args, **kwargs):
         data = request.data.copy()  # Hacemos una copia de los datos para poder modificarlos
@@ -56,10 +56,10 @@ class PostViewSet(viewsets.ModelViewSet):
             return None
 
 
-
 class userViewSet(viewsets.ModelViewSet):
     queryset = USERS.objects.all() 
     serializer_class = UserSerializer 
+    
     def create(self, request, *args, **kwargs):
         data = request.data
         image_file = request.FILES.get('image')
@@ -74,24 +74,36 @@ class userViewSet(viewsets.ModelViewSet):
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-# esta viewset gestiona las publicaciones en la application
-
-        
-    
+# Esta viewset gestiona las publicaciones en la aplicación
 
 class PostResponseViewSet(viewsets.ModelViewSet):
-    queryset = PostReplies.objects.all()  
     serializer_class = PostResponseSerializer
+
+    def get_queryset(self):
+        """
+        Si se proporciona un post_id en la URL, devuelve las respuestas de ese post.
+        Si no, devuelve todas las respuestas (para propósitos administrativos, por ejemplo).
+        """
+        post_id = self.kwargs.get('post_id')
+        if post_id:
+            return PostReplies.objects.filter(post_id=post_id)
+        return PostReplies.objects.all()
+
     def create(self, request, *args, **kwargs):
-        data = request.data
-        post_id = data.get('post_id')
+        post_id = kwargs.get('post_id')  # Obtenemos el post_id desde los argumentos de la URL
         try:
             post = Post.objects.get(post_id=post_id)
         except Post.DoesNotExist:
             return Response({"error": "Post not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        data = request.data.copy()
+        data['post_id'] = post_id  # Añadimos el post_id al payload de datos
+        data['id_user'] = request.user.id  # Añadimos el usuario autenticado como autor de la respuesta
+
+        # Serializamos y validamos los datos
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
+        
+        # Guardamos la nueva respuesta
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
-    

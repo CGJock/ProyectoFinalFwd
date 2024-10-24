@@ -102,8 +102,7 @@ export const login_user = async(apiPost,user_data) => {
             body: JSON.stringify(user_data), // User data containing the input values
             credentials:'include'
         });
-        const data_1 = await response.json()
-        console.log(data_1);
+        
         
         
         

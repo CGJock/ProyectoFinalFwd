@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'student',
     'psychologist',
     'library',
+    
 ]
 
 MIDDLEWARE = [
@@ -156,9 +157,11 @@ CORS_ALLOW_CREDENTIALS = True
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+
 # Add REST framework configuration
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         
     ),
@@ -175,3 +178,5 @@ SIMPLE_JWT = {
     'USER_ID_CLAIM': 'id_user', # Claim to use for user identification in the token
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
+
+IMGUR_CLIENT_ID = 'cc5933407f174ac'

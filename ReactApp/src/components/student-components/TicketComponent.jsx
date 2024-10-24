@@ -1,13 +1,19 @@
 import React from 'react'
+
 import { useAuth } from '../../context/AuthContext';
 import { POST,GET } from '../../services/crud';
+
+
+
 import '../../styles/ticket.css'
 
 export const TicketComponent = () => {
 
+
   const {id_user} = useAuth();
   const apiUrl = 'http://localhost:8000/api/psychologist/create-ticket/'
   console.log(id_user)
+
 
   async function handle_form(){
     

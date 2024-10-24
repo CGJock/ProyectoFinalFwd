@@ -1,0 +1,74 @@
+
+.faq-container {
+    max-width: 900px; /* Limita el ancho del contenedor */
+    margin: 0 auto; /* Centra el contenedor */
+    padding: 20px; /* Agrega espacio interno */
+    background-color: #ffffff; /* Color de fondo blanco */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  }
+  
+  .faq-title {
+    text-align: center; /* Centra el título */
+    font-size: 2em; /* Tamaño de fuente grande */
+    color: #333; /* Color del texto */
+    margin-bottom: 20px; /* Espacio debajo del título */
+  }
+  
+  .faq-item {
+    margin-bottom: 15px; /* Espacio entre preguntas */
+    border: 1px solid #e3e7ff; /* Borde ligero alrededor de cada pregunta */
+    border-radius: 5px; /* Bordes redondeados para las preguntas */
+    overflow: hidden; /* Oculta el desbordamiento del contenido */
+  }
+  
+  .faq-item-toggle {
+    display: none; /* Oculta el checkbox */
+  }
+  
+  .faq-item-question {
+    display: flex; /* Uso de flexbox para centrar el texto */
+    justify-content: space-between; /* Espacio entre texto y icono */
+    align-items: center; /* Centra verticalmente el contenido */
+    padding: 15px; /* Espacio interno */
+    font-size: 1.2em; /* Tamaño de fuente más pequeño */
+    background-color: #f7f7f7; /* Color de fondo ligero */
+    cursor: pointer; /* Cambia el cursor al pasar sobre la pregunta */
+    transition: background-color 0.3s ease; /* Transición para cambios de color */
+  }
+  
+  .faq-item-question:hover {
+    background-color: #e0f7fa; /* Color de fondo al pasar el mouse */
+  }
+  
+  .faq-item-answer {
+    padding: 15px; /* Espacio interno para las respuestas */
+    background-color: #fafafa; /* Color de fondo más claro */
+    display: none; /* Oculta la respuesta inicialmente */
+  }
+  
+  .faq-item-toggle:checked + .faq-item-question + .faq-item-answer {
+    display: block; /* Muestra la respuesta si el checkbox está marcado */
+  }
+  
+  ul {
+    margin: 10px 0; /* Margen para listas */
+    padding-left: 20px; /* Sangría para listas */
+    color: #555; /* Color del texto de la lista */
+  }
+  
+  button {
+    margin-top: 20px; /* Espacio en la parte superior del botón */
+    padding: 10px 20px; /* Espaciado para el botón */
+    background-color: #000000; /* Color de fondo del botón */
+    color: #fff; /* Color del texto del botón */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados para el botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s ease; /* Transición para cambios de color */
+  }
+  
+  button:hover {
+    background-color: #e64a19; /* Color al pasar el mouse sobre el botón */
+  }
+  

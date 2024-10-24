@@ -1,11 +1,10 @@
-
-import "../../styles/faq.css";
+import "../../styles/home-styles/faq.css";
 
 // Component that contains the FAQs a student might have
 const FAQ = () => {
   return (
     <div className="faq-container">
-      <h2 className="faq-title">Frequently Asked Questions</h2>
+      <h2 className="faq-title">Preguntas Frecuentes</h2>
       
       {/* Question 1 */}
       <div className="faq-item">
@@ -15,21 +14,21 @@ const FAQ = () => {
           className="faq-item-toggle"
         />
         <label htmlFor="faq-item-1" className="faq-item-question">
-          How is my privacy protected on this platform?
+          ¿Cómo se protege mi privacidad en esta plataforma?
         </label>
         <div className="faq-item-answer">
           <p>
-            We take privacy seriously. All interactions on this platform are confidential, and your personal data is stored securely.
+            Tomamos la privacidad muy en serio. Todas las interacciones en esta plataforma son confidenciales y tus datos personales se almacenan de manera segura.
           </p>
           <ul>
             <li>
-              All communications between you and the professionals are encrypted to ensure privacy.
+              Todas las comunicaciones entre tú y los profesionales están encriptadas para asegurar la privacidad.
             </li>
             <li>
-              You can remain anonymous when interacting with other students.
+              Puedes permanecer anónimo al interactuar con otros estudiantes.
             </li>
             <li>
-              We do not share your personal information with third parties.
+              No compartimos tu información personal con terceros.
             </li>
           </ul>
         </div>
@@ -43,21 +42,21 @@ const FAQ = () => {
           className="faq-item-toggle"
         />
         <label htmlFor="faq-item-2" className="faq-item-question">
-          What support can I expect from the counselors?
+          ¿Qué apoyo puedo esperar de los consejeros?
         </label>
         <div className="faq-item-answer">
           <p>
-            Our platform provides professional support from licensed counselors who are trained to help students facing bullying or emotional difficulties.
+            Nuestra plataforma proporciona apoyo profesional de consejeros licenciados que están capacitados para ayudar a estudiantes que enfrentan acoso o dificultades emocionales.
           </p>
           <ul>
             <li>
-              You can schedule one-on-one sessions with a counselor.
+              Puedes programar sesiones individuales con un consejero.
             </li>
             <li>
-              There is a forum for peer support, where you can share experiences anonymously.
+              Hay un foro para el apoyo entre pares, donde puedes compartir experiencias de manera anónima.
             </li>
             <li>
-              The counselors can provide coping strategies, emotional support, and practical advice on handling difficult situations.
+              Los consejeros pueden ofrecer estrategias de afrontamiento, apoyo emocional y consejos prácticos para manejar situaciones difíciles.
             </li>
           </ul>
         </div>
@@ -71,21 +70,21 @@ const FAQ = () => {
           className="faq-item-toggle"
         />
         <label htmlFor="faq-item-3" className="faq-item-question">
-          Is my data secure on this platform?
+          ¿Está segura mi información en esta plataforma?
         </label>
         <div className="faq-item-answer">
           <p>
-            Yes, we use industry-standard security protocols to protect your data.
+            Sí, utilizamos protocolos de seguridad de estándares industriales para proteger tus datos.
           </p>
           <ul>
             <li>
-              All data is encrypted in transit and at rest.
+              Todos los datos están encriptados tanto en tránsito como en reposo.
             </li>
             <li>
-              Access to your data is restricted to authorized personnel only.
+              El acceso a tus datos está restringido solo a personal autorizado.
             </li>
             <li>
-              You can request deletion of your data at any time.
+              Puedes solicitar la eliminación de tus datos en cualquier momento.
             </li>
           </ul>
         </div>
@@ -99,11 +98,11 @@ const FAQ = () => {
           className="faq-item-toggle"
         />
         <label htmlFor="faq-item-4" className="faq-item-question">
-          Can I remain anonymous?
+          ¿Puedo permanecer en el anonimato?
         </label>
         <div className="faq-item-answer">
           <p>
-            Yes, anonymity is an option when interacting with other students on the platform. However, counselors may need basic information to provide appropriate support.
+            Sí, el anonimato es una opción al interactuar con otros estudiantes en la plataforma. Sin embargo, los consejeros pueden necesitar información básica para brindar apoyo adecuado.
           </p>
         </div>
       </div>
@@ -116,21 +115,21 @@ const FAQ = () => {
           className="faq-item-toggle"
         />
         <label htmlFor="faq-item-5" className="faq-item-question">
-          How do I report inappropriate content or behavior?
+          ¿Cómo reporto contenido o comportamiento inapropiado?
         </label>
         <div className="faq-item-answer">
           <p>
-            If you encounter inappropriate content or behavior on the platform, please report it immediately through our contact form or by notifying a moderator.
+            Si encuentras contenido o comportamiento inapropiado en la plataforma, por favor repórtalo inmediatamente a través de nuestro formulario de contacto o notificando a un moderador.
           </p>
           <ul>
             <li>
-              Use the "Report" button located on each post.
+              Usa el botón "Reportar" ubicado en cada publicación.
             </li>
             <li>
-              Contact a moderator directly for urgent issues.
+              Contacta directamente a un moderador para problemas urgentes.
             </li>
             <li>
-              All reports are reviewed and handled confidentially by our team.
+              Todos los informes son revisados y manejados de manera confidencial por nuestro equipo.
             </li>
           </ul>
         </div>
@@ -144,21 +143,21 @@ const FAQ = () => {
           className="faq-item-toggle"
         />
         <label htmlFor="faq-item-6" className="faq-item-question">
-          Where can I access emergency services?
+          ¿Dónde puedo acceder a servicios de emergencia?
         </label>
         <div className="faq-item-answer">
           <p>
-            If you need urgent help, we recommend contacting your local emergency services. We also provide links to various helplines and resources on the platform.
+            Si necesitas ayuda urgente, te recomendamos contactar a los servicios de emergencia locales. También proporcionamos enlaces a varias líneas de ayuda y recursos en la plataforma.
           </p>
           <ul>
             <li>
-              Emergency contacts are listed on the "Help" page.
+              Los contactos de emergencia están listados en la página "Ayuda".
             </li>
             <li>
-              Our counselors can guide you on how to reach the nearest support services.
+              Nuestros consejeros pueden guiarte sobre cómo llegar a los servicios de apoyo más cercanos.
             </li>
             <li>
-              In case of critical situations, don't hesitate to call emergency numbers in your area.
+              En caso de situaciones críticas, no dudes en llamar a los números de emergencia de tu área.
             </li>
           </ul>
         </div>

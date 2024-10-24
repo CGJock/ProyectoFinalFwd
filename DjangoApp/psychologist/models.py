@@ -15,7 +15,7 @@ class PSYCHOLOGIST(models.Model):
     years_experience  = models.IntegerField()
     
     def __str__(self):
-        return self.id_psychologist
+        return str(self.id_psychologist)
     
 
 class TICKET(models.Model):
@@ -31,6 +31,12 @@ class EXPEDIENT(models.Model):
     id_psychologist = models.ForeignKey(PSYCHOLOGIST, on_delete=models.CASCADE)
     observations = models.TextField(max_length=250, blank=True, null=True)
     crated_at = models.DateTimeField(default=timezone.now)
+    
+    def __str__(self):
+        return f"Expedient for {self.id_pacient} assigned to {self.id_psychologist}"
+    
+   
+
     
 class PACIENTFILES(models.Model):
     id_file = models.AutoField(primary_key=True)

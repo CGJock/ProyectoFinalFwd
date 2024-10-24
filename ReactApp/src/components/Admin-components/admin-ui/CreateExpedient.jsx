@@ -1,12 +1,12 @@
 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { GET,PUT } from '../../../services/crud';
+import { GET,PUT,POST } from '../../../services/crud';
 import {  useEffect } from 'react';
 import { useState } from 'react';
 import { useAuth } from '../../../context/AuthContext';
 
-export const ExpedienteModal = ({ Show, setShow, id_user }) => {
+export const ExpedienteModal = ({ Show, setShow }) => {
     const [TicketStatus, setTicketStatus] = useState('')
     const {id_ticket} = useAuth()
     const {ticket_user_id} = useAuth()
@@ -21,6 +21,7 @@ export const ExpedienteModal = ({ Show, setShow, id_user }) => {
         
         "state": TicketStatus
       }
+      const post_link = 'http://localhost:8000/api/psychologist/create-case/'
       const api_link = 'http://localhost:8000/api/psychologist/list-tickets/'
       let data = await  GET(api_link)
       if(data){
@@ -29,6 +30,13 @@ export const ExpedienteModal = ({ Show, setShow, id_user }) => {
       const update_link =  `http://localhost:8000/api/psychologist/update-ticket/${id_ticket}/`
         await PUT(updated_data,update_link)
         alert('ticket actualizado')
+        if (TicketStatus == 'accepted'){
+        const user_data = {
+          'id_user': ticket_user_id
+        }
+        console.log(user_data)
+        await POST(post_link,user_data)
+      }
       }else {
         alert('No se encontró el ticket')
       }
@@ -57,7 +65,7 @@ export const ExpedienteModal = ({ Show, setShow, id_user }) => {
                 name="ticket-status"
                 id="ticket-status"
               >
-                <option key={1} value={'acepted'}> 
+                <option key={1} value={'accepted'}> 
                 aceptar
                 </option>
                 <option key={2} value={'rejected'}> 

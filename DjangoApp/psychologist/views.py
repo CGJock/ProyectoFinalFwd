@@ -121,7 +121,9 @@ class FileUploadView(viewsets.ModelViewSet):
 class CreateCase(viewsets.ModelViewSet):
     queryset = EXPEDIENT.objects.all()
     serializer_class = ExpedientSerializer 
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
+    authentication_classes = []
+    permission_classes = [AllowAny]
     
     
     def create(self,request,*args, **kwargs):
@@ -144,19 +146,19 @@ class CreateCase(viewsets.ModelViewSet):
             return Response({'error': 'No hay psicólogos disponibles'}, status=status.HTTP_404_NOT_FOUND)
         
         expedient_data = {
-            'pacient': pacient.id_user,
-            'id_psychologist': psychologist.id
+            'id_pacient': pacient.id_user,
+            'id_psychologist': psychologist.id_psychologist
         } 
-        Expedient_Serializer = self.get_serializer(data=expedient_data)
+        expedient_serializer = self.get_serializer(data=expedient_data)
         
-        if Expedient_Serializer.isvalid():
-            Expedient_Serializer.save()
+        if expedient_serializer.is_valid():
+            expedient_serializer.save()
                 
-            return Response(ticket_serializer.data,status=status.HTTP_201_CREATED)
+            return Response(expedient_serializer.data,status=status.HTTP_201_CREATED)
         elif ticket_serializer.errors:
-            return Response(ticket_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(expedient_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-
+#vista que unifica psicologo y user
 class PsychologistUser(viewsets.ViewSet):
     def list(self, request, ):
         # Recupera todos los psicologos con sus usuarios relacionados

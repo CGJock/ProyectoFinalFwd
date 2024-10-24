@@ -34,15 +34,16 @@ export const postRegister = async (apiPost, user_data) => {
 
         // inserta la data en json 
         const data = await response.json();
+        //console.log(user_data.password)
         alert("Te has registrado correctamente");
         //console.log(data.user_data.email)
-        console.log(user_data.email)
+        
 
 
       const templateParams = {
         email: user_data.email,
         username: user_data.username,
-        password: user_data.password,
+        password: data.password,
         reset_url: user_data.reset_url
 
       }
@@ -81,7 +82,7 @@ const sendEmail = async (templateParams) => {
 export const login_user = async(apiPost,user_data) => {
     try {
         const csrftoken = Cookies.get('csrftoken');
-        
+        const access_token = Cookies.get('acces_token')
         
         
         // Make the POST request to register the user
@@ -90,6 +91,8 @@ export const login_user = async(apiPost,user_data) => {
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrftoken,
+                'Authorization': `Bearer ${access_token}`,
+
                 
             },
             body: JSON.stringify(user_data), // User data containing the input values

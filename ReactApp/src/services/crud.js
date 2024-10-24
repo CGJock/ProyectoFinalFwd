@@ -3,13 +3,15 @@ import Cookies from 'js-cookie';
 export const POST = async(apiPost,user_data) => {
     try {
         const csrftoken = Cookies.get('csrftoken');
+        const access_token =  Cookies.get('acces_token')
         
         // Make the POST request to register the user
         const response = await fetch(apiPost, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken
+                'X-CSRFToken': csrftoken,
+                'Authorization': `Bearer ${access_token}`,
             },
             body: JSON.stringify(user_data), // User data containing the input values
             credentials:'include'
@@ -96,3 +98,4 @@ export const PUT = async(updated_data,edit_link) => {
         throw error; // Rethrow the error to handle it in the calling function
     }
     }
+

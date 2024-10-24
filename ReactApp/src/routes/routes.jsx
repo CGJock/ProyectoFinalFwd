@@ -22,7 +22,7 @@ import { Profile } from '../pages/profile/Profile';
 import { ProfilePsychologist } from '../pages/psychologist/psychologist';
 
 import { TicketsView } from '../components/Admin-components/admin-ui/TicketsView';
-import {PsychoContainer} from '../components/Admin-components/admin-ui/PsychoContainer';
+// import {PsychoContainer} from '../components/Admin-components/admin-ui/PsychoContainer';
 
 
 import ProfilePsycho from "../components/psychologist-components/PhofilePsycho";
@@ -87,7 +87,7 @@ const Rutas = () => {
           <Route path="register" element={<Register />} />{/*Administration/register*/}
           <Route path="students" element={<UsersContainer />} />{/*Administration/students*/}
           <Route path="tickets" element={<TicketsView />} />{/*Administration/tickets*/}
-          <Route path='psychologists' element={<PsychoContainer /> }/>{/*Administration/psychologists}
+          {/* <Route path='psychologists' element={<PsychoContainer /> }/>{/*Administration/psychologists} */}
           
 
           {/* <Route path="profile/psycho/:id" element={<ProfilePsycho />} /> */}

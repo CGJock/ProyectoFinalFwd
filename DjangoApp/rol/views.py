@@ -9,7 +9,7 @@ class RolViewSet(viewsets.ModelViewSet):
     queryset = ROL.objects.all()
     serializer_class = RolSerializer
     authentication_classes = []
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     
 class RolViewList(viewsets.ReadOnlyModelViewSet):
     queryset = ROL.objects.all()

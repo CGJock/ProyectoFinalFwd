@@ -21,8 +21,6 @@ class RegisterStudentViewSet(viewsets.ModelViewSet):
             return Response(student_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
       
 
-            
-
 class StudentsUser(viewsets.ViewSet):
     
     def list(self, request, ):

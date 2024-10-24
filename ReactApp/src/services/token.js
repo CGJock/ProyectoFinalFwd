@@ -18,12 +18,14 @@ export const isTokenExpired = (access_token) => {
 
 export const refreshAccessToken = async () => {
     try {
-       
+      let access_token = Cookies.get('access_token');
         const response = await fetch('http://localhost:8000/api/user/token/refresh/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access_token}`,
             },
+            
             credentials: 'include'
         });
 

@@ -3,13 +3,15 @@ import Cookies from 'js-cookie';
 export const POST = async(apiPost,user_data) => {
     try {
         const csrftoken = Cookies.get('csrftoken');
+        const access_token =  Cookies.get('acces_token')
         
         // Make the POST request to register the user
         const response = await fetch(apiPost, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken
+                'X-CSRFToken': csrftoken,
+                'Authorization': `Bearer ${access_token}`,
             },
             body: JSON.stringify(user_data), // User data containing the input values
             credentials:'include'
@@ -54,7 +56,6 @@ export const GET = async(apiPost) => {
         });
         
         
-
         // Check if the response is ok
         if (!response.ok) {
             const errorData = await response.json();
@@ -70,18 +71,18 @@ export const GET = async(apiPost) => {
     }
 };
 
-export const PUT = async(edit_link,data) => {
+export const PUT = async(updated_data,edit_link) => {
     try{
         const csrftoken = Cookies.get('csrftoken');
         const access_token = Cookies.get('access_token')
         const response = await fetch(edit_link, {
-           method: 'PUT',
+           method: 'PATCH',
            headers:{
             'Content-Type': 'application/json',
             'X-CSRFToken': csrftoken,
             'Authorization': `Bearer ${access_token}`, // Incluye el access token
            } ,
-           body: JSON.stringify(data),
+           body: JSON.stringify(updated_data),
            credentials: 'include'
         })
         if (!response.ok) {
@@ -97,3 +98,4 @@ export const PUT = async(edit_link,data) => {
         throw error; // Rethrow the error to handle it in the calling function
     }
     }
+

@@ -11,6 +11,7 @@ export const AdminNav = () => {
             <Link to="/administration/register" className="nav-button">Registro</Link>
             <Link to="/administration/psychologists" className="nav-button">Psicólogos</Link>
             <Link to="/administration/tickets" className="nav-button">Tickets</Link>
+            <Link to="/administration/expedients" className="nav-button">Expedientes</Link>
         </div>
     </div>
     </>

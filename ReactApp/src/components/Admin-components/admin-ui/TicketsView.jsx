@@ -1,15 +1,17 @@
 import { GET,PUT } from "../../../services/crud";
 import { useState, useEffect } from "react";
 import { ExpedienteModal } from "./CreateExpedient";
+import { useAuth } from "../../../context/AuthContext";
 import '../../../styles/administrator-styles/tickets_views.css'
 
 export const TicketsView = () => {
   
   const [Show, setShow] = useState(false)
-
-  const handleShow = () => setShow(!Show)
-  
+  // const handleShow = () => setShow(!Show)
   const [data, setdata] = useState([]);
+  const {setTicketData} =  useAuth()
+
+  
   useEffect(() => {
     getData(); 
   }, []);
@@ -22,11 +24,12 @@ export const TicketsView = () => {
     console.log
   }
 
-  // async function update_ticket(id,data) {
-  //   const edit_link = 
-
+  const handleShow = (id_ticket,ticket_user_id) => {
+    setShow(!Show);
+    setTicketData(id_ticket,ticket_user_id)
     
-  // }
+  }
+
 
     return (
       <>

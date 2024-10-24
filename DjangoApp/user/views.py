@@ -82,6 +82,7 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
                student_serializer = StudentSerializer(student)
                return Response({
                    "user": user_serializer.data,
+                    "password": generated_password,
                    "student":student_serializer.data
 
                },status=status.HTTP_201_CREATED)
@@ -101,6 +102,7 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
                 
                 return Response({
                     "user": user_serializer.data,
+                     "password": generated_password,
                     "psychologist":psychologist_serializer.data
     
                 },status=status.HTTP_201_CREATED)
@@ -141,8 +143,6 @@ class LoginUserViewSet(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer 
     permission_classes = [AllowAny]
     authentication_classes = []
-    
-     
     
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)

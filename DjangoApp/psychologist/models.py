@@ -9,13 +9,13 @@ from django.utils import timezone
 class PSYCHOLOGIST(models.Model):
     id_user = models.ForeignKey(USERS, on_delete=models.CASCADE)
     id_psychologist = models.AutoField(primary_key=True)
-    pacient_count = models.IntegerField()
+    pacient_count = models.IntegerField(default=0)
     license_code = models.CharField(max_length=100)
     availability   = models.BooleanField()
     years_experience  = models.IntegerField()
     
     def __str__(self):
-        return self.id_psychologist
+        return str(self.id_psychologist)
     
 
 class TICKET(models.Model):
@@ -30,7 +30,14 @@ class EXPEDIENT(models.Model):
     id_pacient  = models.ForeignKey(USERS, on_delete=models.CASCADE)
     id_psychologist = models.ForeignKey(PSYCHOLOGIST, on_delete=models.CASCADE)
     observations = models.TextField(max_length=250, blank=True, null=True)
+    state = models.TextField(max_length=55,default='open')
     crated_at = models.DateTimeField(default=timezone.now)
+    
+    def __str__(self):
+        return f"Expedient for {self.id_pacient} assigned to {self.id_psychologist}"
+    
+   
+
     
 class PACIENTFILES(models.Model):
     id_file = models.AutoField(primary_key=True)

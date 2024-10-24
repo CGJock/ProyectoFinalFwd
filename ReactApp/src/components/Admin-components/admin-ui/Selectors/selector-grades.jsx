@@ -14,7 +14,7 @@ const Selector_grades = ({id_grade, setid_grade}) => {
     const [grades, setgrades] = useState([])
    
    const apiUrl = 'http://localhost:8000/api/grade/grades/';
-   console.log({'grade_id':id_grade})
+   console.log(id_grade)
    
 
    const getgrades = async () => {

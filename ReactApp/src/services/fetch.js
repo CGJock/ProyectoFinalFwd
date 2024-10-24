@@ -32,20 +32,24 @@ export const postRegister = async (apiPost, user_data) => {
             throw new Error(errorData.detail || "Error al registrarse");
         }
 
-        // inserta la datga en json 
+        // inserta la data en json 
         const data = await response.json();
+        //console.log(user_data.password)
         alert("Te has registrado correctamente");
+        //console.log(data.user_data.email)
+        
+
 
       const templateParams = {
-        email: data.email,
-        username: data.username,
+        email: user_data.email,
+        username: user_data.username,
         password: data.password,
-        reset_url: data.reset_url
+        reset_url: user_data.reset_url
 
       }
 
         // Send the email using the response data
-        sendEmail(templateParams);
+       await sendEmail(templateParams);
         
 
         return data; 
@@ -56,6 +60,7 @@ export const postRegister = async (apiPost, user_data) => {
 };
 
 const sendEmail = async (templateParams) => {
+    console.log(templateParams.email)
   try {
     const response = await emailjs.send(
             "service_73e4kpp", 
@@ -63,8 +68,9 @@ const sendEmail = async (templateParams) => {
             templateParams, 
             "WaYegO_6CWZJoBg6b"
         );
+
        
-         alert(`Se ha enviado un correo a: ${email}`);
+         alert(`Se ha enviado un correo a: ${templateParams.email}`);
             }catch (err)  {
                 console.error("Error al enviar el correo:", err);
                 alert(`Hubo un error al enviar el correo: ${err.text || err.message}`);
@@ -76,7 +82,7 @@ const sendEmail = async (templateParams) => {
 export const login_user = async(apiPost,user_data) => {
     try {
         const csrftoken = Cookies.get('csrftoken');
-        
+        const access_token = Cookies.get('acces_token')
         
         
         // Make the POST request to register the user
@@ -85,6 +91,8 @@ export const login_user = async(apiPost,user_data) => {
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrftoken,
+                'Authorization': `Bearer ${access_token}`,
+
                 
             },
             body: JSON.stringify(user_data), // User data containing the input values

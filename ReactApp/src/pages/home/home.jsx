@@ -1,6 +1,9 @@
 import React from "react";
 import NavHome from "../../components/home-components/NavHome";
 import Footer from "../../components/home-components/footer";
+import InfoSection from '../../components/home-components/InfoSection';
+
+
 
 // import CreatePost from '../../components/Admin-components/post/CreatePost'
 // import { useAuth } from "../../context/AuthContext";
@@ -19,6 +22,15 @@ export const Home = () => {
       <div>
         <NavHome />
       </div>
+      <div>
+    
+        <VideoCarousel />
+        <InfoSection />
+      
+
+      </div>
+   
+  
 
 
       {/* Componente de posteos de publicaciones */}

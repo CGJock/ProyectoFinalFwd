@@ -9,7 +9,7 @@ import Cookies from 'js-cookie';
 const AuthContext = createContext();
 
 // auth provider esta pensado para envolver toda la aplicacion y darle contexto a todos los hijos (children)
-  const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const Token =  Cookies.get('Token');
   const [decodedToken, setdecodedToken] = useState(null)
   const [id_user, setid_user] = useState(null)
@@ -34,9 +34,13 @@ const AuthContext = createContext();
 
   const Loggin =  async (user_data) => {
     try{
+  
+     
     const apiPost = "http://localhost:8000/api/user/login-user/";
     const apiUser = "http://localhost:8000/api/user/user";
     const response = await login_user(apiPost,user_data);
+    
+    
     
     if(response){
       console.log(response);

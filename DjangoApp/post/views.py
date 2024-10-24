@@ -5,21 +5,20 @@ from user.models import USERS
 from .serializers import PostSerializer, PostResponseSerializer
 from user.serializers import UserSerializer
 from rest_framework.response import Response
-from django.views.decorators.csrf import csrf_exempt
 import requests
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
-# queryset = Consulta de todos los usuarios en la base de datos.
-# serializer_class= Clase del serializador utilizado para convertir el modelo User a JSON y viceversa
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = []
+    permission_classes = [IsAuthenticated]  # Solo usuarios autenticados pueden acceder
+    authentication_classes = [JWTAuthentication]  # Autenticación JWT
 
     def create(self, request, *args, **kwargs):
-        data = request.data.copy()  # Hacemos una copia de los datos para poder modificarlos
+        data = request.data.copy()
         image_file = request.FILES.get('image')
-        
+
         # Si hay un archivo de imagen, lo subimos a Imgur
         if image_file:
             imgur_url = self.upload_to_imgur(image_file)
@@ -27,17 +26,17 @@ class PostViewSet(viewsets.ModelViewSet):
                 data['image_url'] = imgur_url
             else:
                 return Response({"error": "Error uploading image to Imgur"}, status=status.HTTP_400_BAD_REQUEST)
-        
+
         # Asignamos el usuario autenticado al campo id_user
         data['id_user'] = request.user.id
-        
+
         # Serializamos y validamos los datos
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
-        
+
         # Guardamos el objeto con los datos
         self.perform_create(serializer)
-        
+
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def upload_to_imgur(self, image_file):
@@ -56,10 +55,12 @@ class PostViewSet(viewsets.ModelViewSet):
             return None
 
 
-class userViewSet(viewsets.ModelViewSet):
-    queryset = USERS.objects.all() 
-    serializer_class = UserSerializer 
-    
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = USERS.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]  # Solo usuarios autenticados pueden acceder
+    authentication_classes = [JWTAuthentication]  # Autenticación JWT
+
     def create(self, request, *args, **kwargs):
         data = request.data
         image_file = request.FILES.get('image')
@@ -69,15 +70,17 @@ class userViewSet(viewsets.ModelViewSet):
                 data['image_url'] = imgur_url
             else:
                 return Response({"error": "Error uploading image to Imgur"}, status=status.HTTP_400_BAD_REQUEST)
+
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-# Esta viewset gestiona las publicaciones en la aplicación
 
 class PostResponseViewSet(viewsets.ModelViewSet):
     serializer_class = PostResponseSerializer
+    permission_classes = [IsAuthenticated]  # Solo usuarios autenticados pueden acceder
+    authentication_classes = [JWTAuthentication]  # Autenticación JWT
 
     def get_queryset(self):
         """
@@ -90,7 +93,7 @@ class PostResponseViewSet(viewsets.ModelViewSet):
         return PostReplies.objects.all()
 
     def create(self, request, *args, **kwargs):
-        post_id = kwargs.get('post_id')  # Obtenemos el post_id desde los argumentos de la URL
+        post_id = kwargs.get('post_id')
         try:
             post = Post.objects.get(post_id=post_id)
         except Post.DoesNotExist:
@@ -103,7 +106,7 @@ class PostResponseViewSet(viewsets.ModelViewSet):
         # Serializamos y validamos los datos
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
-        
+
         # Guardamos la nueva respuesta
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)

@@ -1,29 +1,33 @@
-/* Contenedor principal */
 .container {
-    display: flex;
-    flex-direction: row; /* Cambiado a fila para que la imagen y descripción estén lado a lado */
-    justify-content: space-between;
-    align-items: flex-start;
-    margin: 20px auto;
-    max-width: 900px;
+    width: 80%;
+    margin: 0 auto;
     padding: 20px;
     background-color: #f0f2f5;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
 /* Contenedor del perfil */
 .ProfileStudientContainer {
     display: flex;
-    flex-direction: row; /* Para que los elementos estén en fila */
+    flex-direction: column;
     align-items: center;
-    width: 100%;
+    gap: 20px;
 }
 
 /* Imagen de perfil */
 .imageContainer {
     position: relative;
-    margin-right: 20px; /* Espaciado entre la imagen y la descripción */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .image {
@@ -31,68 +35,94 @@
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 4px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Contenedor de la información (botones y descripción) */
-.infoContainer {
+.placeholder {
+    width: 150px;
+    height: 150px;
     display: flex;
-    flex-direction: column; /* Para que el botón y el área de texto estén uno debajo del otro */
-    align-items: flex-start;
-    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: #dcdcdc;
+    border-radius: 50%;
+    color: #666;
+    font-size: 14px;
 }
 
-/* Botón de cambiar imagen */
 .uploadButton {
-    padding: 5px 15px;
-    background-color: #0000ad;
+    margin-top: 10px;
+    background-color: #1877f2;
     color: white;
     border: none;
+    padding: 8px 15px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
-    margin-bottom: 10px;
 }
 
 .uploadButton:hover {
-    background-color: #00008b;
+    background-color: #0052cc;
 }
 
-/* Área de texto para la descripción */
-.textArea {
+.fileInput {
+    display: none;
+}
+
+/* Contenedor de la información del estudiante */
+.infoContainer {
     width: 100%;
     max-width: 500px;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.textArea {
+    width: 100%;
+    height: 100px;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
     resize: none;
-    margin-bottom: 10px;
 }
 
-.textArea:focus {
-    border-color: #040471;
-    box-shadow: 0 0 4px rgba(24, 119, 242, 0.5);
-}
-
-/* Botón para guardar la descripción */
 .saveDescriptionButton {
-    padding: 5px 15px;
-    background-color: #0000ad;
+    align-self: flex-end;
+    background-color: #1877f2;
     color: white;
     border: none;
+    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
 }
 
 .saveDescriptionButton:hover {
-    background-color: #00008b;
+    background-color: #0052cc;
 }
 
-/* Contenedor de la descripción final */
+/* Descripción guardada */
 .savedDescription {
     margin-top: 20px;
-    text-align: left;
-    width: 100%;
+}
+
+.savedDescription h4 {
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.savedDescription p {
+    color: #555;
+    font-size: 14px;
+    background-color: #f7f7f7;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
 }

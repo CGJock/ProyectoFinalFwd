@@ -13,10 +13,10 @@ import Administration from '../pages/admin/administration';
 import Register from '../components/Admin-components/admin-ui/Register';
 import FAQ from '../components/home-components/FAQ';
 
-import PostList from '../components/post/PostList';
-import CreatePost from '../components/Admin-components/post/CreatePost';
+// import PostList from '../components/post/PostList';
+// import CreatePost from '../components/post/post/CreatePost';
 import Login from '../pages/login/login'
-import PostForm from '../components/Admin-components/post/PostForm';
+import PostForm from '../components/post-components/PostForm';
 import UsersContainer from '../components/Admin-components/admin-ui/UsersContainer';
 import { Profile } from '../pages/profile/Profile';
 import { ProfilePsychologist } from '../pages/psychologist/psychologist';
@@ -51,7 +51,7 @@ const Rutas = () => {
 
         <Route path="/profilePsycho" element={<ProfilePsycho />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/AboutMe" element={<AboutMe />} /> */}
+        <Route path="/AboutMe" element={<AboutMe />} />
 
         <Route
           path="/profile/psychologist"

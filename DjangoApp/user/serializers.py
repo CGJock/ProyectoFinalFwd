@@ -46,7 +46,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         credentials = {
             'username': '',
-            'password': attrs.get("password")
+            'password': str(attrs.get('password'))
         }
 
         #se encuentra al usuario
@@ -66,7 +66,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         #estos son los datos que iran en la respuesta
         data['email'] = self.user.email
-        data
+        # data
         data['id_user'] = self.user.id_user
        
         return data

@@ -1,5 +1,5 @@
 import React from 'react'
-import PostForm from '../../components/Admin-components/post/PostForm'
+import PostForm from '../../components/post-components/PostForm'
 
 export const Profile = () => {
   return (

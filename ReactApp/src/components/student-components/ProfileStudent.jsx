@@ -3,11 +3,11 @@ import "../../styles/profileStudient.css";
 
 import { useImage } from '../../context/AuthContext.jsx';
 import SideModal from './SideModal';
-import PostList from "../Admin-components/post/PostList";
-import PostForm from "../Admin-components/post/PostForm";
+import PostList from "../post-components/PostList.jsx";
+// import PostForm from "../Admin-components/post/PostForm";
 
 const ProfileStudent = () => {
-    const { image, handleImageChange } = useImage(); 
+    const { image, handleImageChange } = useImage() || { image: null, handleImageChange: () => {} };
     const [tempDescription, setTempDescription] = useState('');
     const [description, setDescription] = useState('');
     const [isModalOpen, setModalOpen] = useState(false);
@@ -56,7 +56,7 @@ const ProfileStudent = () => {
                 </div>
 
                 <PostList />
-                <PostForm />
+                {/* <PostForm /> */}
 
                 {/* Añadir la descripción */}
                 <div className="infoContainer">

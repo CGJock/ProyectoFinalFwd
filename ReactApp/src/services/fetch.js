@@ -82,11 +82,15 @@ const sendEmail = async (templateParams) => {
 export const login_user = async(apiPost,user_data) => {
     try {
         const csrftoken = Cookies.get('csrftoken');
+
         const access_token = Cookies.get('acces_token')
+
         
         
         // Make the POST request to register the user
         const response = await fetch(apiPost, {
+            
+            
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -98,6 +102,10 @@ export const login_user = async(apiPost,user_data) => {
             body: JSON.stringify(user_data), // User data containing the input values
             credentials:'include'
         });
+        const data_1 = await response.json()
+        console.log(data_1);
+        
+        
         
         
 
@@ -106,16 +114,21 @@ export const login_user = async(apiPost,user_data) => {
             const errorData = await response.json();
             throw new Error(errorData.detail || "Error al logearse");
         }
+        console.log(response.status);
+        
 
         // Parse the response data
         const data = await response.json();
         Cookies.set('access_token', data.access, { secure: true, sameSite: 'Lax' });
+        console.log(user_data)
+        
         
         
         alert("Log exitoso");
         return data; // Return the data for further use if needed
     } catch (error) {
         console.error("Failed to process the data", error);
+       
         throw error; // Rethrow the error to handle it in the calling function
     }
 };

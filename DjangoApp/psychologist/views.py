@@ -166,6 +166,11 @@ class PsychologistUser(viewsets.ViewSet):
         serializer = PsychologistSerializer(psychologists, many=True)
         return Response(serializer.data)
     
+class TicketList(viewsets.ReadOnlyModelViewSet):
+    queryset = TICKET.objects.all()
+    serializer_class = TicketSerializer
+    authentication_classes = []
+    permission_classes = [AllowAny]   
         
     
     

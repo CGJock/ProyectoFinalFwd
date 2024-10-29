@@ -13,7 +13,7 @@ export const ExpedienteModal = ({ Show, setShow }) => {
 
     
     const handleClose = () => setShow(!Show);
-    const handleShow = () => setShow(!Show);
+
 
    
     async function gestionar_data(TicketStatus) {

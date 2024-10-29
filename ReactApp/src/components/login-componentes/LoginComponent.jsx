@@ -27,7 +27,6 @@ export const LoginComponent = () => {
     
 
     try {
-      await Loggin(user_data);
     if(data){
         console.log("se encontro su usuario")
         console.log(data,'esto es la data del user')

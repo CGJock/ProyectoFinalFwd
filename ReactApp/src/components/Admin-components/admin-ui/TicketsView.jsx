@@ -14,7 +14,7 @@ export const TicketsView = () => {
   
   useEffect(() => {
     getData(); 
-  }, []);
+  }, [data]);
 
   async function getData() {
     const apiUrl = "http://localhost:8000/api/psychologist/list-tickets/";

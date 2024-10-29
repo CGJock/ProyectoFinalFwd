@@ -5,7 +5,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 
 
-export const PsychoContainer = () => {
+export const ExpedientContainer = () => {
   <MoreHorizIcon>
       {/* credit: cog icon from https://heroicons.com */}
       <svg
@@ -28,7 +28,7 @@ export const PsychoContainer = () => {
       }, []);
     
       async function getData() {
-        const apiUrl = "http://localhost:8000/api/psychologist/all-expedientes/"
+        const apiUrl = "http://localhost:8000/api/psychologist/cases-list/"
         const datos = await get_institutes_data(apiUrl);//se llama la data constantemente
         setdata(datos);
         console.log(datos)
@@ -50,11 +50,12 @@ export const PsychoContainer = () => {
     {/* Cuerpo de la tabla */}
     <div className="table-body">
       {data.map((expedient) => (
-        <div className="table-row" key={expedient.id_user.id_user}>
-          <div className="row-">{expedient.id_user.id_user}</div>
-          <div className="row-">{expedient.id_user.dni_number}</div>
-          <div className="row-">{expedient.id_user.name}</div>
-          <div className="row-">{expedient.id_user.first_name} </div>
+        <div className="table-row" key={expedient.id_expedient}>
+          <div className="row-">{expedient.id_expedient}</div>
+          <div className="row-">Restringido</div>
+          <div className="row-">{expedient.id_psychologist}</div>
+          <div className="row-">{expedient.state} </div>
+          <div className="row-">{expedient.created_at} </div>
           <MoreHorizIcon />
         </div>
       ))}

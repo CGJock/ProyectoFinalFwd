@@ -9,10 +9,12 @@ const Administration = () => {
   return (
    <>
    
-    <AdminNav/>
-    <main>
-    <Outlet />
-    </main>
+    
+      <AdminNav/>
+      <main className="admin-main">
+        <Outlet />
+      </main>
+    
    
   
    </>

@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import os
+from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'student',
     'psychologist',
     'library',
+    'TwilioChat',
 ]
 
 MIDDLEWARE = [
@@ -175,3 +177,12 @@ SIMPLE_JWT = {
     'USER_ID_CLAIM': 'id_user', # Claim to use for user identification in the token
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
+
+#se cargan las variables de entorno
+load_dotenv()
+TWILIO_ACCOUNT_SID=os.getenv('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN=os.getenv('TWILIO_AUTH_TOKEN')
+TWILIO_TEST_AUTH_TOKEN=os.getenv('TWILIO_TEST_AUTH_TOKEN')
+TWILIO_API_KEY_SID=os.getenv('TWILIO_API_KEY_SID')
+TWILIO_API_KEY_SECRET=os.getenv('TWILIO_API_KEY_SECRET')
+TWILIO_CONVERSATION_SERVICE_SID=os.getenv('TWILIO_CONVERSATION_SERVICE_SID')

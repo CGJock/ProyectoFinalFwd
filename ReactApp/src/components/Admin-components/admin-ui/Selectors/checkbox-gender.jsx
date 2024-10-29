@@ -12,7 +12,7 @@ onChange={(event) => setsex(event.target.value)}
 name="sex"
 id="sex"
 >
-<option key={1} value={'masculino'}> 
+<option key={1} value={'masculino'} selected> 
      Masculino
     </option>
     <option key={2} value={'femenino'}> 

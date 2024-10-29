@@ -12,18 +12,19 @@ import Administration from '../pages/admin/administration';
 import Register from '../components/Admin-components/admin-ui/Register';
 import FAQ from '../components/home-components/FAQ';
 import PostList from '../components/post/PostList';
-// import CreatePost from '../components/Admin-components/post/CreatePost';
+
 import Login from '../pages/login/login'
-// import PostForm from '../components/Admin-components/post/PostForm';
+
 import UsersContainer from '../components/Admin-components/admin-ui/UsersContainer';
-// import { Profile } from '../pages/profile/Profile';
-import { ProfilePsychologist } from '../pages/psychologist/psychologist';
+import { ExpedientContainer } from '../components/Admin-components/admin-ui/ExpedienteContainer';
+import { ProfilePsychologist } from '../pages/psychologist/Profile-psychologist';
 
 import { TicketsView } from '../components/Admin-components/admin-ui/TicketsView';
 import {PsychoContainer} from '../components/Admin-components/admin-ui/PsychoContainer';
 
 
 import ProfilePsycho from "../components/psychologist-components/PhofilePsycho";
+import { PsychologistCases } from '../components/psychologist-components/PsychoExpedientes';
 // import AboutMe from '../components/home-components/AboutMe';
 import NavHome from '../components/home-components/NavHome';
 
@@ -40,7 +41,7 @@ const Rutas = () => {
  
   return (
     <>
-     <NavHome/>
+     
       <Routes>
        
         
@@ -56,13 +57,14 @@ const Rutas = () => {
         <Route path='/login' element={<Login />} />
 
         <Route
-        path='/profile/psychologist'
+        path='/profile'
         element={
           <Protected_routes_psychologyst>
             <ProfilePsychologist />
           </Protected_routes_psychologyst>
-        
-        }></Route>
+        }>
+          <Route path='psychologist/psychologist-cases' element={<PsychologistCases />} />{/*profile/psychologis/psychoogist-cases*/}
+        </Route>
 
 
         <Route
@@ -91,7 +93,9 @@ const Rutas = () => {
           <Route path="register" element={<Register />} />{/*Administration/register*/}
           <Route path="students" element={<UsersContainer />} />{/*Administration/students*/}
           <Route path="tickets" element={<TicketsView />} />{/*Administration/tickets*/}
-          <Route path='psychologists' element={<PsychoContainer /> }/>{/*Administration/psychologists}
+          <Route path='psychologists' element={<PsychoContainer /> }/>{/*Administration/psychologists*/}
+          <Route path='expedients' element={<ExpedientContainer /> }/>{/*Administration/expedients*/}
+
           
           {/* <Route path="profile/psycho/:id" element={<ProfilePsycho />} /> */}
         </Route>

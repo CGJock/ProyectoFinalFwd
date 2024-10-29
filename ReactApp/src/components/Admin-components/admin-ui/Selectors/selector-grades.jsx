@@ -57,7 +57,7 @@ const Selector_grades = ({id_grade, setid_grade}) => {
   
   useEffect(() => {
     getgrades();
-  }, []); // O [id_rol] si depende de ese valor
+  }, []); 
   
 
   return (

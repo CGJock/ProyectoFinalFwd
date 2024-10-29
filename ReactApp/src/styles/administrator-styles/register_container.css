@@ -49,10 +49,13 @@
     padding-bottom: 5%;
     border: solid green 1px;
 }
-input{
+input {
     border-radius: 10px;
     padding: 8px 20px 8px 20px;
-    background-color: rgb(10, 10, 10);
+    border: 1px solid purple;
+    box-shadow: 1px 1px 2px purple;
+    color: unset;
+    opacity: 0.8;
 }
 .label_input{
     margin-right: 100px;

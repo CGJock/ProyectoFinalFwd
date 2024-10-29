@@ -1,15 +1,15 @@
 .navbar {
     display: flex;
     justify-content: space-between;
+    position: fixed;
     align-items: center;
-    width: 1400px;
-    margin: 0 auto;
-    max-width: 1600px;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
     background-color: #222; /* Negro oscuro */
     padding: 10px 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
-    border-radius: 8px; /* Bordes redondeados para el navbar */
-    margin-bottom: 2px;
+    
 }
 
 .navbar h1 {

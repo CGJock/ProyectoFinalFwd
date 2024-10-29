@@ -1,7 +1,12 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
 
 export const ProfilePsychologist = () => {
   return (
-    <div className="profile">student</div>
+    <div>
+    <main>
+      <Outlet/>
+    </main>
+    </div>
   )
 }

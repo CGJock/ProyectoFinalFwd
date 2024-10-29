@@ -139,3 +139,6 @@ GitHub.sublime-settings
 !.vscode/extensions.json 
 .history
 commands.txt
+
+#environment variables
+.env

@@ -40,6 +40,7 @@ export const PsychoContainer = () => {
     {/* Cabecera de la tabla */}
     <div className="container-header">
         <div className="table-id-user">ID Usuario</div>
+        <div className="table-id-user">ID Psicolog</div>
         <div className="table-dni">Cedula</div>
         <div className="table-cell">Nombre </div>
         <div className="table-cell">Primer Apellido</div>
@@ -57,6 +58,7 @@ export const PsychoContainer = () => {
       {data.map((psychologists) => (
         <div className="table-row" key={psychologists.id_user.id_user}>
           <div className="row-">{psychologists.id_user.id_user}</div>
+          <div className="row-">{psychologists.id_psychologist}</div>
           <div className="row-">{psychologists.id_user.dni_number}</div>
           <div className="row-">{psychologists.id_user.name}</div>
           <div className="row-">{psychologists.id_user.first_name} </div>
@@ -64,7 +66,7 @@ export const PsychoContainer = () => {
           <div className="row-">{psychologists.sex ? "masculino" : "femenino"}</div>
           <div className="row-">{psychologists.pacient_count}</div>
           <div className="row-">{psychologists.license_code}</div>
-          <div className="row-">{psychologists.availability}</div>
+          <div className="row-">{psychologists.availability ? 1 : 0}</div>
           <div className="row-">{psychologists.years_experience}</div>
           <MoreHorizIcon />
         </div>

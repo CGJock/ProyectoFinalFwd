@@ -14,6 +14,7 @@ from rest_framework_simplejwt.tokens import AccessToken, RefreshToken, TokenErro
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny 
 
+
 from rest_framework_simplejwt.views import TokenRefreshView
 
  
@@ -39,6 +40,7 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
     queryset = USERS.objects.all()  # Define el queryset para evitar el error
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
+    authentication_classes = []
     
     def generate_password(self):
             length = random.randint(8, 32)
@@ -91,7 +93,9 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
                 psychologist_data  = {
                     'license_code': request.data.get('license_code'),
                     'availability': request.data.get('availability'),
-                    'years_experience' : request.data.get('years_experience')
+                    'pacient_count': request.data.get('pacient_count'),
+                    'years_experience' : request.data.get('years_experience'),
+                    'assigned_to_hotline' : request.data.get('assigned_to_hotline')
                 }
                 
                 
@@ -132,8 +136,9 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
 class UserListView(viewsets.ReadOnlyModelViewSet):
     queryset = USERS.objects.all()
     serializer_class = UserSerializer
-    # permission_classes = [IsAuthenticated]
-    permission_classes = [IsAuthenticated] 
+    
+    permission_classes = [AllowAny] 
+    authentication_classes = []
     
     
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -216,10 +221,10 @@ class LogOutUserView(viewsets.ViewSet):
 
       
             
-    #para autentificar el estudiante       
+#para autentificar al usuario(admin)      
 class UserViewSet(APIView):
-    permission_classes = [IsAuthenticated]
-    # permission_classes = [AllowAny]
+    permission_classes = []
+    permission_classes = [AllowAny]
     def get(self,request,id_user):
         try:
             user = USERS.objects.get(id_user=id_user)

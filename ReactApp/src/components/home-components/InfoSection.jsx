@@ -1,19 +1,18 @@
 import React from "react";
 import "../../styles/home-styles/info-section.css";
 
-const InfoSection= () => {
+const InfoSection = () => {
   return (
-    <div className="container">
+    <div className="container_infoSection">
       <header>
         <h2>Hub de Superación</h2>
         <h1>Crecimiento Personal</h1>
-        <p className="subheader">te ofrecemos las siguientes herramientas</p>
+        <p className="subheader">Te ofrecemos las siguientes herramientas</p>
       </header>
 
       <section className="tools">
         <div className="tool">
           <div className="icon-box">
-       
             <img src="/path-to-your-icons/icon1.png" alt="Artículos y Herramientas" />
           </div>
           <h3>Artículos y Herramientas</h3>
@@ -79,6 +78,24 @@ const InfoSection= () => {
           <p>
             Explora nuestra variedad de recursos educativos y herramientas para el crecimiento personal.
           </p>
+        </div>
+      </section>
+
+      {/* Nueva Sección de Citas */}
+      <section className="quotes">
+        <div className="quote">
+          <p>"La curiosa paradoja es que cuando me acepto tal como soy, entonces puedo cambiar."</p>
+          <h4>Carl Rogers</h4>
+        </div>
+
+        <div className="quote">
+          <p>"Las creencias sobre nuestras capacidades tienen una profunda influencia en cómo nos sentimos y lo que logramos."</p>
+          <h4>Albert Bandura</h4>
+        </div>
+
+        <div className="quote">
+          <p>"No soy lo que me sucedió, soy lo que decido ser."</p>
+          <h4>Carl Jung</h4>
         </div>
       </section>
     </div>

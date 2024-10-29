@@ -3,7 +3,7 @@ import NavHome from "../../components/home-components/NavHome";
 import Footer from "../../components/home-components/footer";
 import InfoSection from '../../components/home-components/InfoSection';
 
-
+import FAQ from "../../components/home-components/FAQ";
 
 // import CreatePost from '../../components/Admin-components/post/CreatePost'
 // import { useAuth } from "../../context/AuthContext";
@@ -26,6 +26,8 @@ export const Home = () => {
     
         <VideoCarousel />
         <InfoSection />
+        <FAQ />
+        
       
 
       </div>

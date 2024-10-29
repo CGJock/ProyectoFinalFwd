@@ -38,26 +38,34 @@
   }
   
   .faq-item-question:hover {
-    background-color: #e0f7fa; /* Color de fondo al pasar el mouse */
+    background-color: #e0f7fa; /* Ligero cambio de fondo al pasar el mouse */
+  color: #333; /* Asegura que el texto siga siendo legible */
+
   }
   
   .faq-item-answer {
-    padding: 15px; /* Espacio interno para las respuestas */
-    background-color: #fafafa; /* Color de fondo más claro */
-    display: none; /* Oculta la respuesta inicialmente */
+    padding: 20px; /* Aumenta el padding para mejor lectura */
+    margin-top: 5px; /* Añade espacio entre el encabezado y la respuesta */
+    background-color: #fafafa; /* Fondo más claro para el contraste */
+    border-left: 2px solid #ddd; /* Línea para diferenciar respuestas */
+
   }
   
   .faq-item-toggle:checked + .faq-item-question + .faq-item-answer {
-    display: block; /* Muestra la respuesta si el checkbox está marcado */
+    max-height: 500px; /* Define una altura máxima lo suficientemente grande para la respuesta */
+    display: block;
+  
   }
   
   ul {
-    margin: 10px 0; /* Margen para listas */
-    padding-left: 20px; /* Sangría para listas */
-    color: #555; /* Color del texto de la lista */
+    margin: 10px 0;
+    padding-left: 20px;
+    color: #555;
+    line-height: 1.6; /* Mejora la legibilidad de los listados */
+ 
   }
   
-  button {
+  .faq-button {
     margin-top: 20px; /* Espacio en la parte superior del botón */
     padding: 10px 20px; /* Espaciado para el botón */
     background-color: #000000; /* Color de fondo del botón */
@@ -70,5 +78,36 @@
   
   button:hover {
     background-color: #e64a19; /* Color al pasar el mouse sobre el botón */
+  }
+  .faq-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Alinea el ícono verticalmente con el texto */
+    cursor: pointer;
+  }
+  
+
+  
+  .toggle-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .faq-item-answer {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-left: 2px solid #ddd;
+  }
+  .faq-item-answer {
+    transition: max-height 0.3s ease;
+  }
+  @media (max-width: 768px) {
+    .faq-container {
+      padding: 10px;
+    }
+    
+    .faq-item-question {
+      font-size: 1em; /* Tamaño de fuente más pequeño en pantallas pequeñas */
+    }
   }
   

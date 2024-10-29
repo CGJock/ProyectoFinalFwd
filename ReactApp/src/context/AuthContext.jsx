@@ -10,76 +10,68 @@ const AuthContext = createContext();
 
 // auth provider esta pensado para envolver toda la aplicacion y darle contexto a todos los hijos (children)
 export const AuthProvider = ({ children }) => {
-  const Token =  Cookies.get('Token');
-  const [decodedToken, setdecodedToken] = useState(null)
-  const [id_user, setid_user] = useState(null)
-  const [UserInfo, setUserInfo] = useState(null)
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  
+  // Estados del contexto
+  const [Token, setToken] = useState(Cookies.get('Token') || null);
+  const [id_user, setid_user] = useState(null);
+  const [decodedToken, setdecodedToken] = useState(null);
  
  
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // useEffect para observar cambios en el Token desde las cookies
   useEffect(() => {
-    // Al cargar el componente, intenta decodificar el token y obtener el id_user y id_rol
-    if (Token) {
+    const currentToken = Cookies.get('Token');
+    setToken(currentToken);
+    
+    if (currentToken) {
       try {
-        const decoded = jwtDecode(Token); // Decodifica el token solo si no es null
+        const decoded = jwtDecode(currentToken);
         setdecodedToken(decoded);
         setid_user(decoded.id_user);
       } catch (error) {
-        console.error('Error decoding token:', error); // Maneja el error
-        setdecodedToken(null); // Resetea el estado si hay un error
+        console.error('Error decoding token:', error);
+        setdecodedToken(null);
       }
     }
-}, [Token]); // Solo se
+  }, [Cookies.get('Token')]); // Observa cambios en el Token
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//funcion para loguear al usuario 
-  const Loggin =  async (user_data) => {
-    try{
-  
-     
+// Función de login que configura el Token y actualiza el contexto
+const Loggin = async (user_data) => {
+  try {
     const apiPost = "http://localhost:8000/api/user/login-user/";
     const apiUser = "http://localhost:8000/api/user/user";
-    const response = await login_user(apiPost,user_data);
-    
-    
-    
-    if(response){
-      console.log(response);
+    const response = await login_user(apiPost, user_data);
+
+    if (response) {
       Cookies.set('Token', response.access, { expires: 3, path: '/' });
-      Cookies.set('refresh_token', response.refresh, { secure: true, sameSite: 'Lax' });
       Cookies.set('access_token', response.access, { secure: true, sameSite: 'Lax' });
-      const token_raw = Cookies.get('Token');
-      const decodedToken = jwtDecode(token_raw);
-      setid_user(decodedToken.id_user);
-      console.log(decodedToken);
-      
-      
-      if(id_user){
-        const user = await user_fetch(apiUser,id_user);
-        if(user){
-          console.log(user.id_rol)
-          if(user.id_rol == 1){
-            navigate('administration/students');
-      } else if(user.id_rol == 2){
-            navigate('/profile/student');
-      } else if(user.id_rol == 3) {
-            navigate('/profile/psychologist');
-      } else {
-          console.log('no se encontro el usuario');
-      }
-        return ;
+      Cookies.set('refresh_token', response.refresh, { secure: true, sameSite: 'Lax' });
+
+      // Actualizar Token en el estado después de establecer la cookie
+      setToken(response.access);
+
+      // Decodificar Token para obtener información de usuario
+      const decoded = jwtDecode(response.access);
+      setid_user(decoded.id_user);
+
+      // Redireccionar según el rol del usuario
+      const user = await user_fetch(apiUser, decoded.id_user);
+      if (user && user.id_rol) {
+        if (user.id_rol === 1) navigate('administration/students');
+        else if (user.id_rol === 2) navigate('/profile/student');
+        else if (user.id_rol === 3) navigate('/profile/psychologist');
       }
     }
+  } catch (error) {
+    console.error('Login error:', error);
+    throw new Error('Error en la autenticación');
   }
-    throw new Error(response.message);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -106,6 +98,7 @@ const [ticket_user_id, setticket_user_id] = useState(null)
 
 return (
     <AuthContext.Provider value={{ id_user,Token ,Loggin, logout, setTicketData, id_ticket, ticket_user_id }}>
+      {console.log("Token in Provider:", Token)} {/* Verificación */}
       {children}
     </AuthContext.Provider>
   );

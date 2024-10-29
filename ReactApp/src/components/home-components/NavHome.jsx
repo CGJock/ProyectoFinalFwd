@@ -1,83 +1,132 @@
 import { Link } from "react-router-dom";
-import '../../styles/nav-home.css';
+import '../../styles/home-styles/nav-home.css';
 import { useState } from "react";
 import { Modal, Button, Alert } from "react-bootstrap";
+import { sendEmail } from '../../services/email.js';
 
 const NavHome = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [showAlert, setShowAlert] = useState(false); // Estado para la alerta
-  
+    const [showAlert, setShowAlert] = useState(false); 
+    const [formData, setFormData] = useState({ name: '', email: '', message: '' }); // Estado para los datos del formulario
+
+
     const toggleMenu = () => {
-      setIsOpen(!isOpen);
+        setIsOpen(!isOpen);
     };
+
     const handleShow = () => setShowModal(true);
     const handleClose = () => setShowModal(false);
 
-    const handleSubmit = () => {
-        setShowAlert(true); // Mostrar la alerta
+    // Manejar el cambio de los inputs
+    const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        setFormData({ ...formData, [id]: value });
+    };
+
+    // Enviar el formulario por email
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const emailData = {
+                from_name: formData.name, // Corresponde al campo "from_name" del template en Email.js
+                from_email: formData.email, // Corresponde al campo "from_email" del template en Email.js
+                message: formData.message, // Corresponde al campo "message" del template en Email.js
+            };
+
+            const result = await sendEmail(emailData);
+            if (result) {
+                setEmailSent(true); // El email se envió correctamente
+                setFormData({ name: '', email: '', message: '' }); // Limpiar el formulario
+                setShowAlert(true); // Mostrar la alerta
+                setTimeout(() => setShowAlert(false), 5000); // Ocultar la alerta después de 5 segundos
+            }
+        } catch (error) {
+            console.error('Error al enviar el email:', error);
+        }
+
         setShowModal(false); // Cerrar el modal
-        setTimeout(() => setShowAlert(false), 5000); 
     };
 
     return (
-      <>
-        <nav className="navHome">
-            <div className="navHome-container">
-             {/* menu hamburgesa para responsividad */}
-            <button className="nav-toggle" onClick={toggleMenu}>
-          ☰
-        </button>
-            <ul className={`navHome-menu ${isOpen ? 'open' : ''}`}>
-                <li><Link to="/" className="home_link">Home</Link></li>
-                <li><Link to="/AboutMe"className="about_link">About</Link></li>
-                
-                <li><Link to="/FAQ" className="questions_link">FAQ</Link></li>
-                <li><Link to="/profileStudient"className="profileStudient">perfil</Link></li>
-                <li><Button variant="outline-secondary" onClick={handleShow} className="contact_link">Contact</Button>{' '}</li>
-            </ul>
-            </div>
-        </nav>
-        
-        {/* Alerta de envío correcto */}
-     
-        {/* Modal para el formulario de contacto */}
-        <Modal show={showModal} onHide={handleClose}>
-        <Modal.Header closeButton>
-            <Modal.Title>Contact Me</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-            <form>
-                <div className="form-group">
-                    <label htmlFor="name">Name</label>
-                    <input type="text" className="form-control" id="name" placeholder="Enter your name" />
+        <>
+            <nav className="navHome">
+                <div className="navHome-container">
+                    <button className="nav-toggle" onClick={toggleMenu}>
+                        ☰
+                    </button>
+                    <ul className={`navHome-menu ${isOpen ? 'open' : ''}`}>
+                        <li><Link to="/home" className="home_link">Home</Link></li>
+                        <li><Link to="/AboutMe" className="about_link">About</Link></li>
+                        <li><Link to="/FAQ" className="questions_link">FAQ</Link></li>
+                        <li><Link to="/Profile/create-post" className="profileStudient">Perfil</Link></li>
+                        <li>
+                            <Button variant="outline-secondary" onClick={handleShow} className="contact_link">
+                                Contact
+                            </Button>
+                        </li>
+                    </ul>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="email">Email address</label>
-                    <input type="email" className="form-control" id="email" placeholder="Enter your email" />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="message">Message</label>
-                    <textarea className="form-control" id="message" rows="3" placeholder="Your message"></textarea>
-                </div>
-            </form>
-        </Modal.Body>
-        <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-                Close
-            </Button>
-            {showAlert && (
-            <Alert variant="success" onClose={() => setShowAlert(false)} dismissible>
-                se envio correcto!
-            </Alert>
-        )}
+            </nav>
 
-            <Button variant="primary" onClick={handleSubmit}>
-                Send Message
-            </Button>
-        </Modal.Footer>
-    </Modal>
-    </>
+            {/* Modal para el formulario de contacto */}
+            <Modal show={showModal} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Contact Me</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form>
+                        <div className="form-group">
+                            <label htmlFor="name">Name</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="name"
+                                value={formData.name}
+                                onChange={handleInputChange}
+                                placeholder="Enter your name"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="email">Email address</label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                id="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                                placeholder="Enter your email"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="message">Message</label>
+                            <textarea
+                                className="form-control"
+                                id="message"
+                                value={formData.message}
+                                onChange={handleInputChange}
+                                rows="3"
+                                placeholder="Your message"
+                            ></textarea>
+                        </div>
+                    </form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    {showAlert && (
+                        <Alert variant="success" onClose={() => setShowAlert(false)} dismissible>
+                            ¡Correo enviado con éxito!
+                        </Alert>
+                    )}
+                    <Button variant="primary" onClick={handleSubmit}>
+                        Send Message
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
     );
 };
 

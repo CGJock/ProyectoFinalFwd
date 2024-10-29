@@ -11,7 +11,7 @@
 }
 
 .side-modal {
-    background: white;
+    background: rgb(241, 245, 252);
     width: 250px; /* Ancho del modal */
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -43,5 +43,5 @@
 }
 
 .modal-nav a:hover {
-    color: #007BFF; /* Color al pasar el mouse */
+    color: #040471; /* Color al pasar el mouse */
 }

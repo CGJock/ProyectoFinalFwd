@@ -49,7 +49,11 @@ INSTALLED_APPS = [
     'student',
     'psychologist',
     'library',
+<<<<<<< HEAD
     'TwilioChat',
+=======
+    
+>>>>>>> e714734dc5203dee4fa4536d45cbbbd2d93c5103
 ]
 
 MIDDLEWARE = [
@@ -158,9 +162,11 @@ CORS_ALLOW_CREDENTIALS = True
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+
 # Add REST framework configuration
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         
     ),
@@ -178,6 +184,7 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
+<<<<<<< HEAD
 #se cargan las variables de entorno
 load_dotenv()
 TWILIO_ACCOUNT_SID=os.getenv('TWILIO_ACCOUNT_SID')
@@ -186,3 +193,6 @@ TWILIO_TEST_AUTH_TOKEN=os.getenv('TWILIO_TEST_AUTH_TOKEN')
 TWILIO_API_KEY_SID=os.getenv('TWILIO_API_KEY_SID')
 TWILIO_API_KEY_SECRET=os.getenv('TWILIO_API_KEY_SECRET')
 TWILIO_CONVERSATION_SERVICE_SID=os.getenv('TWILIO_CONVERSATION_SERVICE_SID')
+=======
+IMGUR_CLIENT_ID = 'cc5933407f174ac'
+>>>>>>> e714734dc5203dee4fa4536d45cbbbd2d93c5103

@@ -5,7 +5,7 @@ from user.models import USERS
 
 class Post(models.Model):
     post_id  = models.AutoField(primary_key=True)
-    id_user = models.ForeignKey(USERS, on_delete= models.CASCADE, )
+    id_user = models.ForeignKey(USERS, on_delete= models.CASCADE )
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     image_url = models.URLField(max_length=500, null=True, blank=True)
@@ -25,9 +25,9 @@ class PostReplies(models.Model):
     description = models.TextField()
     replies_date = models.DateField(auto_now_add=True)
     like_count = models.IntegerField(default=0)
-    like_count = models.IntegerField(default=0)
+
     
     def __str__(self):
-        return f'Replies by {self.user_id} on {self.post.title}'
+        return f'Replies by {self.id_user} on {self.post_id.title}'
 
     

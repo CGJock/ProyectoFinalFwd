@@ -1,8 +1,10 @@
-.container {
+.container_infoSection {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     text-align: center;
+    width: 100vw;
+    background-color: #ffffff;
   }
   
   header h2 {
@@ -26,6 +28,9 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 40px;
+    justify-content: space-evenly;
+    max-width: 1200px; 
+    margin: 0 auto; /* Centra el contenido en pantalla */
   }
   
   .tool {
@@ -34,7 +39,8 @@
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 30%; /* Ajusta el ancho de cada herramienta */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para resaltar las cajas */
   }
   
   .tool h3 {
@@ -92,4 +98,56 @@
     font-size: 16px;
     color: #555;
   }
-  
+/* Estilos para la sección de citas */
+.quotes {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+  padding: 20px;
+}
+
+.quote {
+  text-align: center;
+  width: 30%;
+}
+
+.quote p {
+  font-style: italic;
+  color: #28a745; /* Color similar al de la imagen */
+}
+
+.quote h4 {
+  margin-top: 10px;
+  font-weight: bold;
+}
+.tool:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+.faq-item {
+  margin-right: 20px; /* Añade margen a la derecha */
+  border-bottom: 1px solid lightgray;
+  padding: 10px 0;
+}
+
+.faq-item-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.faq-item-answer {
+  display: none;
+  padding: 10px;
+}
+
+.faq-item-toggle:checked + .faq-item-answer {
+  display: block;
+}
+
+.faq-icon {
+  font-size: 24px;
+}

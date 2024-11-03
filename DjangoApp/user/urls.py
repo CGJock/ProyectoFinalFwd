@@ -16,13 +16,14 @@ Including another URLconf
 """
 
 from django.urls import path, include
+
 from rest_framework.routers import DefaultRouter
 from user.views import UserListView,RegisterUserViewSet,LoginUserViewSet,UserViewSet,DeleteUser,LogOutUserView,ResetPasswordView,CustomTokenRefreshView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-
+from .views import FriendPostsView
 
 
 router_user = DefaultRouter()
@@ -41,10 +42,13 @@ urlpatterns = [
     path('',include(router_user.urls)),
         path('login-user/', LoginUserViewSet.as_view(), name='login-user'),
         path('token/refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
-        path('user/<int:id_user>/', UserViewSet.as_view(), name='user-detail')
-        
-]
+        path('user/<int:id_user>/', UserViewSet.as_view(), name='user-detail'),
+        path('api/user/<int:id_user>/friends/posts/', FriendPostsView.as_view(), name='amigos_posts')
 
+
+        
+
+]
 
 
 

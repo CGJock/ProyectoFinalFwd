@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PostForm from "./PostForm";
 import Cookies from "js-cookie";
 import { deletePost } from "../../services/callimgur.js";
-
+import "../../styles/profileStudient-styles/PostList.css"
 const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ const PostList = () => {
       }
 
       const data = await response.json();
-      console.log(data);// Verifica que 'image_url' esté presente
+      console.log(data); // Verifica que 'image_url' esté presente
 
       setPosts(data);
     } catch (error) {
@@ -39,8 +39,8 @@ const PostList = () => {
       setLoading(false);
     }
   };
-   // Función para eliminar una publicación
-   const handleDelete = async (postId) => {
+  // Función para eliminar una publicación
+  const handleDelete = async (postId) => {
     try {
       await deletePost(postId); // Llama a deletePost para eliminar la publicación
       // Actualiza la lista de publicaciones después de eliminar
@@ -56,17 +56,18 @@ const PostList = () => {
 
   return (
     <div>
+      <div className="post-list">
       <h1>Publicaciones</h1>
       <PostForm onPostCreated={fetchPosts} />{" "}
       {/* Pasamos la función de actualización */}
       {/* Mostrar el estado de carga */}
       {loading ? (
-        <p>Cargando publicaciones...</p>
+        <p className="loading">Cargando publicaciones...</p>
       ) : error ? (
-        <p>{error}</p>
+        <p className="error">{error}</p>
       ) : posts.length > 0 ? (
         posts.map((post, index) => (
-          <div key={`${post.post_id || post.id}-${index}`}>
+          <div key={`${post.post_id || post.id}-${index}`} className="post">
             {" "}
             {/* Key único combinando post_id e índice */}
             <h2>{post.title}</h2>
@@ -79,15 +80,13 @@ const PostList = () => {
               />
             )}
             <p>Comentarios: {post.comment_count}</p>
-            <button onClick={() => {
-        handleDelete(post.post_id); // Llama a handleDelete con 'post_id'
-      }}> Eliminar</button>
-            
+            <button onClick={() => handleDelete(post.id)}>Eliminar</button>
           </div>
         ))
       ) : (
         <p>No hay publicaciones disponibles</p>
       )}
+    </div>
     </div>
   );
 };

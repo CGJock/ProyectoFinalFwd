@@ -1,0 +1,21 @@
+:root {
+    --color-azul-oscuro: #dbe1ee;
+    --color-azul-medio: #000000;
+    --color-azul-claro: #7085a5;
+    --color-gris-azuloso: #D8E0E9;
+    --color-blanco-roto: #F2F5F9;
+  }
+
+.quote-container{
+    background-color: var(--color-azul-claro);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+.quote-text{
+    color: var(--color-gris-azuloso);
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-align: center;
+}

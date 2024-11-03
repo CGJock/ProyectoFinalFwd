@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { postRegister } from "../../services/fetch"
-import {  useNavigate } from "react-router-dom";
+// import { postRegister } from "../../services/fetch"
+// import {  useNavigate } from "react-router-dom";
 import { useAuth } from '../../context/AuthContext';
 
 export const LoginComponent = () => {

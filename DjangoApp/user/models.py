@@ -1,7 +1,10 @@
-from django.contrib.auth.models import AbstractBaseUser,AbstractUser
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 from rol.models import ROL
+from django.conf import settings
+
+
 
 # Create your models here.
 
@@ -29,6 +32,17 @@ class USERS(AbstractUser):
 
      
     REQUIRED_FIELDS = []
+    
+class Friend(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='friends')
+    friend = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='friend_of')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'friend')
+
+    def __str__(self):
+        return f"{self.user.username} es amigo de {self.friend.username}"
  
 
 

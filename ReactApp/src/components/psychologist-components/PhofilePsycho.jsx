@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import "../../styles/profileStudient.css";
+import "../../styles/profileStudient-styles/profileStudient.css"
+// import "../../styles/profileStudient.css";
 import { saveToLocalStorage, getFromLocalStorage, fileToBase64 } from '../../services/storageUtils';
 
 const ProfileStudient = () => {

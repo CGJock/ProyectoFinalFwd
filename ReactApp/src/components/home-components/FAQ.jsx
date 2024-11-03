@@ -65,8 +65,76 @@ const FAQ = () => {
           </div>
         )}
       </div>
+      <div className="faq-item">
+        <div className="faq-header" onClick={() => handleToggle(2)}>
+          <span>¿Cómo puedo participar en el foro de apoyo?</span>
+          <img
+            src={toggleState[2] ? toggleOnIcon : toggleOffIcon}
+            alt="Toggle"
+            className="toggle-icon"
+          />
+        </div>
+        {toggleState[2] && (
+          <div className="faq-item-answer">
+            <p>Para unirte al foro, simplemente crea una cuenta y accede a la sección de apoyo entre pares.</p>
+            <ul>
+              <li>Puedes publicar tus experiencias y recibir apoyo de otros usuarios.</li>
+              <li>Los consejeros también participan activamente en el foro.</li>
+            </ul>
+          </div>
+        )}
+      </div>
 
-      {/* Puedes agregar más preguntas de manera similar */}
+      {/* Pregunta 4 */}
+      <div className="faq-item">
+        <div className="faq-header" onClick={() => handleToggle(3)}>
+          <span>¿Cuánto cuesta usar esta plataforma?</span>
+          <img
+            src={toggleState[3] ? toggleOnIcon : toggleOffIcon}
+            alt="Toggle"
+            className="toggle-icon"
+          />
+        </div>
+        {toggleState[3] && (
+          <div className="faq-item-answer">
+            <p>La plataforma es gratuita para estudiantes y sus familias. Nos enfocamos en ofrecer apoyo accesible para todos.</p>
+          </div>
+        )}
+      </div>
+
+      {/* Pregunta 5 */}
+      <div className="faq-item">
+        <div className="faq-header" onClick={() => handleToggle(4)}>
+          <span>¿Qué debo hacer si necesito ayuda urgente?</span>
+          <img
+            src={toggleState[4] ? toggleOnIcon : toggleOffIcon}
+            alt="Toggle"
+            className="toggle-icon"
+          />
+        </div>
+        {toggleState[4] && (
+          <div className="faq-item-answer">
+            <p>Si necesitas ayuda inmediata, puedes comunicarte con líneas de emergencia disponibles en nuestra plataforma o contactar a los consejeros para orientación rápida.</p>
+          </div>
+        )}
+      </div>
+
+      {/* Pregunta 6 */}
+      <div className="faq-item">
+        <div className="faq-header" onClick={() => handleToggle(5)}>
+          <span>¿Puedo hablar directamente con un consejero en línea?</span>
+          <img
+            src={toggleState[5] ? toggleOnIcon : toggleOffIcon}
+            alt="Toggle"
+            className="toggle-icon"
+          />
+        </div>
+        {toggleState[5] && (
+          <div className="faq-item-answer">
+            <p>Sí, puedes comunicarte con un consejero a través de nuestro sistema de mensajería privada o programar una videollamada según tu disponibilidad.</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

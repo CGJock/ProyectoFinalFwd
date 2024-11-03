@@ -1,113 +1,107 @@
-
 .faq-container {
-    max-width: 900px; /* Limita el ancho del contenedor */
-    margin: 0 auto; /* Centra el contenedor */
-    padding: 20px; /* Agrega espacio interno */
-    background-color: #ffffff; /* Color de fondo blanco */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
-  }
-  
-  .faq-title {
-    text-align: center; /* Centra el título */
-    font-size: 2em; /* Tamaño de fuente grande */
-    color: #333; /* Color del texto */
-    margin-bottom: 20px; /* Espacio debajo del título */
-  }
-  
-  .faq-item {
-    margin-bottom: 15px; /* Espacio entre preguntas */
-    border: 1px solid #e3e7ff; /* Borde ligero alrededor de cada pregunta */
-    border-radius: 5px; /* Bordes redondeados para las preguntas */
-    overflow: hidden; /* Oculta el desbordamiento del contenido */
-  }
-  
-  .faq-item-toggle {
-    display: none; /* Oculta el checkbox */
+  max-width: 900px; /* Limita el ancho del contenedor */
+  margin: 0 auto; /* Centra el contenedor */
+  padding: 20px; /* Agrega espacio interno */
+  background-color: var(--color-blanco-roto); /* Fondo blanco roto */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+}
+
+.faq-title {
+  text-align: center; /* Centra el título */
+  font-size: 2em; /* Tamaño de fuente grande */
+  color: var(--color-azul-oscuro); /* Color del texto */
+  margin-bottom: 20px; /* Espacio debajo del título */
+}
+
+.faq-item {
+  margin-bottom: 15px; /* Espacio entre preguntas */
+  border: 1px solid var(--color-azul-claro); /* Borde con color azul claro */
+  border-radius: 5px; /* Bordes redondeados para las preguntas */
+  overflow: hidden; /* Oculta el desbordamiento del contenido */
+}
+
+.faq-item-toggle {
+  display: none; /* Oculta el checkbox */
+}
+
+.faq-item-question {
+  display: flex; /* Uso de flexbox para centrar el texto */
+  justify-content: space-between; /* Espacio entre texto y icono */
+  align-items: center; /* Centra verticalmente el contenido */
+  padding: 15px; /* Espacio interno */
+  font-size: 1.2em; /* Tamaño de fuente */
+  background-color: var(--color-gris-azuloso); /* Color de fondo gris azuloso */
+  color: var(--color-azul-oscuro); /* Color de texto */
+  cursor: pointer; /* Cambia el cursor al pasar sobre la pregunta */
+  transition: background-color 0.3s ease; /* Transición para cambios de color */
+}
+
+.faq-item-question:hover {
+  background-color: var(--color-azul-claro); /* Fondo azul claro al pasar el mouse */
+  color: var(--color-azul-oscuro); /* Asegura que el texto siga siendo legible */
+}
+
+.faq-item-answer {
+  padding: 20px; /* Espaciado para mejor lectura */
+  margin-top: 5px; /* Añade espacio entre el encabezado y la respuesta */
+  background-color: var(--color-blanco-roto); /* Fondo blanco roto */
+  border-left: 2px solid var(--color-azul-medio); /* Línea para diferenciar respuestas */
+}
+
+.faq-item-toggle:checked + .faq-item-question + .faq-item-answer {
+  max-height: 500px; /* Define una altura máxima */
+  display: block;
+}
+
+ul {
+  margin: 10px 0;
+  padding-left: 0; /* Quita la indentación de la lista */
+  list-style-type: none; /* Elimina los puntos de la lista */
+  color: var(--color-azul-oscuro); /* Color del texto */
+  line-height: 1.6; /* Mejora la legibilidad */
+  text-align: left;
+}
+
+
+.faq-button {
+  margin-top: 20px; /* Espacio en la parte superior del botón */
+  padding: 10px 20px; /* Espaciado para el botón */
+  background-color: var(--color-azul-oscuro); /* Fondo azul oscuro */
+  color: var(--color-blanco-roto); /* Color del texto */
+  border: none; /* Sin borde */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambia el cursor */
+  transition: background-color 0.3s ease; /* Transición para cambios de color */
+}
+
+button:hover {
+  background-color: var(--color-azul-medio); /* Fondo azul medio al pasar el mouse */
+}
+
+.faq-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Alinea el ícono verticalmente con el texto */
+  cursor: pointer;
+}
+
+.toggle-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.faq-item-answer {
+  transition: max-height 0.3s ease;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .faq-container {
+      padding: 10px;
   }
   
   .faq-item-question {
-    display: flex; /* Uso de flexbox para centrar el texto */
-    justify-content: space-between; /* Espacio entre texto y icono */
-    align-items: center; /* Centra verticalmente el contenido */
-    padding: 15px; /* Espacio interno */
-    font-size: 1.2em; /* Tamaño de fuente más pequeño */
-    background-color: #f7f7f7; /* Color de fondo ligero */
-    cursor: pointer; /* Cambia el cursor al pasar sobre la pregunta */
-    transition: background-color 0.3s ease; /* Transición para cambios de color */
-  }
-  
-  .faq-item-question:hover {
-    background-color: #e0f7fa; /* Ligero cambio de fondo al pasar el mouse */
-  color: #333; /* Asegura que el texto siga siendo legible */
-
-  }
-  
-  .faq-item-answer {
-    padding: 20px; /* Aumenta el padding para mejor lectura */
-    margin-top: 5px; /* Añade espacio entre el encabezado y la respuesta */
-    background-color: #fafafa; /* Fondo más claro para el contraste */
-    border-left: 2px solid #ddd; /* Línea para diferenciar respuestas */
-
-  }
-  
-  .faq-item-toggle:checked + .faq-item-question + .faq-item-answer {
-    max-height: 500px; /* Define una altura máxima lo suficientemente grande para la respuesta */
-    display: block;
-  
-  }
-  
-  ul {
-    margin: 10px 0;
-    padding-left: 20px;
-    color: #555;
-    line-height: 1.6; /* Mejora la legibilidad de los listados */
- 
-  }
-  
-  .faq-button {
-    margin-top: 20px; /* Espacio en la parte superior del botón */
-    padding: 10px 20px; /* Espaciado para el botón */
-    background-color: #000000; /* Color de fondo del botón */
-    color: #fff; /* Color del texto del botón */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados para el botón */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    transition: background-color 0.3s ease; /* Transición para cambios de color */
-  }
-  
-  button:hover {
-    background-color: #e64a19; /* Color al pasar el mouse sobre el botón */
-  }
-  .faq-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* Alinea el ícono verticalmente con el texto */
-    cursor: pointer;
-  }
-  
-
-  
-  .toggle-icon {
-    width: 24px;
-    height: 24px;
-  }
-  
-  .faq-item-answer {
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-left: 2px solid #ddd;
-  }
-  .faq-item-answer {
-    transition: max-height 0.3s ease;
-  }
-  @media (max-width: 768px) {
-    .faq-container {
-      padding: 10px;
-    }
-    
-    .faq-item-question {
       font-size: 1em; /* Tamaño de fuente más pequeño en pantallas pequeñas */
-    }
   }
-  
+}

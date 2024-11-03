@@ -54,6 +54,7 @@
 .questions_link:hover{
     color: #ffffff;
 }
+/* responsividad  */
   @media (max-width: 768px) {
     .navHome {
       flex-direction: column;

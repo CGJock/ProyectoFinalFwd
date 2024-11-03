@@ -16,6 +16,7 @@
     "@mui/material": "^6.1.4",
     "@twilio/conversations": "^2.6.0",
     "aws-sdk": "^2.1691.0",
+    "axios": "^1.7.7",
     "boostrap": "^2.0.0",
     "bootstrap": "^5.3.3",
     "emailjs-com": "^3.2.0",

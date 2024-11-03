@@ -25,6 +25,7 @@ export const Home = () => {
       <div>
     
         <VideoCarousel />
+        
         <InfoSection />
         <FAQ />
         

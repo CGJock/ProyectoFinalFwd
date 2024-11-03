@@ -5,6 +5,7 @@ import { isTokenExpired, refreshAccessToken } from "../../services/token.js";
 import { PostAmazon } from "../../services/callimgur.js";
 
 const PostForm = ({ onPostCreated }) => {
+  //obtener los datos del usuario desde el contexto
   const { id_user, Token: access_token } = useAuth() || {};
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -49,7 +50,6 @@ const PostForm = ({ onPostCreated }) => {
     try {
       const subirPost = await PostAmazon(formData, currentAccessToken);
       if (subirPost && subirPost.image_url) {
-        // Asegúrate de incluir la URL de la imagen en tu objeto de respuesta
         // setImage(subirPost.image_url); // Asigna la URL directamente al estado de imagen
         formData.table_data.image = subirPost.image_url; // Asigna la URL a formData
       }
@@ -58,6 +58,7 @@ const PostForm = ({ onPostCreated }) => {
       if (onPostCreated) {
         onPostCreated(); // Llama a onPostCreated para refrescar la lista de publicaciones
       }
+      //borrar los datos del formulario
 
       setTitle("");
       setDescription("");

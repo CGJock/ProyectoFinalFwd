@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     'student',
     'psychologist',
     'library',
-    'storages'
+    'storages',
     
 ]
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

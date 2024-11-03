@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 
 
-// Configura AWS S3 con variables de entorno
+// Configuracion AWS S3 con variables de entorno
 const bucketName = import.meta.env.VITE_AWS_S3_BUCKET;
 const region = import.meta.env.VITE_AWS_REGION;
 
@@ -12,11 +12,12 @@ const s3 = new AWS.S3({
   secretAccessKey: import.meta.env.VITE_AWS_SECRETACCESSKEY,
   region: region,
 });
+console.log("Bucket Name:", bucketName);
 // Función para subir una imagen a S3
 export const uploadImageToS3 = async (file) => {
   const params = {
     Bucket: bucketName,
-    Key: file.name, // Puedes usar un identificador único para evitar sobrescribir archivos
+    Key: file.name, 
     Body: file,
     ContentType: file.type,
     // ACL: 'public-read', 
@@ -75,6 +76,7 @@ export const PostAmazon = async (data, accessToken) => {
     throw error;
   }
 };
+//funcion para eliminar un post
 export const deletePost = async (postId) => {
   console.log("ID del post recibido para eliminar:", postId);
   if (!postId) {
@@ -108,3 +110,4 @@ export const deletePost = async (postId) => {
 };
 
 
+// export default {PostAmazon, deletePost};

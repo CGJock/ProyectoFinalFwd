@@ -4,6 +4,9 @@ from user.models import USERS
 
 
 class Post(models.Model):
+    """
+    Modelo que representa una publicación en la plataforma.
+    """
     post_id  = models.AutoField(primary_key=True)
     id_user = models.ForeignKey(USERS, on_delete= models.CASCADE )
     title = models.CharField(max_length=200)
@@ -15,10 +18,12 @@ class Post(models.Model):
 
 
     def __str__(self):
+        """Devuelve una representación en cadena del título de la publicación."""
         return self.title
     
 class PostReplies(models.Model):
-
+    """Modelo que representa una respuesta a una publicación.
+    """
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='replies')
     replies_id =  models.AutoField(primary_key=True)
     id_user = models.ForeignKey(USERS, on_delete=models.CASCADE,related_name='replies_as_id_user')
@@ -28,6 +33,7 @@ class PostReplies(models.Model):
 
     
     def __str__(self):
+        """Devuelve una representación en cadena de la respuesta indicando el usuario y la publicación."""
         return f'Replies by {self.id_user} on {self.post_id.title}'
 
     

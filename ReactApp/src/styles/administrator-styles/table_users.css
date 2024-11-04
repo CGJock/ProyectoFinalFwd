@@ -1,0 +1,99 @@
+.table-users-container {
+  width: 1400px;
+  max-width: 1600px; /* Set a maximum width for larger screens */ 
+  
+}
+
+
+
+
+.table-row {
+  margin-top: 2
+}
+
+
+
+.container-header {
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  gap: 10px; /* Space between header cells */
+  padding: 10px; /* Add padding for better spacing */
+  column-gap: 30px;
+  padding-left: 10px;
+  background-color: #007bff; /* Header background color */
+  color: white; /* Text color for the header */
+  border-radius: 5px; /* Rounded corners for the header */
+  font-weight: bold; /* Bold text for better visibility */
+  white-space: nowrap; /* Prevent line breaks */
+}
+
+.table-body {
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+  flex-direction: column; /* Stack rows vertically */
+ 
+  border:  solid rgb(255, 0, 221) 1px;
+}
+
+.table-row {
+  display: flex;
+  column-gap: 30px;
+  text-align: center;
+  gap: 10px;
+  justify-content: space-evenly;
+  width: 100%;
+  background-color: #f8f9fa; /* Light background for rows */
+  border: 3px solid #168a12; /* Border for rows */
+  border-radius: 5px; /* Rounded corners for rows */
+  transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+.table-row:hover {
+  background-color: #e2e6ea; /* Change background on hover */
+}
+
+.table-cell {
+  text-align: center; /* Center text in cells */
+  flex: 1; /* Allow cells to grow and fill space equally */
+  
+}
+
+.table-id-user,
+.table-dni {
+  min-width: 75px; /* Set a minimum width for specific columns */
+}
+
+.row- {
+  text-align: center; /* Center text in row cells */
+  margin-left: 5px;
+  margin-right: 50px;
+  border: solid red 2px;
+}
+.row-small {
+  text-align: center; /* Center text in row cells */
+  max-width: 35px;
+  margin-left: 5px;
+  margin-right: 75px;
+  border: solid red 2px;
+  flex: 0.5;
+}
+
+
+@media (max-width: 768px) {
+  .container-header {
+    flex-direction: column; /* Stack header cells on smaller screens */
+  }
+
+  .table-row {
+    flex-direction: column; /* Stack row cells on smaller screens */
+  }
+
+  .table-cell {
+    min-width: 100%; /* Allow cells to take full width */
+  }
+}

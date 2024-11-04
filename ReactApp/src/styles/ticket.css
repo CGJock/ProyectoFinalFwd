@@ -1,0 +1,60 @@
+
+  .ticket-form {
+    margin-top: 10%;
+    margin-left: 33%;
+    background-color: #fff;
+    width: 90%;
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .titulo h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+  }
+  
+  .header  {
+    border: solid #8f03a1 1px;
+    border-radius: 8px;
+    background-color: white;
+    
+  }
+  H4{
+    color: #000000;
+    margin: 10px 0;
+    font-weight: 400;
+  }
+  
+  .button-container {
+    margin: 20px 0;
+  }
+  
+  button {
+    background-color: #7556db;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #ffffff;
+    color: #7556db;
+    transition: background-color 0.3s ease;
+    border: solid #7556db 1px ;
+  }
+  
+  .posdata p {
+    color: #777;
+    font-size: 0.9rem;
+    margin-top: 15px;
+    line-height: 1.5;
+  }
+  

@@ -1,0 +1,89 @@
+.navHome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #193063;
+    width: 100%;
+    padding: 5px;
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    left: 0;
+    right: 0;
+  }
+  
+  .navHome-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+.navHome-menu{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.questions_link,
+.home_link,
+.about_link,
+.contact_link,
+.profileStudient {
+  color: #979da6;
+  cursor: pointer;
+}
+
+.home_link{
+ margin-left: 20px;
+}
+.home_link:hover {
+    color: white;
+  }
+
+.about_link:hover {
+    color: #ffffff;
+  }
+
+.contact_link:hover {
+    color: #ffffff;
+  }
+.questions_link:hover{
+    color: #ffffff;
+}
+/* responsividad  */
+  @media (max-width: 768px) {
+    .navHome {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .navHome-menu {
+        display: none; 
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+    .navHome-menu li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .nav-toggle {
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+      }
+    .navHome-menu.open {
+        display: flex;
+      }
+
+
+
+}
+

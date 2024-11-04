@@ -1,0 +1,27 @@
+
+.general_container{
+    display: flex;
+    margin-left: 20%;
+    margin-top: 10%;
+    
+}
+.contenedor_exped_psy{
+    border: solid black 2px;
+
+}
+.exped_header{
+    text-align: center;
+    background-color: black;
+    color: white;
+    vertical-align: middle;
+    height: 40px;
+    padding-top: 5px;
+}
+.exped_titles,.exped_body{
+    display: grid;
+    grid-template-columns: 100px 100px 100px 100px 100px;
+    text-align: center;
+}
+.exped_button_container{
+    text-align: center;
+}

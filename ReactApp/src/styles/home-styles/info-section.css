@@ -1,0 +1,203 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Playfair+Display:wght@400;700&family=Abril+Fatface&display=swap');
+:root {
+  --color-azul-oscuro: #2A3D66;
+  --color-azul-medio: #000000;
+  --color-azul-claro: #7085a5;
+  --color-gris-azuloso: #D8E0E9;
+  --color-blanco-roto: #F2F5F9;
+}
+/* Aplicar la fuente Poppins a los encabezados */
+header h1, header h2, .faq-item-question {
+  font-family: 'Poppins', sans-serif;
+}
+
+
+.quote p {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+}
+
+.highlighted-title {
+  font-family: 'Abril Fatface', cursive;
+  font-size: 24px;
+  color: var(--color-azul-oscuro);
+}
+
+
+.container_infoSection {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    width: 100vw;
+    background-color: var(--color-blanco-roto);
+  }
+  
+  header h2 {
+    font-size: 24px;
+    color: var(--color-azul-oscuro);
+    margin-bottom: 10px;
+  }
+  
+  header h1 {
+    font-size: 36px;
+    color: var(--color-azul-oscuro);
+  }
+  
+  .subheader {
+    font-size: 18px;
+    color: var(--color-gris-azuloso);
+    margin-bottom: 40px;
+  }
+  
+  .tools {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    justify-content: space-evenly;
+    max-width: 1200px; 
+    margin: 0 auto; /* Centra el contenido en pantalla */
+  }
+  
+  .tool {
+    flex: 1;
+    margin: 0 10px;
+    padding: 20px;
+    background-color: var(--color-blanco-roto);
+    border-radius: 8px;
+    width: 30%; /* Ajusta el ancho de cada herramienta */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para resaltar las cajas */
+  }
+  
+  .tool h3 {
+    margin-top: 20px;
+    font-size: 22px;
+    color: var(--color-azul-oscuro);
+  }
+  
+  .tool p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: var(--color-azul-medio);
+  }
+  
+  .icon-box {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    background-color: var(--color-azul-oscuro);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .icon-box img {
+    width: 50%;
+    height: 50%;
+    object-fit: cover;
+    
+  }
+  
+  .features {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+    flex-wrap: wrap; 
+  }
+  
+  .feature {
+    flex: 1;
+    margin: 0 10px;
+  }
+  
+  .feature-icon {
+    font-size: 40px;
+    color: var(--color-azul-oscuro);
+  }
+  
+  .feature h3 {
+    font-size: 22px;
+    margin-top: 10px;
+    color: var(--color-azul-oscuro);
+  }
+  
+  .feature p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: var(--color-azul-medio);
+  }
+/* Estilos para la sección de citas */
+.quotes {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+  padding: 20px;
+  flex-wrap: wrap; 
+}
+
+.quote {
+  text-align: center;
+  width: 30%;
+}
+
+.quote p {
+  font-style: italic;
+  color: var(--color-azul-medio);
+}
+
+.quote h4 {
+  margin-top: 10px;
+  font-weight: bold;
+  color: var(--color-azul-oscuro);
+}
+.tool:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+  .tools, .features, .quotes {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tool, .feature, .quote {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+
+  header h2 {
+    font-size: 20px;
+  }
+
+  header h1 {
+    font-size: 28px;
+  }
+
+  .subheader, .tool h3, .feature h3 {
+    font-size: 18px;
+  }
+
+  .tool p, .feature p, .quote p, .quote h4 {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  header h2 {
+    font-size: 18px;
+  }
+
+  header h1 {
+    font-size: 24px;
+  }
+
+  .subheader {
+    font-size: 16px;
+  }
+}

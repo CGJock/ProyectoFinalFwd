@@ -1,0 +1,31 @@
+/* Estilos para cada publicación */
+.post {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+
+/* Contenedor principal para las publicaciones */
+.post-list {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  justify-content: center;
+  display: flex;
+}
+/* Estilos para el estado de carga y error */
+.loading,
+.error {
+  text-align: center;
+  color: #666;
+}
+

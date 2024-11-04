@@ -1,82 +1,34 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
-import { user_fetch } from "../services/user_fetch";
-import Cookies from 'js-cookie';
 import { Spinner } from "../components/utilities/spinner";
 
 
 const Protected_routes = ({ allowedRoles, children }) => {
-    const Token = Cookies.get('Token');
-    const [decodedToken, setDecodedToken] = useState(null);
-    const { id_user } = useAuth();
-    const [User, setUser] = useState(null);
-    const [id_rol, setIdRol] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const apiPost = "http://localhost:8000/api/user/user";
+    const {IdRol} = useAuth()
+    const {PsychologistData} = useAuth()
+    console.log(PsychologistData)
+    const [loading, setLoading] = useState(true)
 
-    // Decodificar el token solo si existe y está disponible
-    useEffect(() => {
-        if (Token) {
-            try {
-                const decoded = jwtDecode(Token);
-                setDecodedToken(decoded);
-            } catch (error) {
-                console.error("Error decoding token:", error);
-                setLoading(false); // Detener la carga en caso de error
-            }
-        } else {
-            setLoading(false); // Detener la carga si no hay token
-        }
-    }, [Token]);
-
-    // Obtener datos de usuario si el id_user está disponible
-    useEffect(() => {
-        const fetchUserData = async () => {
-            if (id_user && decodedToken) {
-                try {
-                    console.log('Fetching user ID:', id_user);
-                    const userData = await user_fetch(apiPost, id_user);
-                    console.log('User data fetched:', userData);
-
-                    if (userData) {
-                        setUser(userData);
-                        setIdRol(userData.id_rol);
-                    } else {
-                        console.error('No se encontró la data de usuario');
-                    }
-                } catch (error) {
-                    console.error("Error fetching user data:", error);
-                } finally {
-                    setLoading(false); // Finalizar la carga
-                }
-            } else {
-                console.log('No user ID encontrado');
-                setLoading(false); // Finalizar la carga si no hay id_user
-            }
-        };
-
-        if (id_user && decodedToken) fetchUserData();
-    }, [id_user, decodedToken, apiPost]);
-
-    // Mostrar spinner de carga
-    if (loading) {
-        return <div><Spinner /></div>;
+  // Simulación de una carga inicial para asegurar que IdRol esté listo
+  useEffect(() => {
+    if (IdRol !== null) {
+        setLoading(false);
     }
+}, [IdRol]);
 
-    // Redireccionar si User o id_rol son null
-    if (!User || !id_rol) {
-        console.log('Redirecting to home, user not found or role not available');
-        return <Navigate to='/home' />;
-    }
+// Mostrar un spinner mientras se carga el rol del usuario
+if (loading) {
+    return <div><Spinner /></div>;
+}
 
-    console.log('User:', User);
-    console.log('Rol ID:', id_rol);
-    console.log('Allowed Roles:', allowedRoles);
+// Redireccionar si IdRol no está en los roles permitidos
+if (!allowedRoles.includes(IdRol)) {
+    return <Navigate to="/home" />;
+}
 
     // Verificar que id_rol sea un número antes de compararlo
-    if (allowedRoles.includes(Number(id_rol))) {
+    if (allowedRoles.includes(Number(IdRol))) {
         return children;
     } else {
         console.log('Role not allowed, redirecting to home');
@@ -90,36 +42,11 @@ export const Protected_routes_admin = ({ children }) => (
 );
 
 export const Protected_routes_psychologyst = ({ children }) => (
-    <Protected_routes allowedRoles={[1, 3]}>{children}</Protected_routes>
+    <Protected_routes allowedRoles={[3]}>{children}</Protected_routes>
 );
 
 
-export const Protected_routes_student = ({ children }) => {
-  const [Token, setToken] = useState(sessionStorage.getItem('token_raw') || null);
-  const [id_user, setid_user] = useState(null);
-//se crea un useeffect para controlar las veces que está funciono se va a hacer al mismo 
-//tiempo que se busca capturar los errores del token si este es nulo o indefinido
-  useEffect(() => {
-      if (Token) {
-          try {
-              const decodedToken = jwtDecode(Token);
-              setid_user(decodedToken.id_rol); // Actualiza id_user solo si el token es válido
-          } catch (error) {
-              console.error("Error decodificando el token:", error);
-              setid_user(null); // O manejar de otra forma, como redirigir
-          }
-      }
-  }, [Token]);
-
-  if (!Token) {
-      return <Navigate to='/home' />;
-  }
-
-  // Comprobación de id_user
-  if (id_user === 2 || id_user === 1) {
-      return children;
-  } else {
-      return <Navigate to="/home" />;
-  }
-};
+export const Protected_routes_student = ({ children }) => (
+    <Protected_routes allowedRoles={[2]}>{children}</Protected_routes>
+)
 

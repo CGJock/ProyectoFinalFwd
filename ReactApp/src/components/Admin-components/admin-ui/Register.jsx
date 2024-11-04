@@ -3,6 +3,7 @@ import {postRegister,  get_institutes_data} from "../../../services/fetch";
 import Selector_grades from "./Selectors/selector-grades";
 import Selector_rols from "./Selectors/selector-rol";
 import Selector_institution from "./Selectors/selector-institution";
+import { Selector_Hotline } from "./Selectors/checkbox-hotline";
 import { Checkboxgovernment_subsidy } from "./Selectors/checkbox-government_subsidy";
 import { Selector_gender } from "./Selectors/checkbox-gender";
 import { Checkscholarship } from "./Selectors/checkbox-scholarship";
@@ -39,6 +40,7 @@ const Register = () => {
     const [license_code, setlicense_code] = useState('')
     const [availability, setavailability] = useState(0)
     const [years_experience, setyears_experience] = useState('')
+    const [assigned_to_hotline, setassigned_to_hotline] = useState(false)
     
     
     
@@ -63,7 +65,7 @@ const Register = () => {
           }
         }else if(id_rol == 3){
           user_data = {
-            id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,license_code,availability,years_experience
+            id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,license_code,availability,years_experience,assigned_to_hotline
           }
         }
         
@@ -202,6 +204,11 @@ const Register = () => {
                <div>
                 <Checkboxavailability setavailability={setavailability} availability={availability} />
                 <p className="label_input">Disponibilidad</p>
+              </div>
+
+              <div>
+                <Selector_Hotline setassigned_to_hotline={setassigned_to_hotline}  assigned_to_hotline={assigned_to_hotline} />
+                <p className="label_input">Tipo de atencion</p>
               </div>
             </div>
 

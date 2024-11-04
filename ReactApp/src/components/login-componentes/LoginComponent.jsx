@@ -13,11 +13,14 @@ export const LoginComponent = () => {
     const user_data = { username, password };
 
     try {
+    if(data){
+        console.log("se encontro su usuario")
+        console.log(data,'esto es la data del user')
       await Loggin(user_data);
       console.log("Usuario autenticado con éxito");
     } catch (error) {
       console.error("Error en el login:", error.message);
-      seterrorMessage("Error en las credenciales de usuario");
+      seterrorMessage("Error en las credenciales de usuario")
     }
   };
 

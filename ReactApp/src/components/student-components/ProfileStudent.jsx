@@ -1,9 +1,26 @@
-import React, { useState } from 'react';
+
+import React, { useState,useEffect } from 'react';
+import "../../styles/profileStudient.css";
+import { user_fetch } from '../../services/user_fetch.js';
+import { useImage } from '../../context/AuthContext.jsx';
+import SideModal from './SideModal';
+import PostList from "../post-components/PostList.jsx";
+import { useAuth } from '../../context/AuthContext.jsx';
 import FriendsList from '../post-components/FriendsList.jsx';
 import "../../styles/profileStudient-styles/profileStudient.css"
 import { useImage } from '../../context/AuthContext.jsx';
 import SideModal from './SideModal';
 import PostList from "../post-components/PostList.jsx";
+
+// import PostForm from "../Admin-components/post/PostForm";
+
+const ProfileStudent = () => {
+    const { id_user } = useAuth();
+    const [userData, setuserData] = useState(null); // Estado inicial en null
+    const apiPost = "http://localhost:8000/api/user/user"
+    
+
+
 
 /**
  * Componente que representa el perfil de un estudiante.
@@ -14,6 +31,7 @@ import PostList from "../post-components/PostList.jsx";
 
 const ProfileStudent = () => {
     // Obtener la imagen y la función para cambiarla del contexto de autenticación
+
     const { image, handleImageChange } = useImage() || { image: null, handleImageChange: () => {} };
     //estados locale para manejar  la descripción
     const [tempDescription, setTempDescription] = useState(''); // Descripción temporal del usuario
@@ -40,6 +58,26 @@ const ProfileStudent = () => {
     const toggleModal = () => {
         setModalOpen(!isModalOpen);
     };
+    useEffect(() => {
+        const fetchUserData = async () => {
+          if (id_user) { // Verificar que id_user tenga valor antes de llamar a la API
+            try {
+                const userData = await user_fetch(apiPost,id_user); 
+                setuserData(userData); // Actualiza el estado con la información del usuario
+                
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+          }
+        };
+      
+        fetchUserData();
+      }, [id_user]); 
+      
+          
+      
+          // Verifica si User está disponible antes de acceder a sus propiedades
+          if (!userData) return <p>Cargando...</p>;
 
     return (
         <div className="container">

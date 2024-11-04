@@ -62,8 +62,9 @@ INSTALLED_APPS = [
     'student',
     'psychologist',
     'library',
+    'TwilioChat',
     'storages',
-    
+  
 ]
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
@@ -195,4 +196,19 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
+#se cargan las variables de entorno
+load_dotenv()
+TWILIO_ACCOUNT_SID=os.getenv('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN=os.getenv('TWILIO_AUTH_TOKEN')
+TWILIO_TEST_AUTH_TOKEN=os.getenv('TWILIO_TEST_AUTH_TOKEN')
+TWILIO_API_KEY_SID=os.getenv('TWILIO_API_KEY_SID')
+TWILIO_API_KEY_SECRET=os.getenv('TWILIO_API_KEY_SECRET')
+TWILIO_CONVERSATION_SERVICE_SID=os.getenv('TWILIO_CONVERSATION_SERVICE_SID')
 IMGUR_CLIENT_ID = 'cc5933407f174ac'
+
+
+import os
+
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
+GOOGLE_REDIRECT_URI = os.getenv('GOOGLE_REDIRECT_URI')

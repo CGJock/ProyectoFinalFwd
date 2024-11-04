@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
 import Cookies from "js-cookie";
 import { isTokenExpired, refreshAccessToken } from "../../services/token.js";
-import { PostAmazon } from "../../services/callimgur.js";
+import { PostAmazon } from "../../services/callImgur.js";
 import '../../styles/post-styles.css/post-form.css'
 
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../../styles/SideModal.css";
+import "../../styles/sideModal.css";
 /**
  * Componente que representa un menú lateral (modal) que se puede abrir y cerrar.
  * 

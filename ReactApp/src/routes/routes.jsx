@@ -18,7 +18,7 @@ import Login from '../pages/login/login'
 import UsersContainer from '../components/Admin-components/admin-ui/UsersContainer';
 import { ExpedientContainer } from '../components/Admin-components/admin-ui/ExpedienteContainer';
 import { ProfilePsychologist } from '../pages/psychologist/Profile-psychologist';
-import { InstitutionsContainer } from '../components/Admin-components/admin-ui/InstitutionsContainer';
+import { InstitutionsContainer } from '../components/Admin-components/admin-ui/institutionsContainer';
 
 import { TicketsView } from '../components/Admin-components/admin-ui/TicketsView';
 import {PsychoContainer} from '../components/Admin-components/admin-ui/PsychoContainer';

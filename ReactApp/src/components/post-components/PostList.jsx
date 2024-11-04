@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PostForm from "./PostForm";
 import Cookies from "js-cookie";
-import { deletePost } from "../../services/callimgur.js";
-import "../../styles/profileStudient-styles/PostList.css";
+import { deletePost } from "../../services/callImgur.js";
+import "../../styles/profileStudient-styles/postList.css";
 const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);

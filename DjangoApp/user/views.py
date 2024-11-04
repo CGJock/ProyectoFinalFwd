@@ -309,14 +309,23 @@ class CustomTokenRefreshView(TokenRefreshView):
         request.data['refresh'] = refresh_token
         return super().post(request, *args, **kwargs)
     
-    
+from .serializers import UserFriendPostsSerializer
+
+class FriendPostsView(APIView):
+    def get(self, request, id_user):
+        user = get_object_or_404(USERS, id_user=id_user)
+        serializer = UserFriendPostsSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+# from rest_framework.decorators import action
+# class UserViewSet(viewsets.ModelViewSet):
+#     queryset = USERS.objects.all()
+#     serializer_class = UserSerializer
 
-
-
-        
-        
-
-           
-
+#     # Nueva acción personalizada para obtener todos los usuarios
+#     @action(detail=False, methods=['get'])
+#     def all_users(self, request):
+#         users = USERS.objects.all()
+#         serializer = self.get_serializer(users, many=True)
+#         return Response(serializer.data)

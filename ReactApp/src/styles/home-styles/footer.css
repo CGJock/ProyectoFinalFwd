@@ -25,6 +25,7 @@
   color:  #ffe3ff;
   font-size: 18px;
   margin-bottom: 10px;
+  flex: 1 1 250px;
 }
 
 .footer-links a {
@@ -83,4 +84,42 @@
 
 .footer-remain-updated input::placeholder {
   color: #ffe3ff; /* Color del placeholder */
+}
+
+/* Media Queries para Responsividad */
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column; /* Disposición en columna para pantallas pequeñas */
+    align-items: center;
+  }
+  
+  .footer-logo img {
+    width: 120px; /* Tamaño reducido en móviles */
+    margin-bottom: 20px;
+  }
+
+  .footer-links, .footer-contact, .footer-remain-updated {
+    text-align: center;
+    flex: 1 1 100%; /* Ancho completo en móviles */
+    margin-bottom: 20px;
+  }
+
+  .footer-remain-updated input {
+    width: 100%; /* Ancho completo para el campo de input */
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 20px 0; /* Reducir padding en pantallas muy pequeñas */
+  }
+
+  .footer-links h3, .footer-contact h3, .footer-remain-updated h3 {
+    font-size: 16px; /* Tamaño de fuente reducido para encabezados */
+  }
+
+  .footer-social a {
+    font-size: 18px; /* Ajuste de tamaño de iconos sociales */
+  }
 }

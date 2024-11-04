@@ -14,7 +14,8 @@ const VideoCarousel = () => {
       {videoUrls.map((url, index) => (
         <Carousel.Item key={index}>
           {/* este div es el que engloba al video */}
-          <div className="video-container" style={{ position: "relative", paddingBottom: "56.25%", height: 10, overflow: "hidden", maxWidth: "100%", background: "#000" }}>
+          <div className="video-container" style={{ position: "relative",width: "100vw",
+              height: "100vh", paddingBottom: "40%", height: 10, overflow: "hidden", maxWidth: "100%", background: "#000"}}>
             {/* lo que esta dentro de la etiqueta video son los parametros que le video como tal van a cumplir */}
             <video
               src={url}
@@ -23,7 +24,7 @@ const VideoCarousel = () => {
               loop 
               muted
         
-              style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
+              style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover"}}>
             </video>
           </div>
         </Carousel.Item>

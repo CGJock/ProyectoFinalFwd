@@ -16,6 +16,8 @@
     "@mui/material": "^6.1.5",
     "@mui/x-date-pickers": "^7.22.0",
     "@twilio/conversations": "^2.6.0",
+    "aws-sdk": "^2.1691.0",
+    "axios": "^1.7.7",
     "boostrap": "^2.0.0",
     "bootstrap": "^5.3.3",
     "date-fns": "^4.1.0",

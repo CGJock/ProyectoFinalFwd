@@ -2,7 +2,7 @@ from rol.models import ROL
 from .serializers import RolSerializer
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny  
-from rest_framework.permissions import IsAuthenticated
+# from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 class RolViewSet(viewsets.ModelViewSet):

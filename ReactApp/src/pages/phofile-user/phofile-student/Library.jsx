@@ -1,17 +1,28 @@
 import React, { useState } from 'react';
 import '../../../styles/library.css';
+/**
+ * Componente que representa una biblioteca para agregar y listar libros.
+ *
+ * Este componente permite a los usuarios ingresar el título y la URL de un libro,
+ * y los muestra en una lista que incluye un enlace para leer el libro.
+ */
 
 const Library = () => {
-  const [books, setBooks] = useState([]);
-  const [bookTitle, setBookTitle] = useState('');
-  const [bookUrl, setBookUrl] = useState('');
-
+  const [books, setBooks] = useState([]);  // Estado para almacenar la lista de libros
+  const [bookTitle, setBookTitle] = useState(''); // Estado para el título del libro
+  const [bookUrl, setBookUrl] = useState(''); // Estado para la URL del libro
+  /**
+   * Maneja la adición de un nuevo libro a la lista.
+   * 
+   * @param {Event} e - Evento de envío del formulario.
+   */
   const handleAddBook = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Previene el comportamiento por defecto del formulario
+     // Verifica que el título y la URL no estén vacíos
     if (bookTitle && bookUrl) {
       setBooks([...books, { title: bookTitle, url: bookUrl }]);
-      setBookTitle('');
-      setBookUrl('');
+      setBookTitle('');// Reinicia el campo de título
+      setBookUrl('');// Reinicia el campo de URL
     }
   };
 
@@ -49,9 +60,9 @@ const Library = () => {
       </form>
 
       <div className="book-list">
-        {books.length > 0 ? (
+        {books.length > 0 ? ( // Verifica si hay libros en la lista
           <ul className="list-group">
-            {books.map((book, index) => (
+            {books.map((book, index) => (  // Mapea los libros a una lista
               <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                 <span>{book.title}</span>
                 <a href={book.url} target="_blank" rel="noopener noreferrer" className="btn btn-info btn-sm">
@@ -61,7 +72,7 @@ const Library = () => {
             ))}
           </ul>
         ) : (
-          <p className="text-center">No hay libros en la biblioteca.</p>
+          <p className="text-center">No hay libros en la biblioteca.</p> // Mensaje si no hay libros
         )}
       </div>
     </div>

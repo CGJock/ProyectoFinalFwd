@@ -2,6 +2,7 @@
 from rest_framework import serializers
 from user.models import USERS
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from post.models import Post
 
 
 #Base user form registro
@@ -71,3 +72,26 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['id_user'] = self.user.id_user
        
         return data
+    
+#serializer para traer los post del usuario
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ['post_id', 'title', 'description', 'image_url', 'creation_date']
+#serializer para traer los post de los usuarios amigos 
+class UserFriendPostsSerializer(serializers.ModelSerializer):
+    friends_posts = serializers.SerializerMethodField()
+
+    class Meta:
+        model = USERS
+        fields = ['id_user', 'username', 'friends_posts']
+
+    def get_friends_posts(self, obj):
+        # Obtenemos todos los amigos de este usuario
+        friends = obj.friends.all()
+        
+        # Filtramos los posts de los amigos usando sus `id_user`
+        posts = Post.objects.filter(id_user__in=[friend.friend.id_user for friend in friends])
+        
+        # Serializamos los posts encontrados
+        return PostSerializer(posts, many=True).data

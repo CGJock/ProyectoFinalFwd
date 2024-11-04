@@ -44,3 +44,4 @@ export const user_fetch = async (apiPost, user_id) => {
             console.error("Failed to process the data", error);
         throw error }
     }
+    

@@ -29,6 +29,19 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Cargar el archivo .env
+load_dotenv()
+
+# Configuración de AWS S3
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')  #access Key
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')  #secret Key
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')  #bucket
+AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME')  # Región 
+
+# URL para acceder a los archivos en S3 barryveg24 
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+STATICFILES_STORAGE = 'storages.backends.s3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3.S3Boto3Storage'
 
 # Application definition
 
@@ -50,7 +63,10 @@ INSTALLED_APPS = [
     'psychologist',
     'library',
     'TwilioChat',
+    'storages',
+  
 ]
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

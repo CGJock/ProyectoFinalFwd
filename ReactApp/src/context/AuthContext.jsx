@@ -10,6 +10,7 @@ import Cookies from 'js-cookie';
 const AuthContext = createContext();
 
 // auth provider esta pensado para envolver toda la aplicacion y darle contexto a todos los hijos (children)
+
   export const  AuthProvider = ({ children }) => {
   const access_token =  Cookies.get('access_token');
   const [decodedToken, setdecodedToken] = useState(null)
@@ -21,20 +22,24 @@ const AuthContext = createContext();
   const [StudentData, setStudentData] = useState(null)
   const [PsychologistData, setPsychologistData] = useState(null)
   const navigate = useNavigate()
+
  
  
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // useEffect para observar cambios en el Token desde las cookies
   useEffect(() => {
+
     // Al cargar el componente, intenta decodificar el token y obtener el id_user y id_rol
     if (access_token) {
       try {
-        const decoded = jwtDecode(access_token); // Decodifica el token solo si no es null
+        const decoded = jwtDecode(access_token); // Decodifica el token solo si no es nul
         setid_user(decoded.id_user);
       } catch (error) {
-        console.error('Error decoding token:', error); // Maneja el error
-        setdecodedToken(null); // Resetea el estado si hay un error
+        console.error('Error decoding token:', error);
+        setdecodedToken(null);
       }
     }
+
 }, [access_token]); // dependencia que hace que cambie  el efecto solo cuando Token cambie
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,7 +80,6 @@ useEffect(() => {
 }, [id_user, access_token]); // Dependencias del efecto
 
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const edit_user = async (user_id, userData) => {
@@ -92,11 +96,9 @@ const edit_user = async (user_id, userData) => {
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//funcion para loguear al usuario 
-  const Loggin =  async (user_data) => {
-    try{
-  
-     
+// Función de login que configura el Token y actualiza el contexto
+const Loggin = async (user_data) => {
+  try {
     const apiPost = "http://localhost:8000/api/user/login-user/";
     const apiUser = "http://localhost:8000/api/user/user";
     const apiStudent = "http://localhost:8000/api/student/student-detailed"
@@ -152,14 +154,14 @@ const edit_user = async (user_id, userData) => {
             navigate('/home')
       }
         return ;
+
       }
     }
+  } catch (error) {
+    console.error('Login error:', error);
+    throw new Error('Error en la autenticación');
   }
-    throw new Error(response.message);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //funcion para pasar el formato de creacion de fechas a algo mas legible para el user ej:30/junio/2000
@@ -201,11 +203,13 @@ const [id_expedient, setid_expedient] = useState(null)
 
 
 return (
+
     <AuthContext.Provider value={{ id_user ,Loggin, logout, setTicketData, id_ticket, ticket_user_id,AdminData,StudentData,PsychologistData,IdRol,formatDate,
       setExpedientData,id_expedient,edit_user
      }}>
-      {children}
-    </AuthContext.Provider>
+
+    <AuthContext.Provider value={{ id_user,Token ,Loggin, logout, setTicketData, id_ticket, ticket_user_id }}>
+      
   );
 };
 

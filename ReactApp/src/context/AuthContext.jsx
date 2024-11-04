@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { PUT } from '../services/crud';
 import { useNavigate } from 'react-router-dom';
 import { login_user } from '../services/fetch';
 import { jwtDecode } from 'jwt-decode';
@@ -9,16 +10,11 @@ import Cookies from 'js-cookie';
 const AuthContext = createContext();
 
 // auth provider esta pensado para envolver toda la aplicacion y darle contexto a todos los hijos (children)
-<<<<<<< HEAD
-  const AuthProvider = ({ children }) => {
+  export const  AuthProvider = ({ children }) => {
   const access_token =  Cookies.get('access_token');
-=======
-export const AuthProvider = ({ children }) => {
-  const Token =  Cookies.get('Token');
->>>>>>> e714734dc5203dee4fa4536d45cbbbd2d93c5103
   const [decodedToken, setdecodedToken] = useState(null)
   const [id_user, setid_user] = useState(null)
-  const [UserInfo, setUserInfo] = useState(null)
+  // const [UserInfo, setUserInfo] = useState(null)
   const [IdRol, setIdRol] = useState(null)
 
   const [AdminData, setAdminData] = useState(null)
@@ -82,6 +78,17 @@ useEffect(() => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const edit_user = async (user_id, userData) => {
+  const edit_link = `http://localhost:8000/api/user/edit-user/${user_id}/`;
+
+  try {
+      const data = await PUT(userData, edit_link); // Llama a PUT, que ya maneja errores
+      return data; // Retornar los datos para uso posterior
+  } catch (error) {
+      console.error("Error al editar usuario:", error);
+      throw error; // Relanza el error para manejarlo en el contexto donde se llama
+  }
+};
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,14 +114,19 @@ useEffect(() => {
       const decodedToken = jwtDecode(token_raw);
       console.log(decodedToken)
       setid_user(decodedToken.id_user);
-      
+      const id_user = jwtDecode(response.access).id_user
       if(id_user){
+        // console.log('entre');
         const user = await user_fetch(apiUser,id_user);
+        
+        
         if(user){
+          // console.log('entre againg');
+          
           if(user.id_rol == 1){
             setIdRol(user.id_rol)
             setAdminData(user)//se setean los datos generales de admin para futuro uso
-            navigate('administration/students');
+            // navigate('administration/students');
             setTimeout(() => {
               navigate('administration/students');
             }, 1);
@@ -130,10 +142,11 @@ useEffect(() => {
             setIdRol(user.id_rol)
             const psychologist_data = await user_fetch(apiPsychologist,id_user)
             setPsychologistData(psychologist_data)
+            navigate('/profile/psychologist/psychologist-cases');
             setTimeout(() => {
               navigate('/profile/psychologist/psychologist-cases');
             }, 1);
-            navigate('/profile/psychologist/psychologist-cases');
+            
       } else {
           console.log('no se encontro el usuario');
             navigate('/home')
@@ -149,6 +162,12 @@ useEffect(() => {
   };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//funcion para pasar el formato de creacion de fechas a algo mas legible para el user ej:30/junio/2000
+const formatDate = (dateString) => {
+  const options = { year: 'numeric', month: 'long', day: 'numeric',hour:  'numeric',minute: 'numeric'};
+
+  return new Date(dateString).toLocaleDateString('es-ES', options);
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //funcion para desloguear
@@ -174,10 +193,17 @@ const [ticket_user_id, setticket_user_id] = useState(null)
   };
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const [id_expedient, setid_expedient] = useState(null)
+  const setExpedientData = (id_expedient) => {
+    setid_expedient(id_expedient);
+  }
+
 
 
 return (
-    <AuthContext.Provider value={{ id_user ,Loggin, logout, setTicketData, id_ticket, ticket_user_id,AdminData,StudentData,PsychologistData,IdRol }}>
+    <AuthContext.Provider value={{ id_user ,Loggin, logout, setTicketData, id_ticket, ticket_user_id,AdminData,StudentData,PsychologistData,IdRol,formatDate,
+      setExpedientData,id_expedient,edit_user
+     }}>
       {children}
     </AuthContext.Provider>
   );
@@ -310,3 +336,37 @@ export const useEmail = () => {
   return useContext(EmailContext);
 };
 
+
+
+import { Client as TwilioClient } from '@twilio/conversations';
+
+const TwilioContext = createContext();
+
+export const TwilioProvider = ({ children }) => {
+    const [twilioClient, setTwilioClient] = useState(null);
+    const [conversation, setConversation] = useState(null); // State for conversation
+
+    const initializeTwilio = (token) => {
+        const client = new TwilioClient(token);
+        setTwilioClient(client);
+    };
+
+    useEffect(() => {
+        if (twilioClient) {
+            const getConversation = async () => {
+                const conversationInstance = await twilioClient.getConversationBySid('IS78b2c1901d334caba179904a5c39ac42'); 
+                setConversation(conversationInstance);
+            };
+
+            getConversation();
+        }
+    }, [twilioClient]);
+
+    return (
+        <TwilioContext.Provider value={{ twilioClient, initializeTwilio, conversation }}>
+            {children}
+        </TwilioContext.Provider>
+    );
+};
+
+export const useTwilio = () => useContext(TwilioContext);

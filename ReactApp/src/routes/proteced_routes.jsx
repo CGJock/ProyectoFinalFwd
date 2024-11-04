@@ -42,36 +42,11 @@ export const Protected_routes_admin = ({ children }) => (
 );
 
 export const Protected_routes_psychologyst = ({ children }) => (
-    <Protected_routes allowedRoles={[1, 3]}>{children}</Protected_routes>
+    <Protected_routes allowedRoles={[3]}>{children}</Protected_routes>
 );
 
 
-export const Protected_routes_student = ({ children }) => {
-  const [Token, setToken] = useState(sessionStorage.getItem('token_raw') || null);
-  const [id_user, setid_user] = useState(null);
-//se crea un useeffect para controlar las veces que está funciono se va a hacer al mismo 
-//tiempo que se busca capturar los errores del token si este es nulo o indefinido
-  useEffect(() => {
-      if (Token) {
-          try {
-              const decodedToken = jwtDecode(Token);
-              setid_user(decodedToken.id_rol); // Actualiza id_user solo si el token es válido
-          } catch (error) {
-              console.error("Error decodificando el token:", error);
-              setid_user(null); // O manejar de otra forma, como redirigir
-          }
-      }
-  }, [Token]);
-
-  if (!Token) {
-      return <Navigate to='/home' />;
-  }
-
-  // Comprobación de id_user
-  if (id_user === 2 || id_user === 1) {
-      return children;
-  } else {
-      return <Navigate to="/home" />;
-  }
-};
+export const Protected_routes_student = ({ children }) => (
+    <Protected_routes allowedRoles={[2]}>{children}</Protected_routes>
+)
 

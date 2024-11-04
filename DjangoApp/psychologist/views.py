@@ -1,7 +1,10 @@
-from .models import PSYCHOLOGIST,PACIENTFILES,EXPEDIENT
+from .models import PSYCHOLOGIST,PACIENTFILES,EXPEDIENT,SESSION
 from rest_framework import viewsets
-from .serializers import PsychologistSerializer,PacientFilesSerializer,ExpedientSerializer
+from .serializers import PsychologistSerializer,PacientFilesSerializer,ExpedientSerializer,SessionSerializer,ExpedientSimpleSerializer,SessionExpedientSerializer
 from rest_framework.response import Response
+from datetime import timedelta
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
 from rest_framework import status
 from rest_framework import viewsets
 from student.models import STUDENT
@@ -11,6 +14,8 @@ from django.db.models import Count
 from django.views.decorators.http import require_http_methods
 from user.models import USERS
 from .models import TICKET
+from django.shortcuts import redirect
+from django.conf import settings
 import jwt
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.decorators import action
@@ -22,6 +27,51 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny  
 from twilio.rest import Client
 from django.conf import settings
+import os
+from dotenv import load_dotenv
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny 
+from datetime import datetime, timedelta
+from google.oauth2.credentials import Credentials
+from google.auth.transport.requests import Request
+from googleapiclient.errors import HttpError
+from datetime import timedelta
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+from rest_framework.response import Response
+from rest_framework import status
+import time
+import requests
+from datetime import timedelta
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+from rest_framework.response import Response
+from rest_framework import status
+import uuid  # Para generar un requestId único
+from django.http import JsonResponse
+from datetime import timedelta
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+import urllib.parse
+from django.core.mail import send_mail
+from django.utils import timezone
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+from .models import SESSION
+from .serializers import SessionExpedientSerializer
+
+
+
+
+
+from pathlib import Path
+# Cargar variables de entorno desde el archivo .env
+BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv()
+
 
 
 # Create your views here.
@@ -37,10 +87,151 @@ class RegisterPsychologistViewSet(viewsets.ModelViewSet):
         elif psychologist_serializer.errors:
             return  Response(psychologist_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-class PychologistsList(viewsets.ReadOnlyModelViewSet):
-    queryset = PSYCHOLOGIST.objects.all()
-    serializer_class = PsychologistSerializer
+
+
+
+
+ZOOM_REDIRECT_URI = os.getenv('ZOOM_REDIRECT_URI')
+ZOOM_CLIENT_SECRET = os.getenv('ZOOM_CLIENT_SECRET')
+ZOOM_CLIENT_ID = os.getenv('ZOOM_CLIENT_ID')
+# def zoom_callback(request):
+#     code = request.GET.get('code')
+#     token_url = "https://zoom.us/oauth/token"
     
+#     data = {
+#         "grant_type": "authorization_code",
+#         "code": code,
+#         "redirect_uri": ZOOM_REDIRECT_URI,
+#     }
+
+#     # Solicitar el token de acceso
+#     response = requests.post(token_url, auth=(ZOOM_CLIENT_ID, ZOOM_CLIENT_SECRET), data=data)
+    
+#     if response.status_code == 200:
+#         tokens = response.json()
+#         request.session['access_token'] = tokens['access_token']  # Guardar el token correctamente
+        
+#         return redirect('/')  # Redirige a la página de inicio o a una página de confirmación
+#     else:
+#         error_info = response.json()  # Capturar el error
+#         print("Error al autenticar con Zoom:", error_info)
+#         return JsonResponse({'error': 'Failed to authenticate with Zoom'}, status=400)
+
+# def create_zoom_meeting(session_date, access_token):
+#     url = "https://api.zoom.us/v2/users/me/meetings"
+#     headers = {
+#         "Authorization": f"Bearer {access_token}",
+#         "Content-Type": "application/json"
+#     }
+    
+#     start_time_str = session_date.isoformat() + 'Z'
+#     meeting_details = {
+#         "topic": "Reunión de Prueba",
+#         "type": 2,
+#         "start_time": start_time_str,
+#         "duration": 30,
+#         "timezone": "America/New_York",
+#         "settings": {
+#             "host_video": True,
+#             "participant_video": True,
+#             "join_before_host": True,
+#             "mute_upon_entry": False
+#         }
+#     }
+
+#     response = requests.post(url, headers=headers, json=meeting_details)
+
+#     if response.status_code == 201:
+#         return response.json()
+#     else:
+#         try:
+#             error_info = response.json()
+#             return {"error": error_info}
+#         except ValueError:
+#             return {"error": response.text}
+
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework import viewsets
+from django.shortcuts import get_object_or_404
+from .models import SESSION, EXPEDIENT  # Asegúrate de que esto coincida con tus modelos
+from .serializers import SessionExpedientSerializer  # Asegúrate de que esto coincida con tu serializador
+from datetime import datetime
+
+class RegisterSession(viewsets.ModelViewSet):
+    queryset = SESSION.objects.all()
+    serializer_class = SessionExpedientSerializer
+    permission_classes = [AllowAny]
+    authentication_classes = []
+
+    def create(self, request, *args, **kwargs):
+        session_date_str = request.data.get('session_date')
+        id_expedient = request.data.get('id_expedient')
+
+        if not session_date_str:
+            return Response({'error': 'session_date is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            session_date = datetime.fromisoformat(session_date_str)
+        except ValueError:
+            return Response({'error': 'Invalid date format. Expected ISO format.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Obtiene la instancia del expediente
+        expedient = get_object_or_404(EXPEDIENT, id_expedient=id_expedient)  # Asegúrate de usar el campo correcto
+
+        # Guarda la sesión en la base de datos
+        session = SESSION(
+            session_date=session_date,
+            id_expedient=expedient  # Asigna la instancia del expediente aquí
+            # Añade otros campos que necesites aquí
+        )
+        session.save()
+
+        # Responde con un mensaje de éxito
+        return Response({'message': 'Sesión creada exitosamente', 'session_id': session.id_session}, status=status.HTTP_201_CREATED)
+
+
+    
+    
+    
+from django.shortcuts import redirect
+from django.conf import settings
+import requests
+
+def google_callback(request):
+    code = request.GET.get('code')
+
+    if not code:
+        return JsonResponse({'error': 'Authorization code not provided'}, status=400)
+
+    # Intercambia el código por un access_token
+    token_response = requests.post(
+        'https://oauth2.googleapis.com/token',
+        data={
+            'code': code,
+            'client_id': settings.GOOGLE_CLIENT_ID,
+            'client_secret': settings.GOOGLE_CLIENT_SECRET,
+            'redirect_uri': settings.GOOGLE_REDIRECT_URI,
+            'grant_type': 'authorization_code',
+        },
+    )
+
+    if token_response.status_code != 200:
+        return JsonResponse({'error': 'Failed to retrieve access token'}, status=token_response.status_code)
+
+    token_data = token_response.json()
+    access_token = token_data.get('access_token')
+
+    # Guarda el token en la sesión
+    request.session['access_token'] = access_token
+
+    # Redirige al frontend para completar la creación de la sesión
+    return redirect('http://localhost:5173/profile/psychologist/create-session/')  # Ajusta la URL según tu frontend
+
+
+
+        
+
 
     
 
@@ -49,23 +240,29 @@ class CreateTicket(viewsets.ModelViewSet):
     queryset = TICKET.objects.all()
     authentication_classes = []
     permission_classes = [AllowAny]
-    
-    def create(self,request,*args, **kwargs):
-        #se obtiene el usuario del request
+
+    def create(self, request, *args, **kwargs):
         id_user = request.data.get('id_user')
+        access_token = request.data.get('access_token')
+        refresh_token = request.data.get('refresh_token')
         try:
             user = USERS.objects.get(id_user=id_user)
         except USERS.DoesNotExist:
-            return Response({"error":"usuario no encontrado"}, status=status.HTTP_404_NOT_FOUND)
-        #se crea un diccionario para ser usado en el serializer
-        ticket_data = {"id_user": user.id_user}
+            return Response({"error": "usuario no encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+        ticket_data = {
+            "id_user": user.id_user,
+            "access_token" : access_token,
+            "refresht_token" : refresh_token,
+
+            }
         ticket_serializer = self.get_serializer(data=ticket_data)
+        
         if ticket_serializer.is_valid():
             ticket_serializer.save()
-            return Response(ticket_serializer.data,status=status.HTTP_201_CREATED)
-        elif ticket_serializer.errors:
-            return Response(ticket_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(ticket_serializer.data, status=status.HTTP_201_CREATED)
         
+        return Response(ticket_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UpdateTicket(viewsets.ModelViewSet):
     serializer_class = TicketSerializer
@@ -94,6 +291,8 @@ class UpdateTicket(viewsets.ModelViewSet):
             return Response(ticket_serializer.data, status=status.HTTP_200_OK)
         elif ticket_serializer.errors:
             return Response(ticket_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+
         
 
 class TicketList(viewsets.ReadOnlyModelViewSet):
@@ -148,7 +347,7 @@ class FileUploadView(APIView):
 
 class CreateCase(viewsets.ModelViewSet):
     queryset = EXPEDIENT.objects.all()
-    serializer_class = ExpedientSerializer
+    serializer_class = ExpedientSimpleSerializer
     authentication_classes = []
     permission_classes = [AllowAny]
 
@@ -191,7 +390,7 @@ class CasesList(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]   
         
     
-        
+#listado de todos los casos asignados a un psicologo    
 class PsychologistCases(APIView):
     permission_classes = []
     permission_classes = [AllowAny]
@@ -212,6 +411,26 @@ class PsychologistCases(APIView):
             
         except PSYCHOLOGIST.DoesNotExist:
             return Response({'error': 'No se encontró el psicólogo'}, status=status.HTTP_404_NOT_FOUND)
+        
+class PychologistsList(viewsets.ReadOnlyModelViewSet):
+    queryset = PSYCHOLOGIST.objects.all()
+    serializer_class = PsychologistSerializer
+    
+        
+
+#vista para obtener un expediente especifico
+class  ExpedientDetail(viewsets.ViewSet):
+    authentication_classes = []
+    permission_classes = [AllowAny]
+    
+    def retrieve(self,request,id_expedient):
+        try:
+            expedient = EXPEDIENT.objects.get(id_expedient=id_expedient)
+            serializer =  ExpedientSerializer(expedient)
+            return Response(serializer.data, status=200)
+        
+        except  EXPEDIENT.DoesNotExist:
+            return Response({'error':'No hay expedientes con ese ID'},status=404)  
     
         
 #vista que unifica psicologo y user

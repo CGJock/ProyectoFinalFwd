@@ -1,8 +1,9 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { ProfileStudent } from './student-profile'
 import SideModal from '../../components/student-components/SideModal'
 import { SocialNav } from '../../components/utilities/SocialNav'
+import StartChat from '../../components/utilities/StartChat'
+StartChat
 
 
 
@@ -10,7 +11,8 @@ export const Student = () => {
   return (
     <>
       <SocialNav />
-      <ProfileStudent />
+      <StartChat/>
+      
       <main>
       <Outlet />
       </main>

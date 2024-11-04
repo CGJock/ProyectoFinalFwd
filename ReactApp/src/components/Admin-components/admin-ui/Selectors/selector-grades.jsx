@@ -66,10 +66,7 @@ const Selector_grades = ({id_grade, setid_grade}) => {
     
     <select className="grade_selector"
         value={id_grade}
-        
         onChange={(event) => setid_grade(parseInt(event.target.value))}
-        
-        
         name="id_grade"
         id="grade"
         >

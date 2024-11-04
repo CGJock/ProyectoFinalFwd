@@ -31,7 +31,7 @@ class StudentsUser(viewsets.ViewSet):
     permission_classes = [AllowAny]
     def list(self, request, ):
         # Recupera todos los estudiantes con sus usuarios relacionados
-        students = STUDENT.objects.select_related('id_user','id_institution','id_grade').all()
+        students = STUDENT.objects.filter(id_user__is_active=True).select_related('id_user', 'id_institution', 'id_grade').all()
         serializer = StudentSerializer(students, many=True)
         return Response(serializer.data)
     

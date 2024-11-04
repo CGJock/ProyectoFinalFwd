@@ -22,9 +22,13 @@ class PSYCHOLOGIST(models.Model):
 class TICKET(models.Model):
     id_ticket = models.AutoField(primary_key=True)
     id_user = models.ForeignKey(USERS, on_delete=models.CASCADE)
-    crated_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     state = models.CharField(default='pending', max_length=55)
+    google_access_token = models.CharField(max_length=255, blank=True, null=True)
+    google_resfresh_token = models.CharField(max_length=255, blank=True, null=True)
+    expires_at  = models.DateTimeField(blank=True, null=True)
+
     
 
 class EXPEDIENT(models.Model):
@@ -39,14 +43,17 @@ class EXPEDIENT(models.Model):
     
 
 class SESSION(models.Model):
-    id_session = models.CharField(max_length=100,blank=True,null=True)#se ligara al id de la conversacion de twilio
+    id_session = models.AutoField(primary_key=True)
     id_expedient = models.ForeignKey(EXPEDIENT, related_name='Sessions', on_delete=models.CASCADE)
-    session_date = models.DateTimeField(default=timezone.now)
+    session_date = models.DateTimeField()
+    
+    
+
     
 class OBSERVATIONS(models.Model):
     id_observation = models.AutoField(primary_key=True)
     #cada observacion podra estar ligada unicamente a una session
-    id_session = models.OneToOneField(SESSION, related_name='Obervations', on_delete=models.CASCADE)
+    id_session = models.OneToOneField(SESSION, related_name='Observations', on_delete=models.CASCADE)
     observation_description = models.TextField(max_length=255)
     created_at =models.DateTimeField(default=timezone.now)
     
@@ -58,6 +65,14 @@ class PACIENTFILES(models.Model):
     created_at =models.DateTimeField(default=timezone.now)
     file_name =models.CharField(max_length=55)
     file = models.FileField()
+    
+# class SESSIONOBSERVATOIN(models.Model):
+#     id_observation = models.AutoField(primary_key=True)
+#     #cada observacion podra estar ligada unicamente a una session
+#     id_session = models.OneToOneField(SESSION, related_name='Observations', on_delete=models.CASCADE)
+#     observation_description = models.TextField(max_length=255)
+#     created_at =models.DateTimeField(default=timezone.now)
+    
     
     
 

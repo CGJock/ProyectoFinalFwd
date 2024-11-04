@@ -8,7 +8,7 @@ export const user_fetch = async (apiPost, user_id) => {
         const csrftoken = Cookies.get('csrftoken');
         let access_token = Cookies.get('access_token'); // Recupera el access token actual
 
-        const url = `${apiPost}/${user_id}`
+        const url = `${apiPost}/${user_id}/`
         //se llama a la funcion para ver si el token expiro 
         const token_expired =  isTokenExpired(access_token)
         //si el token expiro se llama la funcion refreshtoken

@@ -11,7 +11,7 @@ export const Student = () => {
   return (
     <>
       <SocialNav />
-      <StartChat/>
+      {/* <StartChat/> */}
       
       <main>
       <Outlet />

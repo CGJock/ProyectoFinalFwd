@@ -25,10 +25,7 @@ class TICKET(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     state = models.CharField(default='pending', max_length=55)
-    google_access_token = models.CharField(max_length=255, blank=True, null=True)
-    google_resfresh_token = models.CharField(max_length=255, blank=True, null=True)
-    expires_at  = models.DateTimeField(blank=True, null=True)
-
+    
     
 
 class EXPEDIENT(models.Model):
@@ -66,13 +63,7 @@ class PACIENTFILES(models.Model):
     file_name =models.CharField(max_length=55)
     file = models.FileField()
     
-# class SESSIONOBSERVATOIN(models.Model):
-#     id_observation = models.AutoField(primary_key=True)
-#     #cada observacion podra estar ligada unicamente a una session
-#     id_session = models.OneToOneField(SESSION, related_name='Observations', on_delete=models.CASCADE)
-#     observation_description = models.TextField(max_length=255)
-#     created_at =models.DateTimeField(default=timezone.now)
-    
+
     
     
 

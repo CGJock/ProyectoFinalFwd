@@ -4,11 +4,14 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox"; //profileicon
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded"; //homeicon
 import BorderColorRoundedIcon from "@mui/icons-material/BorderColorRounded"; //potsicon
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import Tooltip from '@mui/material/Tooltip';
 import "../../styles/utilities-styles/nav-bar.css";
 import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
 
 export const SocialNav = () => {
+  
+  
   const navigate = useNavigate();
   const { StudentData, PsychologistData, logout } = useAuth();
   const [username, setusername] = useState(null);
@@ -29,23 +32,28 @@ export const SocialNav = () => {
   return (
     <>
       <nav className="navBar">
-        <div>
+        <Tooltip title="Home"> <div>
           <Link to="http://localhost:5173/home">
             <HomeRoundedIcon sx={{ color: "#F8E4FC", fontSize: 35 }} />
           </Link>
         </div>
+        </Tooltip>
 
-        <div>
-          <Link to="http://localhost:5173/profile/posts">
+
+          <Tooltip title="Crear Publicacion"><div>
+          <Link to="http://localhost:5173/profile/user/posts">
             <BorderColorRoundedIcon sx={{ color: "#F8E4FC", fontSize: 35 }} />
           </Link>
         </div>
+        </Tooltip>
 
-        <div>
-          <Link to="http://localhost:5173/profile/">
+        <Tooltip title="Perfil"><div>
+          <Link to="http://localhost:5173/profile/user">
             <AccountBoxIcon sx={{ color: "#F8E4FC", fontSize: 35 }} />
           </Link>
-        </div>
+          </div>
+          </Tooltip>
+        
 
         <div
           style={{

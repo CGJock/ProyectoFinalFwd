@@ -3,14 +3,18 @@ import { useAuth } from "../../context/AuthContext.jsx";
 import Cookies from "js-cookie";
 import { isTokenExpired, refreshAccessToken } from "../../services/token.js";
 import { PostAmazon } from "../../services/callimgur.js";
+import '../../styles/post-styles.css/post-form.css'
+
+
 
 const PostForm = ({ onPostCreated }) => {
   //obtener los datos del usuario desde el contexto
-  const { id_user, Token: access_token } = useAuth() || {};
+  const { id_user} = useAuth()
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
-  console.log(id_user, access_token);
+  const access_token = Cookies.get('access_token')
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -69,23 +73,34 @@ const PostForm = ({ onPostCreated }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
+    <>
+    <form className="post_form" onSubmit={handleSubmit}>
+      <label><h5>Crea una publicacion</h5></label>
+      <input className="input_post"
         type="text"
         placeholder="Título"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         required
       />
-      <textarea
-        placeholder="Descripción"
+      <div className="contenedor_post_btn">
+      <textarea className="text_area_post"
+        placeholder="Que piensas?..."
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         required
       />
       <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-      <button type="submit">Crear Publicación</button>
+      <button className="btn-post" type="submit">Submit</button>
+      </div>
     </form>
+    
+    <div>
+      
+    </div>
+    </>
+
+    
   );
 };
 

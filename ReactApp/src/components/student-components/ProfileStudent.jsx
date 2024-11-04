@@ -1,6 +1,5 @@
 
 import React, { useState,useEffect } from 'react';
-import "../../styles/profileStudient.css";
 import { user_fetch } from '../../services/user_fetch.js';
 import { useImage } from '../../context/AuthContext.jsx';
 import SideModal from './SideModal';
@@ -8,9 +7,7 @@ import PostList from "../post-components/PostList.jsx";
 import { useAuth } from '../../context/AuthContext.jsx';
 import FriendsList from '../post-components/FriendsList.jsx';
 import "../../styles/profileStudient-styles/profileStudient.css"
-import { useImage } from '../../context/AuthContext.jsx';
-import SideModal from './SideModal';
-import PostList from "../post-components/PostList.jsx";
+
 
 // import PostForm from "../Admin-components/post/PostForm";
 
@@ -21,7 +18,6 @@ const ProfileStudent = () => {
     
 
 
-
 /**
  * Componente que representa el perfil de un estudiante.
  * 
@@ -29,7 +25,7 @@ const ProfileStudent = () => {
  * escribir y guardar una descripción, y mostrar una lista de amigos y publicaciones.
  */
 
-const ProfileStudent = () => {
+
     // Obtener la imagen y la función para cambiarla del contexto de autenticación
 
     const { image, handleImageChange } = useImage() || { image: null, handleImageChange: () => {} };

@@ -61,6 +61,7 @@ const NavHome = () => {
                         <li><Link to="/AboutMe" className="about_link">About</Link></li>
                         <li><Link to="/FAQ" className="questions_link">FAQ</Link></li>
                         <li><Link to="/Profile/create-post" className="profileStudient">Perfil</Link></li>
+                        <li><Link to="/login" className="home_link">Logueate</Link></li>
                         <li>
                             <Button variant="outline-secondary" onClick={handleShow} className="contact_link">
                                 Contact

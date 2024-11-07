@@ -1,0 +1,80 @@
+/* Contenedor principal para centrar el formulario */
+.post-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Altura completa de la pantalla */
+    background-color: #f0f0f0; /* Fondo claro */
+  }
+  
+  /* Estilo para el formulario */
+  .post_form {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilo para el título de la publicación */
+  .post_form h5 {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilo para los inputs de texto */
+  .input_post, .text_area_post {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  /* Estilo para el área de texto */
+  .text_area_post {
+    min-height: 100px; /* Altura mínima */
+  }
+  
+  /* Estilo para el input de imagen */
+  input[type="file"] {
+    margin: 10px 0;
+  }
+  
+  /* Estilo para el botón de envío */
+  .btn-post {
+    background-color: #74089f;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 60%;
+    margin: 0 auto;
+  }
+  
+  .btn-post:hover {
+    background-color: #f7f7f7;
+    color: #74089f;
+    border: 1px solid #74089f;
+  }
+  
+  /* Estilo para la vista previa de la imagen */
+  .image-preview {
+    margin-top: 15px;
+    text-align: center;
+  }
+  
+  .imgPost {
+    max-width: 100%;
+    max-height: 200px; /* Ajustar la altura de la imagen */
+    object-fit: cover; /* Ajusta la imagen sin distorsionarla */
+    border-radius: 4px;
+  }
+  

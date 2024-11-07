@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post, PostReplies
+from .models import Post, PostReplies,FRIENDS
 from user.models import USERS
 
 # Serializador para el modelo USERS
@@ -22,3 +22,9 @@ class PostResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostReplies # Especifica el modelo que se está serializando
         fields = '__all__' # Incluye todos los campos del modelo en la representación del serializador
+        
+class ListFriendSerializer(serializers.ModelSerializer):
+    id_user = serializers.PrimaryKeyRelatedField(queryset=USERS.objects.all(), source='id_user')
+    class Meta:
+        model = FRIENDS
+        fields = ["user","friend"]

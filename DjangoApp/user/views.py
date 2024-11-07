@@ -17,9 +17,6 @@ from rest_framework.permissions import AllowAny
 
 from rest_framework_simplejwt.views import TokenRefreshView
 
- 
-
-
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.http import urlsafe_base64_encode
@@ -258,12 +255,6 @@ class UserViewSet(APIView):
        
        
            
-
-
-
-
-    
-
 class ResetPasswordView(viewsets.ModelViewSet):
         queryset = USERS.objects.all() 
         serializer_class = ResetPasswordSerializer

@@ -2,9 +2,7 @@ from .models import PSYCHOLOGIST,PACIENTFILES,EXPEDIENT,SESSION
 from rest_framework import viewsets
 from .serializers import PsychologistSerializer,PacientFilesSerializer,ExpedientSerializer,SessionSerializer,ExpedientSimpleSerializer,SessionExpedientSerializer
 from rest_framework.response import Response
-from datetime import timedelta
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
+
 from rest_framework import status
 from rest_framework import viewsets
 from student.models import STUDENT
@@ -23,18 +21,14 @@ from django.urls import reverse_lazy
 # add the imports to the top
 from django.views.generic.edit import CreateView
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.permissions import AllowAny  
+ 
 from twilio.rest import Client
 from django.conf import settings
 import os
 from dotenv import load_dotenv
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny 
-from datetime import datetime, timedelta
-from google.oauth2.credentials import Credentials
-from google.auth.transport.requests import Request
-from googleapiclient.errors import HttpError
+
 from datetime import timedelta
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -42,24 +36,19 @@ from rest_framework.response import Response
 from rest_framework import status
 import time
 import requests
-from datetime import timedelta
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
+
 from googleapiclient.errors import HttpError
 from rest_framework.response import Response
 from rest_framework import status
 import uuid  # Para generar un requestId único
 from django.http import JsonResponse
-from datetime import timedelta
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
+
 import urllib.parse
 from django.core.mail import send_mail
 from django.utils import timezone
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
+
 from .models import SESSION
 from .serializers import SessionExpedientSerializer
 
@@ -182,8 +171,7 @@ class RegisterSession(viewsets.ModelViewSet):
         # Guarda la sesión en la base de datos
         session = SESSION(
             session_date=session_date,
-            id_expedient=expedient  # Asigna la instancia del expediente aquí
-            # Añade otros campos que necesites aquí
+            id_expedient=expedient 
         )
         session.save()
 
@@ -232,8 +220,6 @@ def google_callback(request):
 
         
 
-
-    
 
 class CreateTicket(viewsets.ModelViewSet):
     serializer_class = TicketSerializer

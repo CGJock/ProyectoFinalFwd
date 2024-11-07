@@ -47,6 +47,6 @@ export const Protected_routes_psychologyst = ({ children }) => (
 
 
 export const Protected_routes_student = ({ children }) => (
-    <Protected_routes allowedRoles={[2]}>{children}</Protected_routes>
+    <Protected_routes allowedRoles={[2,3]}>{children}</Protected_routes>
 )
 

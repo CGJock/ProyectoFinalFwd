@@ -1,3 +1,4 @@
+import { Key } from "@mui/icons-material";
 import AWS from "aws-sdk";
 import Cookies from "js-cookie";
 
@@ -14,10 +15,10 @@ const s3 = new AWS.S3({
 });
 console.log("Bucket Name:", bucketName);
 // Función para subir una imagen a S3
-export const uploadImageToS3 = async (file) => {
+export const uploadImageToS3 = async (file  = {} ) => {
   const params = {
     Bucket: bucketName,
-    Key: file.name, 
+    Key: file.name,
     Body: file,
     ContentType: file.type,
     // ACL: 'public-read', 

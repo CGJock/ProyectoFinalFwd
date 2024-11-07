@@ -49,8 +49,6 @@ urlpatterns = [
         path('api/user/<int:id_user>/friends/posts/', FriendPostsView.as_view(), name='amigos_posts')
 
 
-        
-
 ]
 
 

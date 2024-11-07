@@ -4,14 +4,20 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox"; //profileicon
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded"; //homeicon
 import BorderColorRoundedIcon from "@mui/icons-material/BorderColorRounded"; //potsicon
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import MenuIcon from '@mui/icons-material/Menu';
+import SideModal from "../student-components/SideModal";
+import Tooltip from '@mui/material/Tooltip';
 import "../../styles/utilities-styles/nav-bar.css";
 import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
 
 export const SocialNav = () => {
+  
+  
   const navigate = useNavigate();
   const { StudentData, PsychologistData, logout } = useAuth();
   const [username, setusername] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false); // Estado para controlar la apertura del modal
   useEffect(() => {
     if (StudentData && StudentData.id_user) {
       setusername(StudentData.id_user.username);
@@ -26,26 +32,43 @@ export const SocialNav = () => {
     navigate("http:/localhost:5173/home");
   };
 
+  const toggleModal = () => {
+    setModalOpen(!isModalOpen);
+};
+
   return (
     <>
       <nav className="navBar">
-        <div>
+
+
+      <Tooltip title="Barra lateral"> <div>
+         <MenuIcon onClick={toggleModal} sx={{ color: "#F8E4FC", fontSize: 35 }} />
+          
+        </div>
+        </Tooltip>
+
+        <Tooltip title="Home"> <div>
           <Link to="http://localhost:5173/home">
             <HomeRoundedIcon sx={{ color: "#F8E4FC", fontSize: 35 }} />
           </Link>
         </div>
+        </Tooltip>
 
-        <div>
-          <Link to="http://localhost:5173/profile/posts">
+
+          <Tooltip title="Crear Publicacion"><div>
+          <Link to="http://localhost:5173/profile/user/posts">
             <BorderColorRoundedIcon sx={{ color: "#F8E4FC", fontSize: 35 }} />
           </Link>
         </div>
+        </Tooltip>
 
-        <div>
-          <Link to="http://localhost:5173/profile/">
+        <Tooltip title="Perfil"><div>
+          <Link to="http://localhost:5173/profile/user">
             <AccountBoxIcon sx={{ color: "#F8E4FC", fontSize: 35 }} />
           </Link>
-        </div>
+          </div>
+          </Tooltip>
+        
 
         <div
           style={{
@@ -68,6 +91,10 @@ export const SocialNav = () => {
           )}
         </div>
       </nav>
+
+      <button onClick={toggleModal}>Abrir Menú</button>
+            <SideModal isOpen={isModalOpen} onClose={toggleModal} />
+           
     </>
   );
 };

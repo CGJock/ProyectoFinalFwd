@@ -1,8 +1,8 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, status
-from post.models import Post, PostReplies
+from post.models import Post, PostReplies,FRIENDS
 from user.models import USERS
-from .serializers import PostSerializer, PostResponseSerializer
+from .serializers import PostSerializer, PostResponseSerializer,ListFriendSerializer
 from user.serializers import UserSerializer
 from rest_framework.response import Response
 import requests
@@ -102,3 +102,14 @@ class PostResponseViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    
+class FriendListViewSet(viewsets.ModelViewSet):
+    serializer_class = ListFriendSerializer
+    def list(self, request, id_user):
+        # Recupera todos los amigos de un usuario en especifico
+        friends = FRIENDS.objects.filter(id_user=id_user)
+        serializer = FriendListViewSet(FRIENDS, many=True)
+        serializer = ListFriendSerializer(friends, many=True)
+        return Response({"data": serializer.data}, status=status.HTTP_200_OK)
+    

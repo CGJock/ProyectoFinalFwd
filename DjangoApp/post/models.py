@@ -35,5 +35,17 @@ class PostReplies(models.Model):
     def __str__(self):
         """Devuelve una representación en cadena de la respuesta indicando el usuario y la publicación."""
         return f'Replies by {self.id_user} on {self.post_id.title}'
+    
+    
+class FRIENDS(models.Model):
+    user = models.ForeignKey(USERS, related_name='friends', on_delete=models.CASCADE)
+    friend = models.ForeignKey(USERS, related_name='friend_of', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'friend')
+    
+    def __str__(self):
+        return f"{self.user.username} es amigo de {self.friend.username}"
+ 
 
     

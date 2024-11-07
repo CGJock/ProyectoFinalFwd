@@ -51,7 +51,7 @@ export const PsychologistCases = () => {
         ) : error ? (
           <p>{error}</p> // Muestra el mensaje de error si ocurre un problema
         ) : data.length === 0 ? (
-          <p>No hay casos disponibles para este psicólogo.</p> // Muestra cuando no hay casos
+          <p>No hay casos asignados para este psicólogo.</p> // Muestra cuando no hay casos
         ) : (
           <div>
             <h3>Cantidad de casos actuales: {data.length}</h3>

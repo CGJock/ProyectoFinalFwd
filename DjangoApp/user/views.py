@@ -36,8 +36,8 @@ from django.shortcuts import get_object_or_404
 class RegisterUserViewSet(viewsets.ModelViewSet):
     queryset = USERS.objects.all()  # Define el queryset para evitar el error
     serializer_class = UserSerializer
-    authentication_classes = [IsAuthenticated]
-    permission_classes = [IsAuthenticated]
+    authentication_classes = []
+    permission_classes = [AllowAny]
     
     #funcioin que se encarga de crear una contrasenna para el usuario
     def generate_password(self):

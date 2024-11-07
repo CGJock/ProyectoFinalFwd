@@ -54,7 +54,7 @@ const PostForm = ({ onPostCreated }) => {
     try {
       const subirPost = await PostAmazon(formData, currentAccessToken);
       if (subirPost && subirPost.image_url) {
-        // setImage(subirPost.image_url); // Asigna la URL directamente al estado de imagen
+        setImage(subirPost.image_url); 
         formData.table_data.image = subirPost.image_url; // Asigna la URL a formData
       }
       console.log("Post guardado:", subirPost.image_url);

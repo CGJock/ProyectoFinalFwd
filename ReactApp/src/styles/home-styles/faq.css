@@ -1,5 +1,5 @@
 .faq-container {
-  max-width: 900px; /* Limita el ancho del contenedor */
+  width: 100%;
   margin: 0 auto; /* Centra el contenedor */
   padding: 20px; /* Agrega espacio interno */
   background-color: var(--color-blanco-roto); /* Fondo blanco roto */

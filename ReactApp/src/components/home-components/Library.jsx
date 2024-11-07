@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import '../../styles/library.css';
 
 const Library = () => {
   const [books, setBooks] = useState([]);
   const [bookTitle, setBookTitle] = useState('');
   const [bookUrl, setBookUrl] = useState('');
+
+  useEffect(() => {
+    const savedBooks = localStorage.getItem('books');
+    if (savedBooks) {
+      setBooks(JSON.parse(savedBooks));
+    }
+  }, []);
+  useEffect(() => {
+    localStorage.setItem('books', JSON.stringify(books));
+  }, [books])
 
   const handleAddBook = (e) => {
     e.preventDefault();

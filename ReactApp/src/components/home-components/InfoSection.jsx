@@ -14,7 +14,7 @@ const InfoSection = () => {
       <section className="tools">
         <div className="tool">
           <div className="icon-box">
-            <img src="/path-to-your-icons/icon1.png" alt="Artículos y Herramientas" />
+            <img src="/apoyo-tecnico.gif" alt="Artículos y Herramientas" />
           </div>
           <h3>Artículos y Herramientas</h3>
           <p>
@@ -38,7 +38,7 @@ const InfoSection = () => {
 
         <div className="tool">
           <div className="icon-box">
-            <img src="/path-to-your-icons/icon3.png" alt="Apoyo Personalizado" />
+            <img src="/documento.gif" alt="Apoyo Personalizado" />
           </div>
           <h3>Apoyo Personalizado</h3>
           <p>

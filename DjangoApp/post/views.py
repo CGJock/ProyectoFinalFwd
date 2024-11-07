@@ -10,6 +10,17 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class PostViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet para gestionar las publicaciones. Permite crear, listar, actualizar y eliminar publicaciones.
+
+    - queryset: conjunto de datos de Post.
+    - serializer_class: clase de serializador para publicaciones.
+    - permission_classes: permisos de autenticación necesarios.
+    - authentication_classes: clases de autenticación, utiliza JWT.
+
+    Métodos:
+    - create: permite crear una publicación y subir una imagen a Imgur si se proporciona.
+    """
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
@@ -39,6 +50,18 @@ class PostViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class UserViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet para gestionar los usuarios. Permite crear, listar, actualizar y eliminar usuarios.
+
+    - queryset: conjunto de datos de USERS.
+    - serializer_class: clase de serializador para usuarios.
+    - permission_classes: permisos de autenticación necesarios.
+    - authentication_classes: clases de autenticación, utiliza JWT.
+
+    Métodos:
+    - upload_to_imgur: sube una imagen a Imgur.
+    - create: permite crear un usuario y subir una imagen a Imgur si se proporciona.
+    """
     queryset = USERS.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
@@ -61,6 +84,14 @@ class UserViewSet(viewsets.ModelViewSet):
         return imgur_data['data']['link']
 
     def create(self, request, *args, **kwargs):
+        """
+        Crea un usuario. Si se proporciona un archivo de imagen, se sube a Imgur.
+
+        - request: solicitud HTTP que contiene datos del usuario y, opcionalmente, una imagen.
+        
+        Devuelve:
+        - Response: datos del usuario creado o un error si no se pudo cargar la imagen en Imgur.
+        """
         data = request.data.copy()
         image_file = request.FILES.get('image')
         
@@ -77,6 +108,17 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class PostResponseViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet para gestionar las respuestas a publicaciones.
+
+    - serializer_class: clase de serializador para respuestas a publicaciones.
+    - permission_classes: permisos de autenticación necesarios.
+    - authentication_classes: clases de autenticación, utiliza JWT.
+
+    Métodos:
+    - get_queryset: obtiene las respuestas de un post específico o todas las respuestas.
+    - create: permite crear una respuesta a un post.
+    """
     serializer_class = PostResponseSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
@@ -105,6 +147,15 @@ class PostResponseViewSet(viewsets.ModelViewSet):
     
     
 class FriendListViewSet(viewsets.ModelViewSet):
+    
+    """
+    ViewSet para gestionar la lista de amigos de un usuario.
+
+    - serializer_class: clase de serializador para la lista de amigos.
+    
+    Métodos:
+    - list: obtiene todos los amigos de un usuario específico.
+    """
     serializer_class = ListFriendSerializer
     def list(self, request, id_user):
         # Recupera todos los amigos de un usuario en especifico

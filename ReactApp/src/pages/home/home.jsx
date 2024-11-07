@@ -10,6 +10,7 @@ import FAQ from "../../components/home-components/FAQ";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import VideoCarousel from '../../components/home-components/VideoCarousel'
+import BookDetails from "../../components/home-components/BookDetails";
 
 
 
@@ -25,8 +26,12 @@ export const Home = () => {
       <div>
     
         <VideoCarousel />
+
         
         <InfoSection />
+        <BookDetails />
+        
+
         <FAQ />
         
       

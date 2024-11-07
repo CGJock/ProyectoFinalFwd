@@ -14,7 +14,7 @@ const UsersContainer = () => {
     const [data, setdata] = useState([])
     useEffect(() => {
         getData();//use effect revisa constantemente el estado de la data
-      }, [data,refresh]);
+      }, [refresh]);
     
       async function getData() {
         const apiUrl = "http://localhost:8000/api/student/all-students/"

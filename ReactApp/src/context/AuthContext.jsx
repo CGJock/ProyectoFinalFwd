@@ -130,7 +130,7 @@ const Loggin = async (user_data) => {
           } else if (user.id_rol === 2) {
             const student_data = await user_fetch(apiStudent, id_user);
             setStudentData(student_data);
-            navigate('/profile/student');
+            navigate('/profile/user');
           } else if (user.id_rol === 3) {
             const psychologist_data = await user_fetch(apiPsychologist, id_user);
             setPsychologistData(psychologist_data);

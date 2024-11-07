@@ -44,7 +44,7 @@ const PostForm = ({ onPostCreated }) => {
         {
           id: 1,
           nombre: "monica",
-          key:
+        
         },
       ],
     };
@@ -53,6 +53,7 @@ const PostForm = ({ onPostCreated }) => {
     try {
       const subirPost = await PostAmazon(formData, currentAccessToken);
       if (subirPost && subirPost.image_url) {
+        setImage(subirPost.image_url)
         // Asignar la URL de la imagen subida a formData
         formData.table_data.image = subirPost.image_url;
       }

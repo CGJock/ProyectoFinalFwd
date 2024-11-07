@@ -10,14 +10,13 @@ from rest_framework.permissions import AllowAny
 class GradeViewSet(viewsets.ModelViewSet):
     queryset = GRADE.objects.all()
     serializer_class = GradeSerializer
-    authentication_classes = []
-    permission_classes = [AllowAny]
+    authentication_classes = [IsAuthenticated]
+    
     
 class  GradeViewList(viewsets.ReadOnlyModelViewSet):
     queryset = GRADE.objects.all()
     serializer_class =  GradeSerializer
-    authentication_classes = []
-    permission_classes = [AllowAny]
+    authentication_classes = [IsAuthenticated]
 
 
     

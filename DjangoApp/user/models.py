@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser,UserManager
 from django.db import models
 from django.utils import timezone
 from rol.models import ROL
@@ -29,21 +29,27 @@ class USERS(AbstractUser):
     last_login = models.DateTimeField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     
-
-     
+    objects = UserManager() 
     REQUIRED_FIELDS = []
     
-class Friend(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='friends')
-    friend = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='friend_of')
-    created_at = models.DateTimeField(auto_now_add=True)
+   
+    def create_superuser(self, username, email=None, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
 
-    class Meta:
-        unique_together = ('user', 'friend')
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
 
-    def __str__(self):
-        return f"{self.user.username} es amigo de {self.friend.username}"
- 
+        # Asigna el rol de admin
+        extra_fields['id_rol'] = 1  # Asigna el ID del rol administrator
+
+        user = self.model(username=username, email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
 
 
 

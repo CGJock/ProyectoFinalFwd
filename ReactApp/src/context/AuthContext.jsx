@@ -53,6 +53,7 @@ useEffect(() => {
         console.log("Fetching user ID:", id_user);
         const userData = await user_fetch(apiPost, id_user);
         console.log("User data fetched:", userData);
+        setid_user(userData.id_user)
 
         if (userData.id_rol == 1) {
           setAdminData(userData);
@@ -101,60 +102,44 @@ const Loggin = async (user_data) => {
   try {
     const apiPost = "http://localhost:8000/api/user/login-user/";
     const apiUser = "http://localhost:8000/api/user/user";
-    const apiStudent = "http://localhost:8000/api/student/student-detailed"
-    const apiPsychologist =  "http://localhost:8000/api/psychologist/psychologist-detailed"
-    const response = await login_user(apiPost,user_data);
-    
-    
-    
-    if(response){
-      
+    const apiStudent = "http://localhost:8000/api/student/student-detailed";
+    const apiPsychologist = "http://localhost:8000/api/psychologist/psychologist-detailed";
+
+    const response = await login_user(apiPost, user_data);
+
+    if (response) {
+      // Guardar tokens en cookies
       Cookies.set('refresh_token', response.refresh, { secure: true, sameSite: 'Lax' });
       Cookies.set('access_token', response.access, { secure: true, sameSite: 'Lax' });
-      
+
       const token_raw = Cookies.get('access_token');
       const decodedToken = jwtDecode(token_raw);
-      console.log(decodedToken)
+      console.log(decodedToken);
       setid_user(decodedToken.id_user);
-      const id_user = jwtDecode(response.access).id_user
-      if(id_user){
-        // console.log('entre');
-        const user = await user_fetch(apiUser,id_user);
-        
-        
-        if(user){
-          // console.log('entre againg');
-          
-          if(user.id_rol == 1){
-            setIdRol(user.id_rol)
-            setAdminData(user)//se setean los datos generales de admin para futuro uso
-            // navigate('administration/students');
-            setTimeout(() => {
-              navigate('administration/students');
-            }, 1);
-      } else if(user.id_rol == 2){
-            setIdRol(user.id_rol)
-            const student_data = await user_fetch(apiStudent,id_user)
-            setStudentData(student_data)
-            navigate('/profile/student');
-            setTimeout(() => {
-              navigate('/profile/student');
-            }, 1);
-      } else if(user.id_rol == 3) {
-            setIdRol(user.id_rol)
-            const psychologist_data = await user_fetch(apiPsychologist,id_user)
-            setPsychologistData(psychologist_data)
-            navigate('/profile/psychologist/psychologist-cases');
-            setTimeout(() => {
-              navigate('/profile/psychologist/psychologist-cases');
-            }, 1);
-            
-      } else {
-          console.log('no se encontro el usuario');
-            navigate('/home')
-      }
-        return ;
 
+      const id_user = decodedToken.id_user;
+      if (id_user) {
+        const user = await user_fetch(apiUser, id_user);
+
+        if (user) {
+          setIdRol(user.id_rol);
+
+          if (user.id_rol === 1) {
+            setAdminData(user); // Guardar datos de admin
+            navigate('administration/students');
+          } else if (user.id_rol === 2) {
+            const student_data = await user_fetch(apiStudent, id_user);
+            setStudentData(student_data);
+            navigate('/profile/student');
+          } else if (user.id_rol === 3) {
+            const psychologist_data = await user_fetch(apiPsychologist, id_user);
+            setPsychologistData(psychologist_data);
+            navigate('/profile/psychologist/psychologist-cases');
+          } else {
+            console.log('No se encontró el usuario');
+            navigate('/home');
+          }
+        }
       }
     }
   } catch (error) {
@@ -162,7 +147,6 @@ const Loggin = async (user_data) => {
     throw new Error('Error en la autenticación');
   }
 };
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //funcion para pasar el formato de creacion de fechas a algo mas legible para el user ej:30/junio/2000
 const formatDate = (dateString) => {
@@ -202,14 +186,12 @@ const [id_expedient, setid_expedient] = useState(null)
 
 
 
-return (
-
+  return (
     <AuthContext.Provider value={{ id_user ,Loggin, logout, setTicketData, id_ticket, ticket_user_id,AdminData,StudentData,PsychologistData,IdRol,formatDate,
       setExpedientData,id_expedient,edit_user
      }}>
-
-    <AuthContext.Provider value={{ id_user,Token ,Loggin, logout, setTicketData, id_ticket, ticket_user_id }}>
-      
+      {children}
+    </AuthContext.Provider>
   );
 };
 

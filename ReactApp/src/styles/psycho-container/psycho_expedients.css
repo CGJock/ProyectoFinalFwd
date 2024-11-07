@@ -1,15 +1,23 @@
-
-.general_container{
-    display: flex;
-    margin-left: 20%;
-    margin-top: 10%;
-    
+/* Contenedor principal que centrará el contenido */
+.general_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas en pantallas grandes */
+    gap: 20px; /* Espacio entre los contenedores de los expedientes */
+    margin-top: 20px;
+    margin-left: 10%; /* Centrado horizontal */
+    width: 80%; /* Tamaño máximo del contenedor */
 }
-.contenedor_exped_psy{
+
+/* Cada contenedor de expediente */
+.contenedor_exped_psy {
     border: solid black 2px;
-
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-.exped_header{
+
+/* Estilos para la cabecera del expediente */
+.exped_header {
     text-align: center;
     background-color: black;
     color: white;
@@ -17,11 +25,50 @@
     height: 40px;
     padding-top: 5px;
 }
-.exped_titles,.exped_body{
+
+/* Los títulos y los datos estarán en una cuadrícula (grid) */
+.exped_titles,
+.exped_body {
     display: grid;
-    grid-template-columns: 100px 100px 100px 100px 100px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr; /* Dividir en 5 columnas */
+    text-align: center;
+    gap: 10px; /* Espaciado entre los elementos de la grid */
+}
+
+/* El botón del expediente */
+.exped_button_container {
     text-align: center;
 }
-.exped_button_container{
-    text-align: center;
+.exped_button{
+    background-color: rgb(187, 8, 8);
+}
+.exped_button:hover{
+    color: rgb(187, 8, 8);
+    border: solid rgb(187, 8, 8) 2px;
+}
+
+/* Media Query para pantallas pequeñas */
+@media (max-width: 768px) {
+    .general_container {
+        grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+        gap: 10px;
+        margin-left: 5%; /* Reducir margen izquierdo */
+    }
+    
+    .contenedor_exped_psy {
+        width: 100%; /* Asegurarse que el contenedor ocupe todo el ancho disponible */
+    }
+    
+    .exped_titles,
+    .exped_body {
+        grid-template-columns: 1fr 1fr 1fr; /* 3 columnas en pantallas pequeñas */
+    }
+}
+
+/* Media Query para pantallas más grandes (entre 768px y 1200px) */
+@media (min-width: 768px) and (max-width: 1200px) {
+    .general_container {
+        grid-template-columns: 1fr 1fr; /* Dos columnas en pantallas medianas */
+        gap: 15px; /* Más espacio entre los contenedores */
+    }
 }

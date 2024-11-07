@@ -1,8 +1,13 @@
 
-
+import { useAuth } from '../context/AuthContext';
 import {Protected_routes_admin} from './proteced_routes';
 import { Protected_routes_psychologyst } from './proteced_routes';
 import { Protected_routes_student } from './proteced_routes';
+<<<<<<< HEAD
+import { Navigate } from 'react-router-dom';
+=======
+>>>>>>> 24047515c78a93722f0e3ce5393bfde5f34963e5
+import { NotFoundPage } from '../pages/not found/NotFoundPage';
 
 
 import  {Routes, Route, useParams} from "react-router-dom";
@@ -37,18 +42,22 @@ import ProfileStudent from '../components/student-components/ProfileStudent';
 import { TicketComponent } from '../components/student-components/TicketComponent';
 
 
-const Rutas = () => {
 
+const Rutas = () => {
+  
+  const {id_user } = useParams()
   const {id_expedient} = useParams()
 
   return (
     <>
      
       <Routes>
+        <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />
         <Route path="/library" element={<Library />} />
         <Route path="/FAQ" element={<FAQ />} />
         <Route path="/AboutMe" element={<AboutMe />} />
+        <Route path="*" element={<NotFoundPage />} />
         <Route path="/login" element={<Login />} />
         
 {/* 
@@ -63,8 +72,9 @@ const Rutas = () => {
         }>
           <Route path='psychologist/psychologist-cases' element={<PsychologistCases />} />{/*profile/psychologis/psychoogist-cases*/}
           <Route path='psychologist/all-expedients/:id_expedient' element={<BasicTabs /> } />{/*psychologist/all-expedients/:id_expedient*/}
-          <Route path="/profile" element={<ProfilePsycho />} />
-          <Route path='/profile/posts' element={<PostList />} />{/*profile/student/posts*/}
+          {/* <Route path="/profile/psychologist" element={<ProfilePsycho/>} /> */}
+          
+          
         </Route>
 
 
@@ -75,9 +85,9 @@ const Rutas = () => {
             <Student />
           </Protected_routes_student>
         } >
-          <Route path="profile" element={<ProfileStudent />} />{/*profile/student*/}
+          <Route path="/profile/user" element={<ProfileStudent />} />{/*profile/student*/}
           <Route path='student/create-ticket' element={<TicketComponent />} />{/*profile/student/create-ticket*/}
-          <Route path='/profile/posts' element={<PostList />} />{/*profile/student/posts*/}
+          <Route path='/profile/user/posts' element={<PostList/>} />{/*profile/student/posts*/}
         </Route>
 
         <Route

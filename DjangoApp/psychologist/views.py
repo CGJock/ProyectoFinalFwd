@@ -2,9 +2,7 @@ from .models import PSYCHOLOGIST,PACIENTFILES,EXPEDIENT,SESSION
 from rest_framework import viewsets
 from .serializers import PsychologistSerializer,PacientFilesSerializer,ExpedientSerializer,SessionSerializer,ExpedientSimpleSerializer,SessionExpedientSerializer
 from rest_framework.response import Response
-from datetime import timedelta
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
+
 from rest_framework import status
 from rest_framework import viewsets
 from student.models import STUDENT
@@ -23,18 +21,14 @@ from django.urls import reverse_lazy
 # add the imports to the top
 from django.views.generic.edit import CreateView
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.permissions import AllowAny  
+ 
 from twilio.rest import Client
 from django.conf import settings
 import os
 from dotenv import load_dotenv
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import AllowAny 
-from datetime import datetime, timedelta
-from google.oauth2.credentials import Credentials
-from google.auth.transport.requests import Request
-from googleapiclient.errors import HttpError
+
 from datetime import timedelta
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -42,24 +36,19 @@ from rest_framework.response import Response
 from rest_framework import status
 import time
 import requests
-from datetime import timedelta
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
+
 from googleapiclient.errors import HttpError
 from rest_framework.response import Response
 from rest_framework import status
 import uuid  # Para generar un requestId único
 from django.http import JsonResponse
-from datetime import timedelta
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
+
 import urllib.parse
 from django.core.mail import send_mail
 from django.utils import timezone
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
+
 from .models import SESSION
 from .serializers import SessionExpedientSerializer
 
@@ -78,6 +67,7 @@ load_dotenv()
 class RegisterPsychologistViewSet(viewsets.ModelViewSet):
     queryset = PSYCHOLOGIST.objects.all()
     serializer_class = PsychologistSerializer
+    authentication_classes = [IsAuthenticated]
     
     def create(self, request, *args, **kwargs):
         psychologist_serializer  = PsychologistSerializer(data=request.data)
@@ -161,8 +151,8 @@ from datetime import datetime
 class RegisterSession(viewsets.ModelViewSet):
     queryset = SESSION.objects.all()
     serializer_class = SessionExpedientSerializer
-    permission_classes = [AllowAny]
     authentication_classes = []
+    permission_classes = []
 
     def create(self, request, *args, **kwargs):
         session_date_str = request.data.get('session_date')
@@ -182,8 +172,7 @@ class RegisterSession(viewsets.ModelViewSet):
         # Guarda la sesión en la base de datos
         session = SESSION(
             session_date=session_date,
-            id_expedient=expedient  # Asigna la instancia del expediente aquí
-            # Añade otros campos que necesites aquí
+            id_expedient=expedient 
         )
         session.save()
 
@@ -233,13 +222,10 @@ def google_callback(request):
         
 
 
-    
-
 class CreateTicket(viewsets.ModelViewSet):
     serializer_class = TicketSerializer
     queryset = TICKET.objects.all()
-    authentication_classes = []
-    permission_classes = [AllowAny]
+    authentication_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         id_user = request.data.get('id_user')
@@ -267,9 +253,7 @@ class CreateTicket(viewsets.ModelViewSet):
 class UpdateTicket(viewsets.ModelViewSet):
     serializer_class = TicketSerializer
     queryset = TICKET.objects.all()
-    authentication_classes = []
-    permission_classes = [AllowAny]
-        
+    authentication_classes = [IsAuthenticated]
     def partial_update(self, request, *args, **kwargs):
         id_ticket = kwargs.get('id_ticket')#se obtiene el id desde la ruta
         # Busca el ticket que se desea actualizar
@@ -298,8 +282,7 @@ class UpdateTicket(viewsets.ModelViewSet):
 class TicketList(viewsets.ReadOnlyModelViewSet):
     queryset = TICKET.objects.all()
     serializer_class = TicketSerializer
-    authentication_classes = []
-    permission_classes = [AllowAny]
+    authentication_classes = [IsAuthenticated]
     
 from rest_framework.parsers import MultiPartParser   
 class FileUploadView(APIView):
@@ -348,9 +331,8 @@ class FileUploadView(APIView):
 class CreateCase(viewsets.ModelViewSet):
     queryset = EXPEDIENT.objects.all()
     serializer_class = ExpedientSimpleSerializer
-    authentication_classes = []
+    authentication_classes = [IsAuthenticated]
     permission_classes = [AllowAny]
-
     def create(self, request, *args, **kwargs):
         id_user = request.data.get('id_user')
 
@@ -386,14 +368,14 @@ class CreateCase(viewsets.ModelViewSet):
 class CasesList(viewsets.ReadOnlyModelViewSet):
     queryset = EXPEDIENT.objects.all()
     serializer_class = ExpedientSerializer
-    authentication_classes = []
-    permission_classes = [AllowAny]   
+    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]  
         
     
 #listado de todos los casos asignados a un psicologo    
 class PsychologistCases(APIView):
-    permission_classes = []
-    permission_classes = [AllowAny]
+    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     def get(self,request,id_psychologist):
         try:
             #se hace la busqueda del psicolgo
@@ -420,8 +402,8 @@ class PychologistsList(viewsets.ReadOnlyModelViewSet):
 
 #vista para obtener un expediente especifico
 class  ExpedientDetail(viewsets.ViewSet):
-    authentication_classes = []
-    permission_classes = [AllowAny]
+    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     def retrieve(self,request,id_expedient):
         try:
@@ -435,8 +417,8 @@ class  ExpedientDetail(viewsets.ViewSet):
         
 #vista que unifica psicologo y user
 class PsychologistUser(viewsets.ViewSet):
-    authentication_classes = []
-    permission_classes = [AllowAny]   
+    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated] 
         
     def list(self, request, ):
         # Recupera todos los psicologos con sus usuarios relacionados
@@ -445,8 +427,8 @@ class PsychologistUser(viewsets.ViewSet):
         return Response(serializer.data)
     
 class  PsychologistUserDetail(viewsets.ViewSet):
-    authentication_classes = []
-    permission_classes = [AllowAny]
+    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     def retrieve(self,request,id_user):
         try:

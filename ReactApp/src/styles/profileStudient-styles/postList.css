@@ -1,28 +1,98 @@
-/* Estilos para cada publicación */
-.post {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 15px;
-    margin: 10px 0;
-    transition: transform 0.2s;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-  }
-
-  .post:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  }
-
 /* Contenedor principal para las publicaciones */
-.post-list {
-  max-width: 800px;
-  margin: 0 auto;
+.posts-container {
+  display: flex;
+  flex-direction: column; /* Apilar el formulario y la lista de posts */
+  justify-content: flex-start;
   padding: 20px;
   background-color: #f9f9f9;
+<<<<<<< HEAD
+  min-height: 100vh;
+  align-items: center; /* Centra horizontalmente */
+=======
+  justify-content: center;
+  display: flex;
+>>>>>>> 24047515c78a93722f0e3ce5393bfde5f34963e5
 }
+
+/* Estilo para el contenedor del formulario */
+.post-form-container {
+  width: 100%;
+  max-width: 800px; /* Limita el ancho */
+  margin-bottom: 20px; /* Espacio entre el formulario y la lista */
+}
+
+/* Contenedor para la lista de publicaciones */
+.post-list {
+  display: flex;
+  flex-direction: column; /* Asegura que las publicaciones se apilen verticalmente */
+  align-items: center; /* Alinea las publicaciones al centro */
+  width: 100%;
+  max-width: 800px; /* Límite de ancho para la lista de publicaciones */
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* Permite hacer scroll si hay muchas publicaciones */
+  max-height: 80vh; /* Limita la altura para evitar desbordamiento */
+}
+
+/* Título de la lista de publicaciones */
+.post-list h3 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+/* Estilo para cada publicación */
+.post {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px 0;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.post:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
 /* Estilos para el estado de carga y error */
 .loading,
 .error {
   text-align: center;
   color: #666;
 }
+
+<<<<<<< HEAD
+/* Estilo para la imagen del post */
+.post img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  margin-top: 10px;
+}
+
+/* Estilo para el botón de eliminar */
+button {
+  background-color: #74089f;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  align-self: flex-start;
+}
+
+button:hover {
+  background-color: #f7f7f7;
+  color: #74089f;
+  border: 1px solid #74089f;
+}
+=======
+>>>>>>> 24047515c78a93722f0e3ce5393bfde5f34963e5

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import PostForm from "./PostForm";
 import Cookies from "js-cookie";
 import { deletePost } from "../../services/callimgur.js";
-import "../../styles/profileStudient-styles/PostList.css"
+import "../../styles/profileStudient-styles/PostList.css";
+
 const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +15,6 @@ const PostList = () => {
       setLoading(true);
       setError(null);
 
-      // Obtén el token de las cookies
       const token = Cookies.get("access_token");
 
       const response = await fetch("http://localhost:8000/api/post/posts/", {
@@ -29,8 +29,6 @@ const PostList = () => {
       }
 
       const data = await response.json();
-      console.log(data); // Verifica que 'image_url' esté presente
-
       setPosts(data);
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -39,12 +37,12 @@ const PostList = () => {
       setLoading(false);
     }
   };
+
   // Función para eliminar una publicación
   const handleDelete = async (postId) => {
     try {
       await deletePost(postId); // Llama a deletePost para eliminar la publicación
-      // Actualiza la lista de publicaciones después de eliminar
-      fetchPosts();
+      fetchPosts(); // Actualiza la lista de publicaciones después de eliminar
     } catch (error) {
       console.error("Error eliminando la publicación:", error);
     }
@@ -55,38 +53,40 @@ const PostList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="posts-container">
+      {/* Formulario para crear un post */}
+      <div className="post-form-container">
+        <PostForm onPostCreated={fetchPosts} />
+      </div>
+
+      {/* Lista de publicaciones */}
+      <h3>Publicaciones</h3>
       <div className="post-list">
-      <h1>Publicaciones</h1>
-      <PostForm onPostCreated={fetchPosts} />{" "}
-      {/* Pasamos la función de actualización */}
-      {/* Mostrar el estado de carga */}
-      {loading ? (
-        <p className="loading">Cargando publicaciones...</p>
-      ) : error ? (
-        <p className="error">{error}</p>
-      ) : posts.length > 0 ? (
-        posts.map((post, index) => (
-          <div key={`${post.post_id || post.id}-${index}`} className="post">
-            {" "}
-            {/* Key único combinando post_id e índice */}
-            <h2>{post.title}</h2>
-            <p>{post.description}</p>
-            {post.image_url && (
-              <img
-                src={post.image_url}
-                alt="Post"
-                style={{ width: "100%", maxWidth: "500px", height: "auto" }}
-              />
-            )}
-            <p>Comentarios: {post.comment_count}</p>
-            <button onClick={() => handleDelete(post.id)}>Eliminar</button>
-          </div>
-        ))
-      ) : (
-        <p>No hay publicaciones disponibles</p>
-      )}
-    </div>
+       
+        {loading ? (
+          <p className="loading">Cargando publicaciones...</p>
+        ) : error ? (
+          <p className="error">{error}</p>
+        ) : posts.length > 0 ? (
+          posts.map((post, index) => (
+            <div key={`${post.post_id || post.id}-${index}`} className="post">
+              <div><h2>{post.title}</h2></div>
+              <div><p>{post.description}</p>
+              {post.image_url && (
+                <img
+                  src={post.image_url}
+                  alt="Post"
+                  style={{ width: "100%", maxWidth: "500px", height: "auto" }}
+                />
+              )}</div>
+              <p>Comentarios: {post.comment_count}</p>
+              <button onClick={() => handleDelete(post.id)}>Eliminar</button>
+            </div>
+          ))
+        ) : (
+          <p>No hay publicaciones disponibles</p>
+        )}
+      </div>
     </div>
   );
 };

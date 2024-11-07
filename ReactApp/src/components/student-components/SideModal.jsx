@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "../../styles/SideModal.css";
 
+
 /**
  * Componente que representa un menú lateral (modal) que se puede abrir y cerrar.
  * 

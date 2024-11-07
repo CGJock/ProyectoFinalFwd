@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
 import Cookies from "js-cookie";
 import { isTokenExpired, refreshAccessToken } from "../../services/token.js";
-import { PostAmazon } from "../../services/callimgur.js";
+import { PostAmazon } from "../../services/callImgur.js";
 import '../../styles/post-styles.css/post-form.css'
 
 const PostForm = ({ onPostCreated }) => {
@@ -53,9 +53,11 @@ const PostForm = ({ onPostCreated }) => {
     try {
       const subirPost = await PostAmazon(formData, currentAccessToken);
       if (subirPost && subirPost.image_url) {
+
         setImage(subirPost.image_url)
         // Asignar la URL de la imagen subida a formData
         formData.table_data.image = subirPost.image_url;
+
       }
       console.log("Post guardado:", subirPost.image_url);
 

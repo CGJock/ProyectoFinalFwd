@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { deletePost } from "../../services/callimgur.js";
 import "../../styles/profileStudient-styles/PostList.css";
 
+
 const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);

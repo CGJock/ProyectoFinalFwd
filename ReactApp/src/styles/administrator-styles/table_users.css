@@ -1,9 +1,17 @@
 .table-users-container {
   width: 1400px;
-  max-width: 1600px; /* Set a maximum width for larger screens */
-  margin: 0 auto; /* Center the table container */
+  max-width: 1600px; /* Set a maximum width for larger screens */ 
   
 }
+
+
+
+
+.table-row {
+  margin-top: 2
+}
+
+
 
 .container-header {
   display: flex;

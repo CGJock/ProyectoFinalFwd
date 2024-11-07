@@ -1,7 +1,15 @@
 import React from 'react'
+import { SocialNav } from '../../components/utilities/SocialNav'
+import { Outlet } from 'react-router-dom'
 
 export const ProfilePsychologist = () => {
   return (
-    <div className="profile">student</div>
+    <>
+    <SocialNav />
+    
+    <main>
+      <Outlet/>
+    </main>
+    </>
   )
 }

@@ -2,7 +2,8 @@ import { GET,PUT } from "../../../services/crud";
 import { useState, useEffect } from "react";
 import { ExpedienteModal } from "./CreateExpedient";
 import { useAuth } from "../../../context/AuthContext";
-import '../../../styles/administrator-styles/tickets_views.css'
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import '../../../styles/administrator-styles/tickets_container.css'
 
 export const TicketsView = () => {
   
@@ -35,20 +36,21 @@ export const TicketsView = () => {
       <>
         <div className="table-tickets-container">
           {/* Cabecera de la tabla */}
-          <div className="container-header">
-            <div className="table-id-user">ID Ticket</div>
-            <div className="table-dni">ID user</div>
-            <div className="table-cell">ESTADO </div>
+          <div className="ticket-container-header">
+            <div className="ticket-table-id-user">ID Ticket</div>
+            <div className="ticket-table-dni">ID user</div>
+            <div className="ticket-table-cell">Estado </div>
+            <div className="ticket-table-cell">Procesar Ticket</div>
           </div>
 
           {/* Cuerpo de la tabla */}
-          <div className="table-body">
+          <div className="table-ticket-body">
             {data.map((e) => (
-              <div className="table-row" key={e.id_ticket}>
-                <div className="row-">{e.id_ticket}</div>
-                <div className="row-">{e.id_user}</div>
-                <div className="row-">{e.state}</div>
-                <div> <button onClick={() => handleShow(e.id_ticket,e.id_user)}> Procesar Ticket</button></div>
+              <div className="ticket-row-header" key={e.id_ticket}>
+                <div className="ticket-row">{e.id_ticket}</div>
+                <div className="ticket-row">{e.id_user}</div>
+                <div className="ticket-row">{e.state}</div>
+                <div className="ticket-row"> <button className='upload-ticket-btn' onClick={() => handleShow(e.id_ticket,e.id_user)}> Procesar Ticket</button></div>
               </div>
             ))}
           </div>

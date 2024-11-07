@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PostForm from "./PostForm";
 import Cookies from "js-cookie";
-import { deletePost } from "../../services/callimgur.js";
-import "../../styles/profileStudient-styles/PostList.css"
+import { deletePost } from "../../services/callImgur.js";
+import "../../styles/profileStudient-styles/postList.css";
 const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -55,38 +55,38 @@ const PostList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="posts-container">
       <div className="post-list">
-      <h1>Publicaciones</h1>
-      <PostForm onPostCreated={fetchPosts} />{" "}
-      {/* Pasamos la función de actualización */}
-      {/* Mostrar el estado de carga */}
-      {loading ? (
-        <p className="loading">Cargando publicaciones...</p>
-      ) : error ? (
-        <p className="error">{error}</p>
-      ) : posts.length > 0 ? (
-        posts.map((post, index) => (
-          <div key={`${post.post_id || post.id}-${index}`} className="post">
-            {" "}
-            {/* Key único combinando post_id e índice */}
-            <h2>{post.title}</h2>
-            <p>{post.description}</p>
-            {post.image_url && (
-              <img
-                src={post.image_url}
-                alt="Post"
-                style={{ width: "100%", maxWidth: "500px", height: "auto" }}
-              />
-            )}
-            <p>Comentarios: {post.comment_count}</p>
-            <button onClick={() => handleDelete(post.id)}>Eliminar</button>
-          </div>
-        ))
-      ) : (
-        <p>No hay publicaciones disponibles</p>
-      )}
-    </div>
+        <PostForm onPostCreated={fetchPosts} />
+        <h3>Publicaciones</h3>
+        {/* Pasamos la función de actualización */}
+        {/* Mostrar el estado de carga */}
+        {loading ? (
+          <p className="loading">Cargando publicaciones...</p>
+        ) : error ? (
+          <p className="error">{error}</p>
+        ) : posts.length > 0 ? (
+          posts.map((post, index) => (
+            <div key={`${post.post_id || post.id}-${index}`} className="post">
+              {" "}
+              {/* Key único combinando post_id e índice */}
+              <h2>{post.title}</h2>
+              <p>{post.description}</p>
+              {post.image_url && (
+                <img
+                  src={post.image_url}
+                  alt="Post"
+                  style={{ width: "100%", maxWidth: "500px", height: "auto" }}
+                />
+              )}
+              <p>Comentarios: {post.comment_count}</p>
+              <button onClick={() => handleDelete(post.id)}>Eliminar</button>
+            </div>
+          ))
+        ) : (
+          <p>No hay publicaciones disponibles</p>
+        )}
+      </div>
     </div>
   );
 };

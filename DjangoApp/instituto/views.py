@@ -11,15 +11,12 @@ from rest_framework.permissions import AllowAny
 class InstitutionViewSet(viewsets.ModelViewSet):
     queryset = INSTITUTIONS.objects.all()
     serializer_class = InstitutoSerializer
-    authentication_classes = []
-    permission_classes = [AllowAny]
+    authentication_classes = [IsAuthenticated]
     
 class InstitutionsList(viewsets.ReadOnlyModelViewSet):
     queryset = INSTITUTIONS.objects.all()
     serializer_class = InstitutoSerializer
-    authentication_classes = []
-    permission_classes = [AllowAny]
-    
+    authentication_classes = [IsAuthenticated]
     
 
 

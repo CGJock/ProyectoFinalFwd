@@ -18,7 +18,9 @@ Including another URLconf
 from django.urls import path, include
 
 from rest_framework.routers import DefaultRouter
-from user.views import UserListView,RegisterUserViewSet,LoginUserViewSet,UserViewSet,DeleteUser,LogOutUserView,ResetPasswordView,CustomTokenRefreshView
+from user.views import UserListView,RegisterUserViewSet,LoginUserViewSet,UserViewSet,LogOutUserView,ResetPasswordView,CustomTokenRefreshView
+from user.views import EditUserView,DeleteUserView
+
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -33,9 +35,10 @@ router_user.register(prefix='users', viewset=UserListView, basename='user-list')
 router_user.register(prefix='user-register', viewset=RegisterUserViewSet, basename='user-register')
 # router_user.register(prefix='user-login', viewset=LoginUserViewSet, basename='user-login')
 # router_user.register(prefix='user', viewset=UserViewSet, basename='user')
-router_user.register(prefix='delete-user', viewset=DeleteUser,basename='delete-user')
 router_user.register(prefix='logout-user', viewset=LogOutUserView, basename='logout-user')
 router_user.register(prefix='reset-password',viewset=ResetPasswordView, basename="update-password")
+router_user.register(prefix='edit-user', viewset=EditUserView,basename='edit-user')
+router_user.register(prefix='delete-user', viewset=DeleteUserView,basename='delete-user')
 
 
 urlpatterns = [
@@ -45,8 +48,6 @@ urlpatterns = [
         path('user/<int:id_user>/', UserViewSet.as_view(), name='user-detail'),
         path('api/user/<int:id_user>/friends/posts/', FriendPostsView.as_view(), name='amigos_posts')
 
-
-        
 
 ]
 

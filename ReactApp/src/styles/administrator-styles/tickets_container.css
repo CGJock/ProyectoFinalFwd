@@ -1,0 +1,37 @@
+.table-tickets-container{
+    width: 100%;
+    margin: 5px auto;
+    font-family: Arial, sans-serif;
+    border-collapse: collapse;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+}
+.ticket-container-header{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+    background-color: #750a88;
+    color: #fff;
+    padding-top: 15px;
+    height: 60px;
+    font-weight: bold;
+    align-items: center;
+    padding-bottom: 10px;
+}
+.ticket-row-header{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+    padding: 10px 0;
+    transition: background-color 0.2s ease;
+    color: #333;
+    border-bottom: 1px solid #ccc;
+    align-items: center;
+}
+.upload-ticket-btn{
+    background-color: #751fc5;
+    margin-bottom: 10px;
+}
+
+
+

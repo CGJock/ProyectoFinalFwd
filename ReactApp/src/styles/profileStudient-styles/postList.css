@@ -19,6 +19,8 @@
   margin: 0 auto;
   padding: 20px;
   background-color: #f9f9f9;
+  justify-content: center;
+  display: flex;
 }
 /* Estilos para el estado de carga y error */
 .loading,
@@ -26,3 +28,4 @@
   text-align: center;
   color: #666;
 }
+

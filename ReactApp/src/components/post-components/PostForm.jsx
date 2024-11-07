@@ -5,17 +5,15 @@ import { isTokenExpired, refreshAccessToken } from "../../services/token.js";
 import { PostAmazon } from "../../services/callImgur.js";
 import '../../styles/post-styles.css/post-form.css'
 
-
-
 const PostForm = ({ onPostCreated }) => {
-  //obtener los datos del usuario desde el contexto
-  const { id_user} = useAuth()
+  // Obtener los datos del usuario desde el contexto
+  const { id_user } = useAuth();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
-  const access_token = Cookies.get('access_token')
+  const access_token = Cookies.get('access_token');
   
-
+  // Función para manejar el envío del formulario
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -39,31 +37,35 @@ const PostForm = ({ onPostCreated }) => {
         title,
         description,
         id_user,
-        image, // Comienza la imagen como null
+        image, // La imagen que será subida
         replies: [],
       },
       files_info: [
         {
           id: 1,
           nombre: "monica",
+        
         },
       ],
     };
     console.log("formData antes de subir imagen:", formData);
-    // Solo se debe establecer la URL de la imagen después de que se suba a S3
+
     try {
       const subirPost = await PostAmazon(formData, currentAccessToken);
       if (subirPost && subirPost.image_url) {
-        setImage(subirPost.image_url); 
-        formData.table_data.image = subirPost.image_url; // Asigna la URL a formData
+
+        setImage(subirPost.image_url)
+        // Asignar la URL de la imagen subida a formData
+        formData.table_data.image = subirPost.image_url;
+
       }
       console.log("Post guardado:", subirPost.image_url);
 
       if (onPostCreated) {
         onPostCreated(); // Llama a onPostCreated para refrescar la lista de publicaciones
       }
-      //borrar los datos del formulario
 
+      // Limpiar el formulario
       setTitle("");
       setDescription("");
       setImage(null);
@@ -72,35 +74,47 @@ const PostForm = ({ onPostCreated }) => {
     }
   };
 
-  return (
-    <>
-    <form className="post_form" onSubmit={handleSubmit}>
-      <label><h5>Crea una publicacion</h5></label>
-      <input className="input_post"
-        type="text"
-        placeholder="Título"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-      />
-      <div className="contenedor_post_btn">
-      <textarea className="text_area_post"
-        placeholder="Que piensas?..."
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        required
-      />
-      <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-      <button className="btn-post" type="submit">Submit</button>
-      </div>
-    </form>
-    
-    <div>
-      
-    </div>
-    </>
+  // Función para mostrar la imagen seleccionada
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(URL.createObjectURL(file)); // Mostrar la imagen seleccionada
+    }
+  };
 
-    
+  return (
+    <div className="post-form-container">
+      <form className="post_form" onSubmit={handleSubmit}>
+        <h5>Crea una publicación</h5>
+        
+        <input
+          className="input_post"
+          type="text"
+          placeholder="Título"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+        
+        <textarea
+          className="text_area_post"
+          placeholder="¿Qué piensas?"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        />
+        
+        <input type="file" onChange={handleImageChange} />
+        
+        {image && (
+          <div className="image-preview">
+            <img src={image} alt="Vista previa" className="imgPost" />
+          </div>
+        )}
+
+        <button className="btn-post" type="submit">Submit</button>
+      </form>
+    </div>
   );
 };
 

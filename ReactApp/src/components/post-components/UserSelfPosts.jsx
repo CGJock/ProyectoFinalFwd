@@ -4,8 +4,8 @@ import PostList from './PostList'
 
 export const UserSelfPosts = () => {
   return (
-    <div>
-        <PostForm />
+    <div style={{display:"flex",flexDirection:"column"}}>
+       
         <PostList />
     </div>
   )

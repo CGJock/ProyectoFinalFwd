@@ -27,8 +27,8 @@ class RegisterStudentViewSet(viewsets.ModelViewSet):
       
 
 class StudentsUser(viewsets.ViewSet):
-    authentication_classes = []
-    permission_classes = [AllowAny]
+    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     def list(self, request, ):
         # Recupera todos los estudiantes con sus usuarios relacionados
         students = STUDENT.objects.filter(id_user__is_active=True).select_related('id_user', 'id_institution', 'id_grade').all()
@@ -37,8 +37,8 @@ class StudentsUser(viewsets.ViewSet):
     
     
 class  StudentUserDetail(viewsets.ViewSet):
-    authentication_classes = []
-    permission_classes = [AllowAny]
+    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     def retrieve(self,request,id_user):
         try:

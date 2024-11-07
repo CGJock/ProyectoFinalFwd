@@ -5,8 +5,13 @@
   justify-content: flex-start;
   padding: 20px;
   background-color: #f9f9f9;
+<<<<<<< HEAD
   min-height: 100vh;
   align-items: center; /* Centra horizontalmente */
+=======
+  justify-content: center;
+  display: flex;
+>>>>>>> 24047515c78a93722f0e3ce5393bfde5f34963e5
 }
 
 /* Estilo para el contenedor del formulario */
@@ -62,6 +67,7 @@
   color: #666;
 }
 
+<<<<<<< HEAD
 /* Estilo para la imagen del post */
 .post img {
   width: 100%;
@@ -88,3 +94,5 @@ button:hover {
   color: #74089f;
   border: 1px solid #74089f;
 }
+=======
+>>>>>>> 24047515c78a93722f0e3ce5393bfde5f34963e5

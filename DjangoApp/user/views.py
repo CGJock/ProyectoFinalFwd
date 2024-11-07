@@ -36,8 +36,8 @@ from django.shortcuts import get_object_or_404
 class RegisterUserViewSet(viewsets.ModelViewSet):
     queryset = USERS.objects.all()  # Define el queryset para evitar el error
     serializer_class = UserSerializer
-    permission_classes = [AllowAny]
-    authentication_classes = []
+    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     #funcioin que se encarga de crear una contrasenna para el usuario
     def generate_password(self):
@@ -125,8 +125,8 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
 class EditUserView(viewsets.ModelViewSet):
     queryset = USERS.objects.all()
     serializer_class = UserSerializer
-    permission_classes = []
-    authentication_classes = []
+    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
     def partial_update(self, request, *args, **kwargs):
         # Obtener el usuario basado en el id_user
@@ -162,8 +162,8 @@ class EditUserView(viewsets.ModelViewSet):
 class DeleteUserView(viewsets.ModelViewSet):
     queryset = USERS.objects.all()
     serializer_class = DeleteUserSerializer
-    permission_classes = []
-    authentication_classes = []
+    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     #DESTROY para eliminar
     def partial_update(self, request, *args, **kwargs):
        # Obtener el usuario basado en el id_user
@@ -194,9 +194,8 @@ class UserListView(viewsets.ReadOnlyModelViewSet):
     queryset = USERS.objects.all()
     serializer_class = UserSerializer
     
-    permission_classes = [AllowAny] 
-    authentication_classes = []
-    
+    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import CustomTokenObtainPairSerializer
@@ -242,8 +241,8 @@ class LogOutUserView(viewsets.ViewSet):
             
 #para autentificar al usuario(admin)      
 class UserViewSet(APIView):
-    permission_classes = []
-    permission_classes = [AllowAny]
+    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     def get(self,request,id_user):
         try:
             user = USERS.objects.get(id_user=id_user)

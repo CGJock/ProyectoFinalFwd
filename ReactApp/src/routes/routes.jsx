@@ -3,7 +3,10 @@ import { useAuth } from '../context/AuthContext';
 import {Protected_routes_admin} from './proteced_routes';
 import { Protected_routes_psychologyst } from './proteced_routes';
 import { Protected_routes_student } from './proteced_routes';
+<<<<<<< HEAD
 import { Navigate } from 'react-router-dom';
+=======
+>>>>>>> 24047515c78a93722f0e3ce5393bfde5f34963e5
 import { NotFoundPage } from '../pages/not found/NotFoundPage';
 
 

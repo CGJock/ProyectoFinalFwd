@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Contenedor principal para centrar el formulario */
 .post-form-container {
     display: flex;
@@ -27,12 +28,26 @@
   
   /* Estilo para los inputs de texto */
   .input_post, .text_area_post {
+=======
+.post_form {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 500px;
+    margin: 20px auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.input_post {
+>>>>>>> 24047515c78a93722f0e3ce5393bfde5f34963e5
     width: 100%;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+<<<<<<< HEAD
   }
   
   /* Estilo para el área de texto */
@@ -47,6 +62,30 @@
   
   /* Estilo para el botón de envío */
   .btn-post {
+=======
+}
+
+.text_area_post {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    min-height: 100px; /* Altura mínima para el área de texto */
+}
+
+input[type="file"] {
+    margin: 10px 0;
+}
+.contenedor_post_btn{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.btn-post {
+>>>>>>> 24047515c78a93722f0e3ce5393bfde5f34963e5
     background-color: #74089f;
     color: white;
     padding: 10px 15px;
@@ -55,6 +94,7 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+<<<<<<< HEAD
     width: 60%;
     margin: 0 auto;
   }
@@ -78,3 +118,20 @@
     border-radius: 4px;
   }
   
+=======
+    width: 60%; /* Botón de ancho completo */
+    align-self: center;
+}
+
+.btn-post:hover {
+    background-color: #f7f7f7; /* Color al pasar el mouse */
+    color: #74089f;
+    border: 1px solid  #74089f;
+
+}
+
+.btn-post:disabled {
+    background-color: #cccccc; /* Color para el botón deshabilitado */
+    cursor: not-allowed; /* Cambia el cursor */
+}
+>>>>>>> 24047515c78a93722f0e3ce5393bfde5f34963e5

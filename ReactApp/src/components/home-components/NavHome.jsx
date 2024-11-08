@@ -3,13 +3,14 @@ import '../../styles/home-styles/nav-home.css';
 import { useState } from "react";
 import { Modal, Button, Alert } from "react-bootstrap";
 import { sendEmail } from '../../services/email.js';
+import { useAuth } from "../../context/AuthContext.jsx";
 
 const NavHome = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [showAlert, setShowAlert] = useState(false); 
     const [formData, setFormData] = useState({ name: '', email: '', message: '' }); // Estado para los datos del formulario
-
+    const { StudentData, PsychologistData } = useAuth(); // Incluye PsychologistData si es parte del contexto
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -30,14 +31,13 @@ const NavHome = () => {
 
         try {
             const emailData = {
-                from_name: formData.name, // Corresponde al campo "from_name" del template en Email.js
-                from_email: formData.email, // Corresponde al campo "from_email" del template en Email.js
-                message: formData.message, // Corresponde al campo "message" del template en Email.js
+                from_name: formData.name,
+                from_email: formData.email,
+                message: formData.message,
             };
 
             const result = await sendEmail(emailData);
             if (result) {
-                setEmailSent(true); // El email se envió correctamente
                 setFormData({ name: '', email: '', message: '' }); // Limpiar el formulario
                 setShowAlert(true); // Mostrar la alerta
                 setTimeout(() => setShowAlert(false), 5000); // Ocultar la alerta después de 5 segundos
@@ -58,9 +58,12 @@ const NavHome = () => {
                     </button>
                     <ul className={`navHome-menu ${isOpen ? 'open' : ''}`}>
                         <li><Link to="/home" className="home_link">Home</Link></li>
-                        <li><Link to="/AboutMe" className="about_link">About</Link></li>
+                        <li><Link to="/AboutUs" className="about_link">About</Link></li>
                         <li><Link to="/FAQ" className="questions_link">FAQ</Link></li>
-                        <li><Link to="/Profile/create-post" className="profileStudient">Perfil</Link></li>
+                        {/* Renderizar solo si StudentData o PsychologistData no son null */}
+                        {(StudentData || PsychologistData) && (
+                            <li><Link to="/Profile/user" className="profileStudient">Perfil</Link></li>
+                        )}
                         <li><Link to="/login" className="home_link">Logueate</Link></li>
                         <li>
                             <Button variant="outline-secondary" onClick={handleShow} className="contact_link">

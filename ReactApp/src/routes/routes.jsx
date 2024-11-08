@@ -11,7 +11,9 @@ import  {Routes, Route, useParams} from "react-router-dom";
 import Home from '../pages/home/home'
 import Administration from '../pages/admin/administration';
 import Register from '../components/Admin-components/admin-ui/Register';
-import FAQ from '../components/home-components/FAQ';
+import { Librarypage } from '../pages/library/librarypage';
+
+import { FaqPage } from '../pages/FAQ/FaqPage';
 import PostList from '../components/post-components/PostList';
 
 import Login from '../pages/login/login'
@@ -21,22 +23,21 @@ import { ExpedientContainer } from '../components/Admin-components/admin-ui/Expe
 import { ProfilePsychologist } from '../pages/psychologist/Profile-psychologist';
 import { InstitutionsContainer } from '../components/Admin-components/admin-ui/InstitutionsContainer';
 
+
+
+
+import { PsychologistCases } from '../components/psychologist-components/PsychoExpedientes';
 import { TicketsView } from '../components/Admin-components/admin-ui/TicketsView';
 import {PsychoContainer} from '../components/Admin-components/admin-ui/PsychoContainer';
-
-
-import ProfilePsycho from "../components/psychologist-components/PhofilePsycho";
-import { PsychologistCases } from '../components/psychologist-components/PsychoExpedientes';
-// import AboutMe from '../components/home-components/AboutMe';
-import AboutMe from '../components/home-components/AboutMe';
 import BasicTabs from '../components/psychologist-components/PyschologistExpAssigned';
 
 
-import Library from '../components/home-components/Library';
+
 
 import { Student } from '../pages/student/student';
 import ProfileStudent from '../components/student-components/ProfileStudent';
 import { TicketComponent } from '../components/student-components/TicketComponent';
+import { AboutUs } from '../pages/aboutme/aboutus';
 
 
 
@@ -49,16 +50,16 @@ const Rutas = () => {
     <>
      
       <Routes>
+        
         <Route path="/" element={<Navigate to="/home" />} />
+        
         <Route path="/home" element={<Home />} />
-        <Route path="/library" element={<Library />} />
-        <Route path="/FAQ" element={<FAQ />} />
-        <Route path="/AboutMe" element={<AboutMe />} />
+        <Route path="/library" element={<Librarypage />} />
+        <Route path="/FAQ" element={<FaqPage/>} />
+        <Route path="/AboutUs" element={<AboutUs />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/login" element={<Login />} />
         
-{/* 
-        <Route path="/post-list" component={<PostList />} /> */}
 
          <Route
         path='/profile'

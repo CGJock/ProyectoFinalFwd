@@ -1,6 +1,6 @@
 services:
   react:
-    container_name: react_app
+    container_name: frontend-hubsuperacion
     image: react_app
     build:
       context: ./reactApp

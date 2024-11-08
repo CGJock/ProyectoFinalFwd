@@ -83,8 +83,9 @@ const Rutas = () => {
           </Protected_routes_student>
         } >
           <Route path="/profile/user" element={<ProfileStudent />} />{/*profile/student*/}
-          <Route path='student/create-ticket' element={<TicketComponent />} />{/*profile/student/create-ticket*/}
+          <Route path='/profile/student/create-ticket' element={<TicketComponent />} />{/*profile/student/create-ticket*/}
           <Route path='/profile/user/posts' element={<PostList/>} />{/*profile/student/posts*/}
+          
         </Route>
 
         <Route

@@ -229,8 +229,8 @@ class CreateTicket(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         id_user = request.data.get('id_user')
-        access_token = request.data.get('access_token')
-        refresh_token = request.data.get('refresh_token')
+        # access_token = request.data.get('access_token')
+        # refresh_token = request.data.get('refresh_token')
         try:
             user = USERS.objects.get(id_user=id_user)
         except USERS.DoesNotExist:
@@ -238,8 +238,8 @@ class CreateTicket(viewsets.ModelViewSet):
 
         ticket_data = {
             "id_user": user.id_user,
-            "access_token" : access_token,
-            "refresht_token" : refresh_token,
+            # "access_token" : access_token,
+            # "refresht_token" : refresh_token,
 
             }
         ticket_serializer = self.get_serializer(data=ticket_data)

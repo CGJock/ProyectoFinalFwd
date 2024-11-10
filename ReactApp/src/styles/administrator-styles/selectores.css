@@ -1,11 +1,11 @@
 custom-select {
     position: relative;
-    width: 200px; /* Ancho del selector */
+    width: 250px; /* Ancho del selector */
 }
 
 /* Estilos para el select */
 select {
-    width: 50%;
+    width: 100%;
     background: linear-gradient(135deg, #0f0f0f 0%, #060009 100%);
  
     color: white;
@@ -109,7 +109,6 @@ option {
 }
 .selector_rol_condicioinado{
     display: flex;
-    border: solid purple;
     align-items: center;
     
 }

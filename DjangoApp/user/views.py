@@ -200,8 +200,7 @@ from .serializers import CustomTokenObtainPairSerializer
 
 class LoginUserViewSet(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer 
-    permission_classes = [AllowAny]
-    authentication_classes = []
+   
     
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)

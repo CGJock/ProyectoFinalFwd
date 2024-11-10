@@ -49,7 +49,7 @@ export const PsychoContainer = () => {
           <div className="psycho-row-">{psychologists.id_user.name}</div>
           <div className="psycho-row-">{psychologists.id_user.first_name} </div>
           <div className="psycho-row-">{psychologists.id_user.last_name}</div>
-          <div className="psycho-row-small">{psychologists.sex ? "M" : "F"}</div>
+          <div className="psycho-row-small">{psychologists.id_user.sex ? (psychologists.id_user.sex === "masculino" ? "M"  : "F") : "N/A"}</div>
           <div className="psycho-row-small">{psychologists.pacient_count}</div>
           <div className="psycho-row-">{psychologists.license_code}</div>
           <div className="psycho-row-small">{psychologists.availability ? "Disponible" : "Ocupado"}</div>

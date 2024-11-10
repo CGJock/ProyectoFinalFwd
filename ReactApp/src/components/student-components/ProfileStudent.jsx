@@ -131,7 +131,7 @@ const ProfileStudent = () => {
 
                     <UserSelfPosts />
 
-                    <FriendsList />
+                    
             </div>
         </div>
     );

@@ -59,7 +59,7 @@ const UsersContainer = () => {
               <div className="students-row-">{student.id_user.name}</div>
               <div className="students-row-">{student.id_user.first_name} </div>
               <div className="students-row-">{student.id_user.last_name}</div>
-              <div className="students-row-">{student.id_user.sex ? "masculino" : "femenino"}</div>
+              <div className="students-row-">{student.id_user.sex ? (student.id_user.sex === "masculino" ? "M"  : "F") : "N/A"}</div>
               <div className="students-row-">{student.id_institution.institution_name}</div>
               <div className="students-row-">{student.id_grade.grade_name}</div>
               <div className="students-row-small">{student.scholarship ? "Sí" : "No"}</div>

@@ -11,11 +11,12 @@ export const TicketsView = () => {
   // const handleShow = () => setShow(!Show)
   const [data, setdata] = useState([]);
   const {setTicketData} =  useAuth()
+  let refresh = 0
 
   
   useEffect(() => {
     getData(); 
-  }, []);
+  }, [refresh]);
 
   async function getData() {
     const apiUrl = "http://localhost:8000/api/psychologist/list-tickets/";

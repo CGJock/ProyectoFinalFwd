@@ -7,11 +7,13 @@ import '../../styles/post-styles.css/post-form.css'
 
 const PostForm = ({ onPostCreated }) => {
   // Obtener los datos del usuario desde el contexto
-  const { id_user } = useAuth();
+  const { id_user,UserData } = useAuth();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const access_token = Cookies.get('access_token');
+
+  console.log(UserData)
   
   // Función para manejar el envío del formulario
   const handleSubmit = async (event) => {
@@ -96,7 +98,7 @@ const PostForm = ({ onPostCreated }) => {
         
         <textarea
           className="text_area_post"
-          placeholder="¿Qué piensas?"
+          placeholder={`¿Algo para compartir,${UserData.username} ?`}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required

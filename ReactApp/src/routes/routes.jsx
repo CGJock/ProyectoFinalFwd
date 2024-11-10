@@ -38,6 +38,7 @@ import { Student } from '../pages/student/student';
 import ProfileStudent from '../components/student-components/ProfileStudent';
 import { TicketComponent } from '../components/student-components/TicketComponent';
 import { AboutUs } from '../pages/aboutme/aboutus';
+import FriendsList from '../components/post-components/FriendsList';
 
 
 
@@ -85,7 +86,8 @@ const Rutas = () => {
         } >
           <Route path="/profile/user" element={<ProfileStudent />} />{/*profile/student*/}
           <Route path='/profile/student/create-ticket' element={<TicketComponent />} />{/*profile/student/create-ticket*/}
-          <Route path='/profile/user/posts' element={<PostList/>} />{/*profile/student/posts*/}
+          <Route path='/profile/user/posts' element={<PostList />} />{/*profile/student/posts*/}
+          <Route path='/profile/user/add-user' element={<FriendsList />} />
           
         </Route>
 

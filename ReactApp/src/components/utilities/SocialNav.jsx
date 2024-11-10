@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AccountBoxIcon from "@mui/icons-material/AccountBox"; //profileicon
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded"; //homeicon
 import BorderColorRoundedIcon from "@mui/icons-material/BorderColorRounded"; //potsicon
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import MenuIcon from '@mui/icons-material/Menu';
 import SideModal from "../student-components/SideModal";
@@ -62,6 +63,14 @@ export const SocialNav = () => {
         </div>
         </Tooltip>
 
+        <Tooltip title="Seguir Usuario">
+          <div>
+            <Link to="http://localhost:5173/profile/user/add-user">
+                <PersonAddIcon sx={{ color: "#F8E4FC", fontSize: 35 }} />
+            </Link>
+          </div>
+        </Tooltip>
+
         <Tooltip title="Perfil"><div>
           <Link to="http://localhost:5173/profile/user">
             <AccountBoxIcon sx={{ color: "#F8E4FC", fontSize: 35 }} />
@@ -79,7 +88,7 @@ export const SocialNav = () => {
         >
           {username ? (
             <>
-              <div className="welcomeMessage">Bienvenido, {username}</div>
+              <div className="welcomeMessage">{username}</div>
               <Link to="http://localhost:5173/home" onClick={handleLogout}>
                 <LogoutRoundedIcon sx={{ color: "#F8E4FC", fontSize: 35 }} />
               </Link>

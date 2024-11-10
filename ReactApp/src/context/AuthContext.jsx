@@ -21,6 +21,8 @@ const AuthContext = createContext();
   const [AdminData, setAdminData] = useState(null)
   const [StudentData, setStudentData] = useState(null)
   const [PsychologistData, setPsychologistData] = useState(null)
+
+  const [UserData,setUserData] = useState(null)
   const navigate = useNavigate()
 
  
@@ -54,6 +56,7 @@ useEffect(() => {
         const userData = await user_fetch(apiPost, id_user);
         console.log("User data fetched:", userData);
         setid_user(userData.id_user)
+        setUserData(userData)
 
         if (userData.id_rol == 1) {
           setAdminData(userData);
@@ -188,7 +191,7 @@ const [id_expedient, setid_expedient] = useState(null)
 
   return (
     <AuthContext.Provider value={{ id_user ,Loggin, logout, setTicketData, id_ticket, ticket_user_id,AdminData,StudentData,PsychologistData,IdRol,formatDate,
-      setExpedientData,id_expedient,edit_user
+      setExpedientData,id_expedient,edit_user,UserData
      }}>
       {children}
     </AuthContext.Provider>

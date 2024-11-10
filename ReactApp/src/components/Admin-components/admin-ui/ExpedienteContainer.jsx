@@ -18,6 +18,7 @@ export const ExpedientContainer = () => {
       const apiUrl = "http://localhost:8000/api/psychologist/cases-list/";
       const datos = await get_institutes_data(apiUrl);
       setData(datos);
+      console.log(datos)
     } catch (error) {
       console.error("Error al obtener datos:", error);
     } finally {
@@ -47,8 +48,8 @@ export const ExpedientContainer = () => {
           data.map((expedient) => (
             <div className="expedient-table-row" key={expedient.id_expedient}>
               <div className="expedient-row-">{expedient.id_expedient}</div>
-              <div style={{color:"red"}} className="expedient-row-">Restringido</div>
-              <div className="expedient-row-">{expedient.id_psychologist.id_psychologist}</div>
+              <div style={{color:"red"}} className="expedient-row-">Anonimo</div>
+              <div className="expedient-row-">Dr: {expedient.id_psychologist.id_user.name} {expedient.id_psychologist.id_user.first_name}</div>
               <div className="expedient-row-">{expedient.state}</div>
               <div className="expedient-row-">{formatDate(expedient.created_at)}</div>
               <div className="expedient-row-"><MoreHorizIcon /></div>

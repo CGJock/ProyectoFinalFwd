@@ -16,6 +16,7 @@ from rest_framework.permissions import AllowAny
 class RegisterStudentViewSet(viewsets.ModelViewSet):
     queryset = STUDENT.objects.all()
     serializer_class = StudentSerializer
+    authentication_classes = [IsAuthenticated]
      
     def create(self, request, *args, **kwargs):
         student_serializer = StudentSerializer(data=request.data)
@@ -27,7 +28,6 @@ class RegisterStudentViewSet(viewsets.ModelViewSet):
       
 
 class StudentsUser(viewsets.ViewSet):
-    authentication_classes = [IsAuthenticated]
     permission_classes = [IsAuthenticated]
     def list(self, request, ):
         # Recupera todos los estudiantes con sus usuarios relacionados
@@ -37,8 +37,8 @@ class StudentsUser(viewsets.ViewSet):
     
     
 class  StudentUserDetail(viewsets.ViewSet):
-    authentication_classes = [IsAuthenticated]
     permission_classes = [IsAuthenticated]
+    
     
     def retrieve(self,request,id_user):
         try:

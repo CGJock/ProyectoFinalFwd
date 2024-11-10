@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 export const POST = async(apiPost,user_data) => {
     try {
         const csrftoken = Cookies.get('csrftoken');
-        const access_token =  Cookies.get('acces_token')
+        const access_token =  Cookies.get('access_token')
         
         // Make the POST request to register the user
         const response = await fetch(apiPost, {

@@ -36,7 +36,7 @@ from django.shortcuts import get_object_or_404
 class RegisterUserViewSet(viewsets.ModelViewSet):
     queryset = USERS.objects.all()  # Define el queryset para evitar el error
     serializer_class = UserSerializer
-    authentication_classes = []
+
     permission_classes = [AllowAny]
     
     #funcioin que se encarga de crear una contrasenna para el usuario
@@ -125,8 +125,8 @@ class RegisterUserViewSet(viewsets.ModelViewSet):
 class EditUserView(viewsets.ModelViewSet):
     queryset = USERS.objects.all()
     serializer_class = UserSerializer
-    authentication_classes = [IsAuthenticated]
-    permission_classes = [IsAuthenticated]
+    permission_classes =[IsAuthenticated]
+    
     
     def partial_update(self, request, *args, **kwargs):
         # Obtener el usuario basado en el id_user
@@ -163,7 +163,7 @@ class DeleteUserView(viewsets.ModelViewSet):
     queryset = USERS.objects.all()
     serializer_class = DeleteUserSerializer
     authentication_classes = [IsAuthenticated]
-    permission_classes = [IsAuthenticated]
+    
     #DESTROY para eliminar
     def partial_update(self, request, *args, **kwargs):
        # Obtener el usuario basado en el id_user
@@ -193,17 +193,15 @@ class DeleteUserView(viewsets.ModelViewSet):
 class UserListView(viewsets.ReadOnlyModelViewSet):
     queryset = USERS.objects.all()
     serializer_class = UserSerializer
-    
-    authentication_classes = [IsAuthenticated]
     permission_classes = [IsAuthenticated]
+    
     
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import CustomTokenObtainPairSerializer
 
 class LoginUserViewSet(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer 
-    permission_classes = [AllowAny]
-    authentication_classes = []
+   
     
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
@@ -241,8 +239,9 @@ class LogOutUserView(viewsets.ViewSet):
             
 #para autentificar al usuario(admin)      
 class UserViewSet(APIView):
-    authentication_classes = [IsAuthenticated]
+    
     permission_classes = [IsAuthenticated]
+    
     def get(self,request,id_user):
         try:
             user = USERS.objects.get(id_user=id_user)
@@ -254,31 +253,31 @@ class UserViewSet(APIView):
        
        
            
-class ResetPasswordView(viewsets.ModelViewSet):
-        queryset = USERS.objects.all() 
-        serializer_class = ResetPasswordSerializer
+# class ResetPasswordView(viewsets.ModelViewSet):
+#         queryset = USERS.objects.all() 
+#         serializer_class = ResetPasswordSerializer
         
-        def update(self,request,pk=None):
-            token = request.COOKIES.get('jwt')
-            if not token:
-                raise AuthenticationFailed("No Autentificado")
-            try:
-                payload = jwt.decode(token, 'secret', algorithm='HS256')
+#         def update(self,request,pk=None):
+#             token = request.COOKIES.get('jwt')
+#             if not token:
+#                 raise AuthenticationFailed("No Autentificado")
+#             try:
+#                 payload = jwt.decode(token, 'secret', algorithm='HS256')
            
-            except jwt.ExpiredSignatureError :
-                raise AuthenticationFailed("Autentificacion Expirada")
+#             except jwt.ExpiredSignatureError :
+#                 raise AuthenticationFailed("Autentificacion Expirada")
         
-            user =  USERS.objects.filter(pk=payload['id_user']).first()
-            if not user:
-                raise  AuthenticationFailed("no autentificado")
+#             user =  USERS.objects.filter(pk=payload['id_user']).first()
+#             if not user:
+#                 raise  AuthenticationFailed("no autentificado")
 
-            serializer = ResetPasswordSerializer(user, data=request.data)
-            if serializer.is_valid():
-                user.password = make_password(serializer.validated_data['new_password'])
-                user.save()
-                return Response({"message": "Contraseña actualizada correctamente."})
+#             serializer = ResetPasswordSerializer(user, data=request.data)
+#             if serializer.is_valid():
+#                 user.password = make_password(serializer.validated_data['new_password'])
+#                 user.save()
+#                 return Response({"message": "Contraseña actualizada correctamente."})
         
-            return Response(serializer.errors, status=400)
+#             return Response(serializer.errors, status=400)
             
             
             

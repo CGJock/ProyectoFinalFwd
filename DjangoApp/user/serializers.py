@@ -78,6 +78,7 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ['post_id', 'title', 'description', 'image_url', 'creation_date']
+
 #serializer para traer los post de los usuarios amigos 
 class UserFriendPostsSerializer(serializers.ModelSerializer):
     friends_posts = serializers.SerializerMethodField()

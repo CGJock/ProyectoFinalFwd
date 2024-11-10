@@ -13,8 +13,11 @@ services:
     #     - CHOKIDAR_USEPOLLING=true
 
   react:
-    container_name: react_app
-    image: react-react_app:prod
+
+
+    container_name: frontend-hubsuperacion
+    image: react_app
+
     build:
       context: ./reactApp
       target: production

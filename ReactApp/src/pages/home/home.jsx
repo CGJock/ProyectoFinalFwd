@@ -29,10 +29,14 @@ export const Home = () => {
 
         
         <InfoSection />
+
         <BookDetails />
         
 
         <FAQ />
+
+        
+
         
       
 

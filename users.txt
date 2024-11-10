@@ -1,0 +1,39 @@
+ADMINISTRADOR:
+    password: P}5#f]o+n$t'`@cF6d
+    email: jcardenas@fwdcostarica.com
+    username: Jocksan
+
+ESTUDIANTES:
+    username: Estudiante1
+    password: ~GJg3v\\m6H%r6>VI-pR=c<8cUR
+    email: carlos.martinez@gmail.com
+///////////////////////////////////////////////////
+    username: Estudiante2
+    password: eT21:o?WP2-K>#)_'C[Dxt
+    email: ana.lopez@gmail.com
+//////////////////////////////////////////////////
+    password: Lt7pP2>/Oz$j;Xz]cw
+    email: juan.hernandez@gmail.com
+    username: Estudiante3
+/////////////////////////////////////////////////
+    password: \\A)_,6}ZR$hr6WG^&
+    username: Esudiante4
+    email: maria.sanchez@gmail.com
+////////////////////////////////////////////////
+    password: nV[8X)lgIhUwA<
+    username: Estudiante5
+    email: jose.gonzalez@gmail.com
+
+PSICOLOGOS:
+    password: !&5Pv{}EI:-Q"
+    username: Psicologa1
+    email: lucia.torres@gmail.com
+//////////////////////////////////////////////////
+    password: '3VX|ae*|PA|R7}<q#ax00O-{j'srAVC
+    username: Psicologo2
+    email: carlos.soto@gmail.com
+/////////////////////////////////////////////////
+    password: u[ZT7+Y.M~{3wcnyEsoD<V/\\9sSS)4-H
+    username: Psicologa3
+    email: sofia.rojas@gmail.com
+

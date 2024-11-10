@@ -3,12 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import AccountBoxIcon from "@mui/icons-material/AccountBox"; //profileicon
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded"; //homeicon
 import BorderColorRoundedIcon from "@mui/icons-material/BorderColorRounded"; //potsicon
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
-<<<<<<< HEAD
 import MenuIcon from '@mui/icons-material/Menu';
 import SideModal from "../student-components/SideModal";
-=======
->>>>>>> 24047515c78a93722f0e3ce5393bfde5f34963e5
 import Tooltip from '@mui/material/Tooltip';
 import "../../styles/utilities-styles/nav-bar.css";
 import { useAuth } from "../../context/AuthContext";
@@ -42,7 +40,6 @@ export const SocialNav = () => {
   return (
     <>
       <nav className="navBar">
-<<<<<<< HEAD
 
 
       <Tooltip title="Barra lateral"> <div>
@@ -51,8 +48,6 @@ export const SocialNav = () => {
         </div>
         </Tooltip>
 
-=======
->>>>>>> 24047515c78a93722f0e3ce5393bfde5f34963e5
         <Tooltip title="Home"> <div>
           <Link to="http://localhost:5173/home">
             <HomeRoundedIcon sx={{ color: "#F8E4FC", fontSize: 35 }} />
@@ -66,6 +61,14 @@ export const SocialNav = () => {
             <BorderColorRoundedIcon sx={{ color: "#F8E4FC", fontSize: 35 }} />
           </Link>
         </div>
+        </Tooltip>
+
+        <Tooltip title="Seguir Usuario">
+          <div>
+            <Link to="http://localhost:5173/profile/user/add-user">
+                <PersonAddIcon sx={{ color: "#F8E4FC", fontSize: 35 }} />
+            </Link>
+          </div>
         </Tooltip>
 
         <Tooltip title="Perfil"><div>
@@ -85,7 +88,7 @@ export const SocialNav = () => {
         >
           {username ? (
             <>
-              <div className="welcomeMessage">Bienvenido, {username}</div>
+              <div className="welcomeMessage">{username}</div>
               <Link to="http://localhost:5173/home" onClick={handleLogout}>
                 <LogoutRoundedIcon sx={{ color: "#F8E4FC", fontSize: 35 }} />
               </Link>
@@ -98,7 +101,7 @@ export const SocialNav = () => {
         </div>
       </nav>
 
-      <button onClick={toggleModal}>Abrir Menú</button>
+      
             <SideModal isOpen={isModalOpen} onClose={toggleModal} />
            
     </>

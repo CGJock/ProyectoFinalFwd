@@ -8,9 +8,10 @@ from rest_framework.permissions import IsAuthenticated
 class RolViewSet(viewsets.ModelViewSet):
     queryset = ROL.objects.all()
     serializer_class = RolSerializer
-    authentication_classes = [IsAuthenticated]
     permission_classes = [IsAuthenticated]
+    
 class RolViewList(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = ROL.objects.all()
     serializer_class = RolSerializer
     

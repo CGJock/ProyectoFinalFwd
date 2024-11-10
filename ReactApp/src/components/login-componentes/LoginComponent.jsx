@@ -13,7 +13,6 @@ import icon1 from '../../assets/img/icon1.jpg';
 import icon2 from '../../assets/img/icon2.jpg';
 
 export const LoginComponent = () => {
-<<<<<<< HEAD
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -27,12 +26,6 @@ export const LoginComponent = () => {
 
   // Lista de imágenes
   const images = [icon1, icon2];
-=======
-  const [username, setUsername] = useState(''); // Use camelCase for state variables
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const { Loggin } = useAuth(); // Ensure Loggin is defined in your AuthContext
->>>>>>> 24047515c78a93722f0e3ce5393bfde5f34963e5
 
   const handleLogin = async () => {
     if (!username || !password) {
@@ -47,7 +40,6 @@ export const LoginComponent = () => {
     const user_data = { username, password };
 
     try {
-<<<<<<< HEAD
       await Loggin(user_data);
       setSuccessMessage("Login exitoso. Bienvenido!");
       setErrorMessage('');
@@ -55,13 +47,6 @@ export const LoginComponent = () => {
       console.error("Error en el login:", error.message);
       setErrorMessage("Usuario o contrasenna incorrectoss");
       setSuccessMessage('');
-=======
-      await Loggin(user_data); // Call the Loggin function
-      console.log("Usuario autenticado con éxito");
-    } catch (error) {
-      console.error("Error en el login:", error.message);
-      setErrorMessage("Error en las credenciales de usuario");
->>>>>>> 24047515c78a93722f0e3ce5393bfde5f34963e5
     }
   };
 
@@ -75,7 +60,6 @@ export const LoginComponent = () => {
   };
 
   return (
-<<<<<<< HEAD
     <div className="login-container">
       <div className={classNames("login-form", { "form-left": true })}>
         <h1>Login</h1>
@@ -131,26 +115,6 @@ export const LoginComponent = () => {
           </IconButton>
         </div>
       </div>
-=======
-    <div className="contenedor_login">
-      <h1>Login</h1>
-      <label>Correo Electrónico</label>
-      <input
-        type="text"
-        placeholder="Ingrese correo electrónico"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)} // Match state setter name
-      />
-      <label>Contraseña</label>
-      <input
-        type="password"
-        placeholder="Ingrese contraseña"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)} // Match state setter name
-      />
-      <button onClick={handleLogin}>Login</button>
-      {errorMessage && <p>{errorMessage}</p>}
->>>>>>> 24047515c78a93722f0e3ce5393bfde5f34963e5
     </div>
   );
 };

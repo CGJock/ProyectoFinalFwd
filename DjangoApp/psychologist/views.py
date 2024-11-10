@@ -225,12 +225,12 @@ def google_callback(request):
 class CreateTicket(viewsets.ModelViewSet):
     serializer_class = TicketSerializer
     queryset = TICKET.objects.all()
-    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         id_user = request.data.get('id_user')
-        access_token = request.data.get('access_token')
-        refresh_token = request.data.get('refresh_token')
+        # access_token = request.data.get('access_token')
+        # refresh_token = request.data.get('refresh_token')
         try:
             user = USERS.objects.get(id_user=id_user)
         except USERS.DoesNotExist:
@@ -238,8 +238,8 @@ class CreateTicket(viewsets.ModelViewSet):
 
         ticket_data = {
             "id_user": user.id_user,
-            "access_token" : access_token,
-            "refresht_token" : refresh_token,
+            # "access_token" : access_token,
+            # "refresht_token" : refresh_token,
 
             }
         ticket_serializer = self.get_serializer(data=ticket_data)
@@ -253,7 +253,7 @@ class CreateTicket(viewsets.ModelViewSet):
 class UpdateTicket(viewsets.ModelViewSet):
     serializer_class = TicketSerializer
     queryset = TICKET.objects.all()
-    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     def partial_update(self, request, *args, **kwargs):
         id_ticket = kwargs.get('id_ticket')#se obtiene el id desde la ruta
         # Busca el ticket que se desea actualizar
@@ -282,13 +282,13 @@ class UpdateTicket(viewsets.ModelViewSet):
 class TicketList(viewsets.ReadOnlyModelViewSet):
     queryset = TICKET.objects.all()
     serializer_class = TicketSerializer
-    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     
 from rest_framework.parsers import MultiPartParser   
 class FileUploadView(APIView):
     parser_class = (MultiPartParser,)
     permission_classes = [AllowAny]
-    authentication_classes = []
+    authentication_classes = [IsAuthenticated]
 
     def post(self, request, id_expedient, format=None):
         
@@ -331,8 +331,8 @@ class FileUploadView(APIView):
 class CreateCase(viewsets.ModelViewSet):
     queryset = EXPEDIENT.objects.all()
     serializer_class = ExpedientSimpleSerializer
-    authentication_classes = [IsAuthenticated]
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
+    
     def create(self, request, *args, **kwargs):
         id_user = request.data.get('id_user')
 
@@ -368,13 +368,11 @@ class CreateCase(viewsets.ModelViewSet):
 class CasesList(viewsets.ReadOnlyModelViewSet):
     queryset = EXPEDIENT.objects.all()
     serializer_class = ExpedientSerializer
-    authentication_classes = [IsAuthenticated]
     permission_classes = [IsAuthenticated]  
         
     
 #listado de todos los casos asignados a un psicologo    
 class PsychologistCases(APIView):
-    authentication_classes = [IsAuthenticated]
     permission_classes = [IsAuthenticated]
     def get(self,request,id_psychologist):
         try:
@@ -402,7 +400,7 @@ class PychologistsList(viewsets.ReadOnlyModelViewSet):
 
 #vista para obtener un expediente especifico
 class  ExpedientDetail(viewsets.ViewSet):
-    authentication_classes = [IsAuthenticated]
+    
     permission_classes = [IsAuthenticated]
     
     def retrieve(self,request,id_expedient):
@@ -417,7 +415,7 @@ class  ExpedientDetail(viewsets.ViewSet):
         
 #vista que unifica psicologo y user
 class PsychologistUser(viewsets.ViewSet):
-    authentication_classes = [IsAuthenticated]
+    
     permission_classes = [IsAuthenticated] 
         
     def list(self, request, ):
@@ -427,7 +425,7 @@ class PsychologistUser(viewsets.ViewSet):
         return Response(serializer.data)
     
 class  PsychologistUserDetail(viewsets.ViewSet):
-    authentication_classes = [IsAuthenticated]
+    
     permission_classes = [IsAuthenticated]
     
     def retrieve(self,request,id_user):
@@ -447,8 +445,7 @@ class  PsychologistUserDetail(viewsets.ViewSet):
 class TicketList(viewsets.ReadOnlyModelViewSet):
     queryset = TICKET.objects.all()
     serializer_class = TicketSerializer
-    authentication_classes = []
-    permission_classes = [AllowAny]   
+    permission_classes = [IsAuthenticated]
         
     
     

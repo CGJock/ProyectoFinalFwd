@@ -1,0 +1,14 @@
+.friend-list-container{
+    display: flex;
+    flex-direction: row;
+    column-gap: 25px;
+}
+.friend-card{
+    
+}
+.card-username{
+    text-align: center;
+}
+.card-img{
+    text-align: center;
+}

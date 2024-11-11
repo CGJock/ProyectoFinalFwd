@@ -39,6 +39,7 @@ import ProfileStudent from '../components/student-components/ProfileStudent';
 import { TicketComponent } from '../components/student-components/TicketComponent';
 import { AboutUs } from '../pages/aboutme/aboutus';
 import FriendsList from '../components/post-components/FriendsList';
+import { UsersToFollow } from '../components/post-components/UsersToFollow';
 
 
 

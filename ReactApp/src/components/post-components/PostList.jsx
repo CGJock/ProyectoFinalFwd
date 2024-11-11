@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PostForm from "./PostForm";
 import Cookies from "js-cookie";
+import { UsersToFollow } from "./UsersToFollow.jsx";
 import { deletePost } from "../../services/callimgur.js";
 import "../../styles/profileStudient-styles/PostList.css";
 
@@ -86,6 +87,9 @@ const PostList = () => {
         ) : (
           <p>No hay publicaciones disponibles</p>
         )}
+      </div>
+      <div>
+        <UsersToFollow />
       </div>
     </div>
   );

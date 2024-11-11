@@ -50,8 +50,8 @@ export const TicketsView = () => {
               <div className="ticket-row-header" key={e.id_ticket}>
                 <div className="ticket-row">{e.id_ticket}</div>
                 <div className="ticket-row">{e.id_user}</div>
-                <div className="ticket-row">{e.state}</div>
-                <div className="ticket-row"> <button className='upload-ticket-btn' onClick={() => handleShow(e.id_ticket,e.id_user)}> Procesar Ticket</button></div>
+                <div style={e.state == 'accepted' ? {color:'green'} : e.state == 'rejected' ? {color:"red"} :{} } className="ticket-row">{e.state}</div>
+                <div className="ticket-row"> <button  style={e.state !== 'pending' ? { opacity: 0.5, cursor: 'El ticket ya se proceso',  } : {}} disabled={e.state !== 'pending'} className='upload-ticket-btn' onClick={() => handleShow(e.id_ticket,e.id_user)}> Procesar Ticket</button></div>
               </div>
             ))}
           </div>

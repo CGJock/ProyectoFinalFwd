@@ -7,6 +7,11 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = USERS # Especifica el modelo que se está serializando
         fields = ['id_user', 'email', 'first_name', 'last_name']  # Campos que se incluirán en la representación del serializador
+        
+class UserFriendsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = USERS
+        fields = ['id_user','username']
 
 # Serializador para el modelo Post
 class PostSerializer(serializers.ModelSerializer):
@@ -28,3 +33,10 @@ class ListFriendSerializer(serializers.ModelSerializer):
     class Meta:
         model = FRIENDS
         fields = ["user","friend"]
+        
+class FriendsToFollowSerializer(serializers.ModelSerializer):
+    id_user = UserSerializer()
+    friend = ListFriendSerializer()
+    class Meta:
+        model = USERS
+        fields = ['id_user','username']

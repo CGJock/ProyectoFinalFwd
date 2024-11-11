@@ -1,14 +1,20 @@
 .friend-list-container{
     display: flex;
+    margin-top: 50px;
     flex-direction: row;
     column-gap: 25px;
 }
+.title{
+    text-align: center;
+    margin-top: 55px;
+}
 .friend-card{
-    
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .card-username{
     text-align: center;
 }
 .card-img{
     text-align: center;
+    padding-top: 25px;
 }

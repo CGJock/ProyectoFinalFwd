@@ -49,7 +49,7 @@ export const UsersToFollow = () => {
 
   return (
     <>
-      <h3>Estos Usuarios te podrían interesar</h3>
+      <div className='title'><h3>Estos Usuarios te podrían interesar</h3></div>
       <div className="friend-list-container">
         {Data.length > 0 ? (
           Data.map((user) => (

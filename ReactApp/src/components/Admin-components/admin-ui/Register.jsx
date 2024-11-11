@@ -46,52 +46,54 @@ const Register = () => {
     
   
     async function handle_form(event) {
-      event.preventDefault()
-
-      const apiPost = 'http://localhost:8000/api/user/user-register/' //api para el registro de usuarios basicos
-      const apiUrl = 'http://localhost:8000/api/user/users/'          //api para ver todos los usuarios
+      event.preventDefault();
+    
+      const apiPost = 'http://localhost:8000/api/user/user-register/';
+      const apiUrl = 'http://localhost:8000/api/user/users/';
       
-      
+      let user_data = {};
+    
+      // Validación para estudiantes (id_rol == 2)
+      if (id_rol == 2) {
+        user_data = {
+          id_rol, dni_number, sex, username, birth_date, name, first_name, last_name, email, phone_number, id_institution, id_grade, government_subsidy, scholarship
+        };
         
-        if (id_rol == 2){
-          user_data = {
-            id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,id_institution,id_grade,government_subsidy,scholarship
-          }
-          if (!id_rol || !dni_number || !sex || !birth_date || !first_name || !first_name || !last_name || !email || !phone_number || !id_grade || !government_subsidy || !scholarship){
-            return alert("No se pueden dejar campos vacios")
-            
-          }
-        }else if(id_rol == 3){
-          user_data = {
-            id_rol,dni_number,sex,username,birth_date,name,first_name,last_name,email,phone_number,license_code,availability,years_experience,assigned_to_hotline
-          }
-          if (!id_rol || !dni_number || !sex || !birth_date || !first_name || !first_name || !last_name || !email || !phone_number || !license_code || !availability || !years_experience || !assigned_to_hotline ){
-            return alert("No se pueden dejar campos vacios")
-          }
+        // Validar solo los campos necesarios para estudiantes
+        if (!dni_number || sex == undefined|| !birth_date || !first_name || !username || !last_name || !email || !phone_number || !id_grade || government_subsidy === undefined || scholarship === undefined) {
+          console.log(user_data)
+          return alert("No se pueden dejar campos vacíos estudiante");
         }
-        
-        
-          let data  = await get_institutes_data(apiUrl)
-
-          const profileExists = data.some((e) => e.dni_number == dni_number || e.email == email)
-         
-
-            if(profileExists) {
-              alert('User already exists')
-            }else if(!user_data){
-              alert("rellena todos los espacios")
-            }else{
-            try {
-              const response = await postRegister(apiPost, user_data);
-              console.log("Registration successful", response);
-          } catch (error) {
-              console.error("Registration failed", error);
-              alert('Registration failed, please try again.');
-          }
+      
+      } 
+      // Validación para psicólogos (id_rol == 3) 
+      else if (id_rol == 3) {
+        user_data = {
+          id_rol, dni_number, sex, username, birth_date, name, first_name, last_name, email, phone_number, license_code, availability, years_experience, assigned_to_hotline
+        };
+    
+        // Validar solo los campos necesarios para psicólogos
+        if (!dni_number || !sex || !birth_date || !first_name || !username || !last_name || !email || !phone_number || !license_code || availability === undefined || !years_experience || assigned_to_hotline === undefined) {
+          return alert("No se pueden dejar campos vacíos");
+        }
       }
-  }
-          
-
+    
+      // Verificar si el usuario ya existe
+      let data = await get_institutes_data(apiUrl);
+      const profileExists = data.some((e) => e.dni_number == dni_number || e.email == email);
+    
+      if (profileExists) {
+        alert('User already exists');
+      } else {
+        try {
+          const response = await postRegister(apiPost, user_data);
+          console.log("Registration successful", response);
+        } catch (error) {
+          console.error("Registration failed", error);
+          alert('Registration failed, please try again.');
+        }
+      }
+    }
           
     
 

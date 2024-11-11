@@ -60,6 +60,10 @@ const PostList = () => {
         <PostForm onPostCreated={fetchPosts} />
       </div>
 
+      <div>
+        <UsersToFollow />
+      </div>
+
       {/* Lista de publicaciones */}
       <h3>Publicaciones</h3>
       <div className="post-list">
@@ -88,9 +92,7 @@ const PostList = () => {
           <p>No hay publicaciones disponibles</p>
         )}
       </div>
-      <div>
-        <UsersToFollow />
-      </div>
+      
     </div>
   );
 };

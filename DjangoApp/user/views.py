@@ -36,7 +36,7 @@ from django.shortcuts import get_object_or_404
 class RegisterUserViewSet(viewsets.ModelViewSet):
     queryset = USERS.objects.all()  # Define el queryset para evitar el error
     serializer_class = UserSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     
     #funcioin que se encarga de crear una contrasenna para el usuario
     def generate_password(self):
@@ -180,9 +180,7 @@ class DeleteUserView(viewsets.ModelViewSet):
         # Validar y guardar
         if user_serializer.is_valid(raise_exception=True):
             user_serializer.save()  # Guarda los cambios en el usuario existente
-            return Response(user_serializer.data, status=status.HTTP_200_OK)  # Devuelve los datos del usuario actualizado
-
-        return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST) #los datos no se procesaron de manera correcta
+             #los datos no se procesaron de manera correcta
     
     
     

@@ -2,6 +2,7 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import { Spinner } from "../components/utilities/spinner";
+import { NotFoundPage } from "../pages/not found/NotFoundPage";
 
 
 const Protected_routes = ({ allowedRoles, children }) => {
@@ -12,7 +13,7 @@ const Protected_routes = ({ allowedRoles, children }) => {
 
   // Simulación de una carga inicial para asegurar que IdRol esté listo
   useEffect(() => {
-    if (IdRol !== null) {
+    if (IdRol || IdRol == null) {
         setLoading(false);
     }
 }, [IdRol]);
@@ -22,20 +23,13 @@ if (loading) {
     return <div><Spinner /></div>;
 }
 
-// Redireccionar si IdRol no está en los roles permitidos
-if (!allowedRoles.includes(IdRol)) {
-    return <Navigate to="/home" />;
+// Si IdRol es null o no está en los roles permitidos, redirigir a /home
+if (IdRol === null || !allowedRoles.includes(Number(IdRol))) {
+    return <NotFoundPage />;
 }
 
-    // Verificar que id_rol sea un número antes de compararlo
-    if (allowedRoles.includes(Number(IdRol))) {
-        return children;
-    } else {
-        console.log('Role not allowed, redirecting to home');
-        return <Navigate to='/home' />;
-    }
+return children;
 };
-
 // Rutas protegidas según los roles
 export const Protected_routes_admin = ({ children }) => (
     <Protected_routes allowedRoles={[1]}>{children}</Protected_routes>
